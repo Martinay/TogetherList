@@ -5,8 +5,8 @@ Read the references as you need them.
 * [Frontend Skills](docs/skills/frontend.md) See for frontend development skills.
 * [Backend Skills](docs/skills/backend.md) See for backend development skills.
 * [Coding Skills](docs/skills/coding.md) See for coding skills.
-* [ADR Instructions](docs/adr/0000_readme.md) See for Architecture Decision Record (ADR) instructions.
-* [Requirement Instructions](docs/requirements/0000_readme.md) See for requirement instructions.
+* [ADR Instructions](docs/adr/0000_readme-adr.md) See for Architecture Decision Record (ADR) instructions.
+* [Requirement Instructions](docs/requirements/0000_readme-requirements.md) See for requirement instructions.
 * [Vision](docs/vision.md) See to understand the vision.
 * [Status](status.md) See to understand the status of the project.
 

@@ -5,3 +5,7 @@
 5. Backgrounds & Details - Don't just use solid colors. Add textures, subtle gradients, decorative elements that match your aesthetic.
 6. Always have a look at the UX. Create the UI so it is easy to use and intuitive. A 10 year old child should be able to use it without any issues.
 7. Make sure that the UI always supports multiple languages. All strings must be loaded from a translation file.
+8. **Performance Budgets**: All pages must meet these thresholds:
+   - LCP (Largest Contentful Paint): < 2.5 seconds
+   - FCP (First Contentful Paint): < 1.8 seconds
+   - Initial Bundle size: ≤ 200 KB (compressed)

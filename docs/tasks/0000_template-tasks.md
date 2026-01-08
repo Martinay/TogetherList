@@ -10,6 +10,9 @@
 - [ ] [Step 1: Specific Action]
 - [ ] [Step 2: Verification]
 
+## Blockers / Risks
+[Optional: Known blockers or risks that may impact this task]
+
 ## Definition of Done
 - [ ] Code is implemented and verified.
 - [ ] Automated Tests are verified and passing (Required for coding tasks).

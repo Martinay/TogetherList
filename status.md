@@ -17,9 +17,9 @@
 ## Implementation Tasks
 ### Phase 1: Foundation (Current)
 - [x] Initial Requirements Analysis
-- [x] Setup agents instructions (`docs/tasks/001_setup_agents_instructions.md`)
-- [ ] **Decide Frontend Technology** (`docs/tasks/002_decide_frontend_tech.md`) <!-- Active -->
-- [ ] Decide Backend Technology (`docs/tasks/003_decide_backend_tech.md`)
+- [x] Setup agents instructions (`docs/tasks/0001_setup_agents_instructions.md`)
+- [ ] **Decide Frontend Technology** (`docs/tasks/0002_decide-frontend-tech.md`) <!-- Active -->
+- [ ] Decide Backend Technology (`docs/tasks/0003_decide-backend-tech.md`)
 
 ### Phase 2: Walking Skeleton (Planned)
 - [ ] Implement Landing Page

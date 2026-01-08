@@ -21,7 +21,7 @@ This repository explicitly does **not** use CLI tools, generators, or ADR automa
 - **ADR format:** MADR only  
 - **File format:** Markdown (`.md`)  
 - **Tooling:** IDE + Markdown files only  
-- **Templates:** ADRs are created by copying `0001_template.md`  
+- **Templates:** ADRs are created by copying `0001_template-adr.md`  
 - **Audience:** Developers and architects  
 - **This document:** Instructions for the AI agent only
 
@@ -32,31 +32,39 @@ The AI agent must **not** introduce:
 
 ---
 
-## Mandatory Economic Evaluation: The 9 Cost Factors
+## Mandatory Economic Evaluation: The 3 Cost Categories
 
-Every ADR **must explicitly evaluate each considered option** against the following **nine cost factors**:
+Every ADR **must explicitly evaluate each considered option** against the following **three cost categories**:
 
-1. **Authoring** – Cost of writing, reading, and changing code
-2. **Project Scale** – Suitability for large codebases and teams
-3. **Onboarding** – Hiring availability and ramp-up time
-4. **Maintenance & Debugging** – Long-term effort to fix and evolve the system
-5. **Runtime** – Operational and performance-related costs
-6. **Deployment** – Build, test, and release complexity
-7. **AI Assistance** – Effectiveness of AI tools for this technology
-8. **Interoperability** – Ease and cost of integration with other systems
-9. **Security** – Risk, mitigation effort, and ecosystem maturity
+### 1. Building (Development)
+Costs incurred while creating and evolving the codebase:
+- **Authoring** – Cost of writing, reading, and changing code
+- **Project Scale** – Suitability for large codebases and teams
+- **Onboarding** – Hiring availability and ramp-up time
+- **AI Assistance** – Effectiveness of AI tools for this technology
 
-These factors represent **total lifecycle cost**, not just initial implementation effort. Include this in your reasoning.
-https://spf13.com/p/the-9-factors/
+### 2. Running (Operations)
+Costs tied to executing, deploying, and maintaining running systems:
+- **Runtime** – Operational and performance-related costs
+- **Deployment** – Build, test, and release complexity
+- **Maintenance & Debugging** – Long-term effort to fix and evolve the system
+
+### 3. Externalities
+Costs arising from ecosystem, tooling, security, and integration:
+- **Interoperability** – Ease and cost of integration with other systems
+- **Security** – Risk, mitigation effort, and ecosystem maturity
+
+These categories represent **total lifecycle cost**, not just initial implementation effort. Include this in your reasoning.
+Inspired by: https://spf13.com/p/the-9-factors/
 
 ---
 
 ## Required Evaluation Rules
 
-- **Every ADR must include an explicit evaluation of the 9 cost factors**
-- **Every considered option must be evaluated against all 9 factors**
+- **Every ADR must include an explicit evaluation of the 3 cost categories**
+- **Every considered option must be evaluated against all 3 categories**
 - Evaluations must be **qualitative and concise** (e.g., short bullet points)
-- Do **not** omit factors because they seem irrelevant; explain low impact instead
+- Do **not** omit categories because they seem irrelevant; explain low impact instead
 - Trade-offs must be made explicit
 
 ### Required Placement
@@ -66,15 +74,20 @@ The evaluation must appear as a dedicated subsection under **Considered Options*
 ```markdown
 #### Option 1: <Name>
 
-* Authoring: ...
-* Project Scale: ...
-* Onboarding: ...
-* Maintenance & Debugging: ...
-* Runtime: ...
-* Deployment: ...
-* AI Assistance: ...
-* Interoperability: ...
-* Security: ...
+**Building (Development)**:
+- Authoring: ...
+- Project Scale: ...
+- Onboarding: ...
+- AI Assistance: ...
+
+**Running (Operations)**:
+- Runtime: ...
+- Deployment: ...
+- Maintenance & Debugging: ...
+
+**Externalities**:
+- Interoperability: ...
+- Security: ...
 ```
 
 This structure is mandatory.
@@ -149,7 +162,7 @@ Rules:
 - Include the chosen option
 - Include rejected alternatives
 - Do not list strawman options
-- **Each option must include a full 9 cost factor evaluation**
+- **Each option must include a full 3 cost category evaluation**
 
 ---
 
@@ -160,7 +173,7 @@ Describe:
 - The rationale for choosing it
 - Why other options were not chosen
 
-The rationale must reference **cost factor trade-offs** where relevant.
+The rationale must reference **cost category trade-offs** where relevant.
 
 ---
 
@@ -198,8 +211,8 @@ Include:
 Before presenting a new ADR to the user, confirm that:
 - All required sections are present: Title, Date, Status (Proposed), Context, Alternatives Considered, Decision, Rationale, Consequences / Expected Impact
 - The title is a short, clear noun phrase
--The rationale:
-  - Integrates relevant cost factors (“The 9 Cost Factors”)
+- The rationale:
+  - Integrates relevant cost categories ("The 3 Cost Categories")
   - Clearly explains why the selected option is preferable to the alternatives
 - The record addresses exactly one decision
 - Formatting is clean and consistent (no leading whitespace, correct spacing, no duplicated sections)
@@ -211,10 +224,10 @@ Before presenting a new ADR to the user, confirm that:
 When working in this repository:
 
 1. **Always follow MADR**
-2. **Always evaluate all options using the 9 cost factors**
+2. **Always evaluate all options using the 3 cost categories**
 3. **Keep evaluations concise and comparative**
 4. **Use Markdown only, no tooling assumptions**
 5. **Optimize for long-term economic understanding**
 
-Failure to apply the cost factor evaluation invalidates the ADR.
+Failure to apply the cost category evaluation invalidates the ADR.
 

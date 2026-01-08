@@ -20,7 +20,7 @@ The goal is to ensure that all requirements are:
 - **Documentation format:** Markdown only
 - **Granularity:** One requirement per Markdown file
 - **Tooling:** No generators, no CLI tools, no databases
-- **Authoring method:** Copy and adapt `0001_template.md`
+- **Authoring method:** Copy and adapt `0001_template-requirements.md`
 - **Audience:** Developers, architects, testers, and AI agents
 
 The AI agent must **not** assume the presence of:
@@ -45,7 +45,7 @@ A requirement:
 
 ## Mandatory Structure
 
-All requirement files **must be created from** `0001_template.md`.
+All requirement files **must be created from** `0001_template-requirements.md`.
 - Files live in the ADR directory (e.g. `docs/requirements/`)
 - Filenames are
   - descriptive and stable (e.g. `0012-user-password-restore.md`)

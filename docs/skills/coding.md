@@ -3,3 +3,4 @@
 3. **Git Commits**: NEVER commit code automatically. The user will commit the code.
 4. **Testing**: Use a Test-Driven Development (TDD) approach when applicable. Propose code changes only after the corresponding tests have been written and passed. Every new functionality must be covered by automated tests.
 5. **CLI Warnings**: If any CLI command produces warnings or notices, resolve them before continuing. This includes understanding the warning, executing any recommended remediation steps, and verifying that the issue is fully resolved. Do not proceed to subsequent tasks until all warnings have been cleared.
+6. **File Naming**: If the file has a sequential number prefix, use the pattern `0000_kebab-case.ext` (e.g., `0001_template-tasks.md`). If there is no sequential number, use only kebab-case (e.g., `my-component.tsx`).
