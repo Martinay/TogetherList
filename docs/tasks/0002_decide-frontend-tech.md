@@ -17,7 +17,7 @@ Evaluate and select a frontend technology stack that fits the "Vibe Coding" and 
     - Confirm with the user before finalizing `status.md`.
 
 ## Definition of Done
-- [ ] ADR `docs/adr/0002_frontend_tech.md` is drafted and presented to the user.
-- [ ] Automated Tests (Mock/Setup) strategy included in ADR.
-- [ ] `status.md` updated with the decision once accepted.
-- [ ] Next Task (`0003_decide_backend_tech.md`) created.
+- [x] ADR `docs/adr/0002_frontend_tech.md` is drafted and presented to the user.
+- [x] Automated Tests (Mock/Setup) strategy included in ADR.
+- [x] `status.md` updated with the decision once accepted.
+- [x] Next Task (`0003_decide_backend_tech.md`) created.

@@ -11,15 +11,15 @@
 
 ### Architecture Decisions (ADRs)
 - **Event Sourcing**: State derived from JSONL event log.
-- [ ] **Frontend Tech**: [Pending] -> `docs/adr/0002_frontend_tech.md`
-- [ ] **Backend Tech**: [Pending] -> `docs/adr/0003_backend_tech.md`
+- [x] **Frontend Tech**: React + Vite -> `docs/adr/0002_frontend_tech.md`
+- [x] **Backend Tech**: Go + net/http -> `docs/adr/0003_backend_tech.md`
 
 ## Implementation Tasks
 ### Phase 1: Foundation (Current)
 - [x] Initial Requirements Analysis
 - [x] Setup agents instructions (`docs/tasks/0001_setup_agents_instructions.md`)
-- [ ] **Decide Frontend Technology** (`docs/tasks/0002_decide-frontend-tech.md`) <!-- Active -->
-- [ ] Decide Backend Technology (`docs/tasks/0003_decide-backend-tech.md`)
+- [x] Decide Frontend Technology (`docs/tasks/0002_decide-frontend-tech.md`)
+- [x] **Decide Backend Technology** (`docs/tasks/0003_decide-backend-tech.md`)
 
 ### Phase 2: Walking Skeleton (Planned)
 - [ ] Implement Landing Page
@@ -27,4 +27,4 @@
 - [ ] Implement Event Sourcing Backend
 
 ## Current Recommendation
-Start with the Frontend Tech stack decision. It determines the "vibe" and development speed of the UI.
+Phase 1 (Foundation) is complete. Ready to begin Phase 2: Walking Skeleton implementation with the decided stack (React + Vite frontend, Go backend).
