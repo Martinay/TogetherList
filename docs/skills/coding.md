@@ -1,0 +1,5 @@
+1. **Comments**: Avoid adding unnecessary comments. Only include comments when they are strictly essential for clarity.
+2. **Version Selection**: Adhere to version requirements specified in ADRs and PDRs. If no specific version is mandated, default to the latest LTS (Long-Term Support) version for all frameworks, tools, and libraries.
+3. **Git Commits**: NEVER commit code automatically. The user will commit the code.
+4. **Testing**: Use a Test-Driven Development (TDD) approach when applicable. Propose code changes only after the corresponding tests have been written and passed. Every new functionality must be covered by automated tests.
+5. **CLI Warnings**: If any CLI command produces warnings or notices, resolve them before continuing. This includes understanding the warning, executing any recommended remediation steps, and verifying that the issue is fully resolved. Do not proceed to subsequent tasks until all warnings have been cleared.
