@@ -10,6 +10,19 @@ Read the references as you need them.
 * [Vision](docs/vision.md) See to understand the vision.
 * [Status](status.md) See to understand the status of the project.
 
+## Technology Stack
+The following technology decisions have been made and documented in `docs/adr/`:
+
+### Frontend
+**Decision**: [React + Vite](docs/adr/0002_frontend_tech.md)
+*   **Why**: Optimal balance of performance (bundle size ≤ 200KB), aesthetic capability ("Vibe Coding"), and alignment with event sourcing patterns.
+*   **Key Libraries**: React, Vite, Framer Motion (for animations), Vitest (testing).
+
+### Backend
+**Decision**: [Go + net/http](docs/adr/0003_backend_tech.md)
+*   **Why**: High performance, simple deployment (single binary), and strong standard library support for JSONL file I/O and concurrency.
+*   **Key Libraries**: Standard library (`net/http`, `encoding/json`).
+
 
 ## Folder Structure
 * `docs/` folder contains documentation for the project.
