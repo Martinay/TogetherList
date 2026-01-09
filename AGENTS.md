@@ -57,15 +57,16 @@ We use a "Status + Task" protocol to keep the context window small.
 - **Testing**: If the task involves code changes, you MUST add coverage with an automated test. The task is not complete until the test is passing.
 
 ### End of Session
-1. **Update `status.md`**:
+1. **Request Completion Confirmation**: Before marking any task as complete, you MUST ask the user: "Is this task complete?" Do NOT mark a task as `[x]` until the user explicitly confirms.
+2. **Update `status.md`** (only after user confirmation):
    - **Tasks**: Mark completed items with `[x]`. Add new discovered tasks to "Implementation Tasks". Rearrange "Tasks" if needed
    - **Decisions**: If you made a stable Product or Arch decision, log it in "Key Decisions".
    - **Pruning**: Remove completed/irrelevant details to keep it scannable.
-2. **Create Next Task**:
+3. **Create Next Task**:
    - Create `docs/tasks/XXX_next_task.md`.
    - Explicitly tell the user: "Step X is complete. Please start a new session for Step Y."
-3. **Notify User**: Point to the new task file.
-4. **Cleanup**: Archive or delete task files that are completed, outdated, or no longer necessary to keep the `docs/tasks/` folder clean.
+4. **Notify User**: Point to the new task file.
+5. **Cleanup**: Archive or delete task files that are completed, outdated, or no longer necessary to keep the `docs/tasks/` folder clean.
 
 ## Rules
 1. **Respect Decisions**: Specific technology choices have already been made (see `doc/adr`). You MAY suggest alternatives if they offer significant benefits, but you MUST explicitly acknowledge that they conflict with a recorded decision.
@@ -82,5 +83,4 @@ We use a "Status + Task" protocol to keep the context window small.
 - Proactively draft or update the relevant requirement file
 - Present the change for user review
 - Do not ask for permission before drafting
-
-This keeps documentation current and reduces friction.
+12. **Task Completion Requires User Confirmation**: You MUST NOT mark any task as complete (`[x]`) unless the user has explicitly stated that the task is complete. Always ask the user: "Is this task complete?" before updating task status. Never assume completion based on your own assessment.

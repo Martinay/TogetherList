@@ -18,10 +18,7 @@
 
 ### Backlog (Ready to Pick)
 
-#### 1. Requirements (Scope: `docs/requirements/`) — Do First
-- [ ] **0022: Document Requirements** -> `docs/tasks/0022_document_requirements.md`
-
-#### 2. ADR Decisions (Scope: `docs/adr/`)
+#### 1. ADR Decisions (Scope: `docs/adr/`)
 - [ ] **0017: Decide Deployment Strategy** -> `docs/tasks/0017_decide_deployment_strategy.md`
 - [ ] **0018: Decide State Sync Strategy** -> `docs/tasks/0018_decide_state_sync_strategy.md`
 - [ ] **0019: Decide File Locking Strategy** -> `docs/tasks/0019_decide_file_locking_strategy.md`
@@ -53,10 +50,10 @@
 - [x] Setup agents instructions
 - [x] Decide Frontend Technology -> `docs/adr/0002_frontend_tech.md`
 - [x] Decide Backend Technology -> `docs/adr/0003_backend_tech.md`
+- [x] **0022: Document Requirements** -> `docs/requirements/` (REQ-0002 to REQ-0012)
 
 ## Current Recommendation
 Suggested execution order:
-1. **First**: 0022 (Requirements) - Formalize requirements before coding
-2. **Parallel**: ADR decisions (0017-0021) can be done alongside requirements
-3. **Then**: Backend (0006→0007→0008→0009) and Frontend (0005→0010→0011→0012→0013→0014→0015) in parallel
-4. **Finally**: 0016 (Integration) after frontend + backend are ready
+1. **Parallel**: ADR decisions (0017-0021) - Resolve architectural questions
+2. **Then**: Backend (0006→0007→0008→0009) and Frontend (0005→0010→0011→0012→0013→0014→0015) in parallel
+3. **Finally**: 0016 (Integration) after frontend + backend are ready
