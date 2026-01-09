@@ -13,6 +13,7 @@
 - **Event Sourcing**: State derived from JSONL event log.
 - [x] **Frontend Tech**: React + Vite -> `docs/adr/0002_frontend_tech.md`
 - [x] **Backend Tech**: Go + net/http -> `docs/adr/0003_backend_tech.md`
+- [x] **Deployment**: Azure Container Apps -> `docs/adr/0004_deployment_strategy.md`
 - [ ] **Package Manager**: Bun -> `docs/adr/0005_bun_package_manager.md` (Proposed)
 
 ## Implementation Tasks (Kanban)
@@ -20,7 +21,7 @@
 ### Backlog (Ready to Pick)
 
 #### 1. ADR Decisions (Scope: `docs/adr/`)
-- [ ] **0017: Decide Deployment Strategy** -> `docs/tasks/0017_decide_deployment_strategy.md`
+- [ ] **0017: Decide Storage Implementation** -> `docs/tasks/0017_next_task.md`
 - [ ] **0018: Decide State Sync Strategy** -> `docs/tasks/0018_decide_state_sync_strategy.md`
 - [ ] **0019: Decide File Locking Strategy** -> `docs/tasks/0019_decide_file_locking_strategy.md`
 - [ ] **0020: Decide API Versioning** -> `docs/tasks/0020_decide_api_versioning.md`
@@ -51,6 +52,7 @@
 - [x] Decide Frontend Technology -> `docs/adr/0002_frontend_tech.md`
 - [x] Decide Backend Technology -> `docs/adr/0003_backend_tech.md`
 - [x] **0022: Document Requirements** -> `docs/requirements/` (REQ-0002 to REQ-0012)
+- [x] **0017: Decide Deployment Strategy** -> `docs/adr/0004_deployment_strategy.md`
 - [x] **0006: Implement Backend Core** -> Go HTTP server with `/health` endpoint
 
 ## Current Recommendation
