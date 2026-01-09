@@ -17,27 +17,46 @@
 ## Implementation Tasks (Kanban)
 
 ### Backlog (Ready to Pick)
-#### Frontend (Scope: `frontend/`)
-- [ ] **Implement Landing Page** -> `docs/tasks/0005_implement_landing_page.md`
-    - Create `frontend/` with Vite.
-    - Implement UUID generation & Redirect.
-- [ ] Implement List View
 
-#### Backend (Scope: `backend/`)
-- [ ] **Implement Event Sourcing Core** -> `docs/tasks/0006_implement_backend_core.md`
-    - Create `backend/` module.
-    - Define Event Structs.
-    - Implement `main.go` HTTP server.
+#### 1. Requirements (Scope: `docs/requirements/`) — Do First
+- [ ] **0022: Document Requirements** -> `docs/tasks/0022_document_requirements.md`
+
+#### 2. ADR Decisions (Scope: `docs/adr/`)
+- [ ] **0017: Decide Deployment Strategy** -> `docs/tasks/0017_decide_deployment_strategy.md`
+- [ ] **0018: Decide State Sync Strategy** -> `docs/tasks/0018_decide_state_sync_strategy.md`
+- [ ] **0019: Decide File Locking Strategy** -> `docs/tasks/0019_decide_file_locking_strategy.md`
+- [ ] **0020: Decide API Versioning** -> `docs/tasks/0020_decide_api_versioning.md`
+- [ ] **0021: Decide Error Handling** -> `docs/tasks/0021_decide_error_handling.md`
+
+#### 3. Backend Implementation (Scope: `backend/`)
+- [ ] **0006: Implement Backend Core** -> `docs/tasks/0006_implement_backend_core.md`
+- [ ] **0007: Implement Event Sourcing** -> `docs/tasks/0007_implement_event_sourcing.md`
+- [ ] **0008: Implement List API** -> `docs/tasks/0008_implement_list_api.md`
+- [ ] **0009: Implement Item API** -> `docs/tasks/0009_implement_item_api.md`
+
+#### 4. Frontend Implementation (Scope: `frontend/`)
+- [ ] **0005: Implement Landing Page** -> `docs/tasks/0005_implement_landing_page.md`
+- [ ] **0010: Implement Frontend Routing** -> `docs/tasks/0010_implement_frontend_routing.md`
+- [ ] **0011: Implement User Identity** -> `docs/tasks/0011_implement_user_identity.md`
+- [ ] **0012: Implement List View UI** -> `docs/tasks/0012_implement_list_view_ui.md`
+- [ ] **0013: Implement Add Item UI** -> `docs/tasks/0013_implement_add_item_ui.md`
+- [ ] **0014: Implement Item Actions** -> `docs/tasks/0014_implement_item_actions.md`
+- [ ] **0015: Implement Real-time Polling** -> `docs/tasks/0015_implement_realtime_polling.md`
+
+#### 5. Integration (Scope: `frontend/` + `backend/`)
+- [ ] **0016: Implement CORS & Integration** -> `docs/tasks/0016_implement_cors_and_integration.md`
 
 ### In Progress
 *(Empty - Agents pick from Backlog)*
 
 ### Done
 - [x] Setup agents instructions
-- [x] Decide Frontend Technology
-- [x] Decide Backend Technology
+- [x] Decide Frontend Technology -> `docs/adr/0002_frontend_tech.md`
+- [x] Decide Backend Technology -> `docs/adr/0003_backend_tech.md`
 
 ## Current Recommendation
-We are ready for parallel work.
-- Agent A: Pick **Implement Landing Page** (`frontend/`).
-- Agent B: Pick **Implement Event Sourcing Core** (`backend/`).
+Suggested execution order:
+1. **First**: 0022 (Requirements) - Formalize requirements before coding
+2. **Parallel**: ADR decisions (0017-0021) can be done alongside requirements
+3. **Then**: Backend (0006→0007→0008→0009) and Frontend (0005→0010→0011→0012→0013→0014→0015) in parallel
+4. **Finally**: 0016 (Integration) after frontend + backend are ready
