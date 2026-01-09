@@ -17,6 +17,7 @@ The following technology decisions have been made and documented in `docs/adr/`:
 **Decision**: [React + Vite](docs/adr/0002_frontend_tech.md)
 *   **Why**: Optimal balance of performance (bundle size ≤ 200KB), aesthetic capability ("Vibe Coding"), and alignment with event sourcing patterns.
 *   **Key Libraries**: React, Vite, Framer Motion (for animations), Vitest (testing).
+*   **Package Manager**: [Bun](docs/adr/0005_bun_package_manager.md) - Use `bun` instead of `npm` (e.g., `bun install`, `bun run dev`).
 
 ### Backend
 **Decision**: [Go + net/http](docs/adr/0003_backend_tech.md)

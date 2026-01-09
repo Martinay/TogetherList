@@ -1,0 +1,15 @@
+{
+    "landing": {
+        "title": "TogetherList",
+        "subtitle": "Simple, real-time shared lists for everyone",
+        "createButton": "Create New List",
+        "features": {
+            "noAuth": "No sign-up required",
+            "realtime": "Real-time updates",
+            "share": "Easy sharing"
+        }
+    },
+    "list": {
+        "placeholder": "List page coming soon..."
+    }
+}

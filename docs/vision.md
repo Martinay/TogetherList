@@ -9,9 +9,8 @@ Create a web app for organizing and assigning list items.
 ## Features
 ### 1. Landing Page
 *   **Create a new list**: 
-    1. User enters their own name.
-    2. User adds names of other participants.
-    3. System generates a unique UUID and redirects to the list page.
+    1. User clicks "Create List".
+    2. System redirects to `/list/new`.
 
 ### 2. Identity & Access
 *   **Participant-based**: Participants are defined during list creation.

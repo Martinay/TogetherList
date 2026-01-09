@@ -13,6 +13,7 @@
 - **Event Sourcing**: State derived from JSONL event log.
 - [x] **Frontend Tech**: React + Vite -> `docs/adr/0002_frontend_tech.md`
 - [x] **Backend Tech**: Go + net/http -> `docs/adr/0003_backend_tech.md`
+- [ ] **Package Manager**: Bun -> `docs/adr/0005_bun_package_manager.md` (Proposed)
 
 ## Implementation Tasks (Kanban)
 
@@ -26,13 +27,12 @@
 - [ ] **0021: Decide Error Handling** -> `docs/tasks/0021_decide_error_handling.md`
 
 #### 3. Backend Implementation (Scope: `backend/`)
-- [ ] **0006: Implement Backend Core** -> `docs/tasks/0006_implement_backend_core.md`
 - [ ] **0007: Implement Event Sourcing** -> `docs/tasks/0007_implement_event_sourcing.md`
 - [ ] **0008: Implement List API** -> `docs/tasks/0008_implement_list_api.md`
 - [ ] **0009: Implement Item API** -> `docs/tasks/0009_implement_item_api.md`
 
 #### 4. Frontend Implementation (Scope: `frontend/`)
-- [ ] **0005: Implement Landing Page** -> `docs/tasks/0005_implement_landing_page.md`
+- [x] **0005: Implement Landing Page** -> `docs/tasks/0005_implement_landing_page.md`
 - [ ] **0010: Implement Frontend Routing** -> `docs/tasks/0010_implement_frontend_routing.md`
 - [ ] **0011: Implement User Identity** -> `docs/tasks/0011_implement_user_identity.md`
 - [ ] **0012: Implement List View UI** -> `docs/tasks/0012_implement_list_view_ui.md`
@@ -51,6 +51,7 @@
 - [x] Decide Frontend Technology -> `docs/adr/0002_frontend_tech.md`
 - [x] Decide Backend Technology -> `docs/adr/0003_backend_tech.md`
 - [x] **0022: Document Requirements** -> `docs/requirements/` (REQ-0002 to REQ-0012)
+- [x] **0006: Implement Backend Core** -> Go HTTP server with `/health` endpoint
 
 ## Current Recommendation
 Suggested execution order:
