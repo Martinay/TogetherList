@@ -21,6 +21,15 @@ Read the references as you need them.
 * `frontend/` folder contains the frontend code.
 
 
+## Multi-Agent Coordination (Directory Isolation)
+To allow multiple agents to work in parallel on the same branch, we use **Directory Isolation**.
+
+### Rules
+1.  **Scope Definition**: Every task MUST have a defined `Scope` (e.g., `frontend/`, `backend/`, `docs/`).
+2.  **The "Do Not Touch" Rule**: You MUST NOT modify files outside your task's declared scope. If you need to change a shared file (like `status.md`), be extremely careful and minimize the edit window.
+3.  **Orthogonal Selection**: When picking a new task, ensure its scope does NOT overlap with any currently "In Progress" task.
+    - *Example*: If Agent A is doing `frontend/landing-page`, Agent B can pick `backend/api`, but NOT `frontend/login`.
+
 ## Context Handoff (Vibe Coding)
 We use a "Status + Task" protocol to keep the context window small.
 

@@ -3,6 +3,10 @@
 ## Goal
 [Brief description of what needs to be achieved in this session.]
 
+## Scope
+- **Directory**: `[frontend/ | backend/ | docs/]`
+- **Files**: `[Optional: Specific files if needed]`
+
 ## Context
 [Essential background. Reference `status.md` Key Decisions if relevant.]
 
