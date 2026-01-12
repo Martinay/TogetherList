@@ -2,28 +2,26 @@
 
 ## References
 Read the references as you need them.
-* [Frontend Skills](docs/skills/frontend.md) See for frontend development skills.
-* [Backend Skills](docs/skills/backend.md) See for backend development skills.
-* [Coding Skills](docs/skills/coding.md) See for coding skills.
-* [ADR Instructions](docs/adr/0000_readme-adr.md) See for Architecture Decision Record (ADR) instructions.
-* [Requirement Instructions](docs/requirements/0000_readme-requirements.md) See for requirement instructions.
-* [Vision](docs/vision.md) See to understand the vision.
+* [Frontend Skills](docs/skills/frontend.md) See for frontend development skills. You MUST read it when working on the frontend.
+* [Backend Skills](docs/skills/backend.md) See for backend development skills. You MUST read it when working on the backend.
+* [Coding Skills](docs/skills/coding.md) See for coding skills. You MUST read it when working on the code.
+* [Git Skills](docs/skills/git.md) See for git skills. You MUST read it when working on the git.
+* [ADR Instructions](docs/adr/0000_readme-adr.md) See for Architecture Decision Record (ADR) instructions. You MUST read it when working on the ADRs.
+* [Requirement Instructions](docs/requirements/0000_readme-requirements.md) See for requirement instructions. You MUST read it when working on the requirements.
+* [Vision](docs/vision.md) See to understand the key ideas of the product.
 * [Status](status.md) See to understand the status of the project.
 
 ## Technology Stack
 The following technology decisions have been made and documented in `docs/adr/`:
 
 ### Frontend
-**Decision**: [React + Vite](docs/adr/0002_frontend_tech.md)
-*   **Why**: Optimal balance of performance (bundle size ≤ 200KB), aesthetic capability ("Vibe Coding"), and alignment with event sourcing patterns.
-*   **Key Libraries**: React, Vite, Framer Motion (for animations), Vitest (testing).
-*   **Package Manager**: [Bun](docs/adr/0005_bun_package_manager.md) - Use `bun` instead of `npm` (e.g., `bun install`, `bun run dev`).
+* [React + Vite](docs/adr/0002_frontend_tech.md)
+* **Key Libraries**: React, Vite, Framer Motion (for animations), Vitest (testing)
+* **Package Manager**: [Bun](docs/adr/0005_bun_package_manager.md) - Use `bun` instead of `npm` (e.g., `bun install`, `bun run dev`).
 
 ### Backend
-**Decision**: [Go + net/http](docs/adr/0003_backend_tech.md)
-*   **Why**: High performance, simple deployment (single binary), and strong standard library support for JSONL file I/O and concurrency.
-*   **Key Libraries**: Standard library (`net/http`, `encoding/json`).
-
+* [Go + net/http](docs/adr/0003_backend_tech.md)
+* **Key Libraries**: Standard library (`net/http`, `encoding/json`).
 
 ## Folder Structure
 * `docs/` folder contains documentation for the project.
@@ -61,13 +59,15 @@ We use a "Status + Task" protocol to keep the context window small.
 1. **Request Completion Confirmation**: Before marking any task as complete, you MUST ask the user: "Is this task complete?" Do NOT mark a task as `[x]` until the user explicitly confirms.
 2. **Update `status.md`** (only after user confirmation):
    - **Tasks**: Mark completed items with `[x]`. Add new discovered tasks to "Implementation Tasks". Rearrange "Tasks" if needed
-   - **Decisions**: If you made a stable Product or Arch decision, log it in "Key Decisions".
+   - **Decisions**: If you made a stable Product or Architecture decision, log it in "Key Decisions".
    - **Pruning**: Remove completed/irrelevant details to keep it scannable.
-3. **Create Next Task**:
+3. **Update `requirements folder`** (only after user confirmation):
+   - Make sure that the requirements are up to date.
+4. **Create Next Task**:
    - Create `docs/tasks/XXX_next_task.md`.
+5. **Notify User**: Point to the new task file.
    - Explicitly tell the user: "Step X is complete. Please start a new session for Step Y."
-4. **Notify User**: Point to the new task file.
-5. **Cleanup**: Archive or delete task files that are completed, outdated, or no longer necessary to keep the `docs/tasks/` folder clean.
+6. **Cleanup**: Archive or delete task files that are completed, outdated, or no longer necessary to keep the `docs/tasks/` folder clean.
 
 ## Rules
 1. **Respect Decisions**: Specific technology choices have already been made (see `doc/adr`). You MAY suggest alternatives if they offer significant benefits, but you MUST explicitly acknowledge that they conflict with a recorded decision.
