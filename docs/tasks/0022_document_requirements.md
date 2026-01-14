@@ -10,7 +10,7 @@ Extract and document formal requirements from `docs/vision.md` following the EAR
 ## Context
 - **Vision doc**: `docs/vision.md` contains informal feature descriptions.
 - **Template**: `docs/requirements/0001_template-requirements.md` defines the format.
-- **Rules**: `docs/requirements/0000_readme-requirements.md` defines atomicity and EARS syntax.
+- **Rules**: `.agent/skills/requirements/SKILL.md` defines atomicity and EARS syntax.
 - **Current state**: ✅ All formal requirements documented (REQ-0002 to REQ-0012).
 
 ## Granular Instructions

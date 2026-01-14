@@ -119,6 +119,6 @@ React + Vite provides the optimal balance for TogetherList:
 
 ## More Information
 
-- Performance budgets defined in: `docs/skills/frontend.md`
+- Performance budgets defined in: `.agent/skills/frontend/SKILL.md`
 - Project vision: `docs/vision.md`
 - Related decision: Backend Tech (pending in `docs/adr/0003_backend_tech.md`)

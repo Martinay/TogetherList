@@ -6,7 +6,7 @@ Evaluate and select a frontend technology stack that fits the "Vibe Coding" and 
 ## Context
 - **Vision**: `docs/vision.md` (Simple, real-time, shared lists).
 - **Core Principle**: Simplicity and speed of development. 
-- **Skills**: Check `docs/skills/frontend.md` for inspiration.
+- **Skills**: Check `.agent/skills/frontend/SKILL.md` for inspiration.
 
 ## Granular Instructions
 1.  **Research**: Compare 2-3 options (e.g., Vanilla JS/CSS, React/Vite, Next.js).
