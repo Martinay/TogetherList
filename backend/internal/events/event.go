@@ -13,14 +13,14 @@ type Event struct {
 }
 
 // Store defines the interface for event storage operations.
-// Implementations will handle JSONL file persistence.
+// Implementations will handle JSONL file persistence (one file per list).
 type Store interface {
-	// Append adds a new event to the store.
-	Append(event Event) error
+	// Append adds a new event to the store for a specific list.
+	Append(listID string, event Event) error
 
-	// ReadAll returns all events from the store.
-	ReadAll() ([]Event, error)
+	// ReadAll returns all events from the store for a specific list.
+	ReadAll(listID string) ([]Event, error)
 
-	// ReadSince returns events after the given timestamp.
-	ReadSince(since time.Time) ([]Event, error)
+	// ReadSince returns events after the given timestamp for a specific list.
+	ReadSince(listID string, since time.Time) ([]Event, error)
 }

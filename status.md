@@ -30,7 +30,7 @@
 - [x] **0021: Decide Error Handling** -> `docs/adr/0021_error_handling.md`
 
 #### 3. Backend Implementation (Scope: `backend/`)
-- [ ] **0007: Implement Event Sourcing** -> `docs/tasks/0007_implement_event_sourcing.md`
+- [x] **0007: Implement Event Sourcing** -> `docs/tasks/0007_implement_event_sourcing.md`
 - [ ] **0008: Implement List API** -> `docs/tasks/0008_implement_list_api.md`
 - [ ] **0009: Implement Item API** -> `docs/tasks/0009_implement_item_api.md`
 
