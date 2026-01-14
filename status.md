@@ -58,6 +58,7 @@
 - [x] **0006: Implement Backend Core** -> Go HTTP server with `/health` endpoint
 - [x] **0020: Decide API Versioning** -> `docs/adr/0007_api_versioning.md`
 - [x] **0019: Decide File Locking Strategy** -> `docs/adr/0006_storage_implementation.md` (Covered in Storage ADR)
+- [x] **REQ-0002: List Creation** -> Wizard UI + backend API with event persistence
 
 ## Current Recommendation
 Suggested execution order:

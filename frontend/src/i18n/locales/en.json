@@ -9,6 +9,18 @@
             "share": "Easy sharing"
         }
     },
+    "createList": {
+        "step1Title": "What's your name?",
+        "step1Placeholder": "Enter your name",
+        "step1Next": "Continue",
+        "step2Title": "Who else is joining?",
+        "step2Placeholder": "Add a participant",
+        "step2Add": "Add",
+        "step2Create": "Create List",
+        "creating": "Creating...",
+        "back": "Back",
+        "you": "You"
+    },
     "list": {
         "placeholder": "List page coming soon..."
     }

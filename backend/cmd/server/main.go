@@ -4,6 +4,9 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"os"
+
+	"github.com/rs/cors"
 
 	"backend/internal/features/createlist"
 	"backend/internal/features/viewlist"
@@ -12,11 +15,26 @@ import (
 func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/health", healthHandler)
-	mux.HandleFunc("/list/create", createlist.Handler)
-	mux.HandleFunc("/list/view", viewlist.Handler)
+	mux.HandleFunc("/api/v1/list/create", createlist.Handler)
+	mux.HandleFunc("/api/v1/list/view", viewlist.Handler)
 
-	log.Println("Server starting on :8080")
-	if err := http.ListenAndServe(":8080", mux); err != nil {
+	// Configure CORS
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"http://localhost:5173", "http://localhost:3000"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Content-Type", "Authorization"},
+		AllowCredentials: true,
+	})
+
+	handler := c.Handler(mux)
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	log.Printf("Server starting on :%s", port)
+	if err := http.ListenAndServe(":"+port, handler); err != nil {
 		log.Fatalf("Server failed to start: %v", err)
 	}
 }

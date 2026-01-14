@@ -1,6 +1,6 @@
 ---
 id: REQ-0002
-status: Proposed
+status: Implemented
 type: Functional
 priority: P0
 source: docs/vision.md
@@ -64,4 +64,3 @@ Unique identifiers (UUIDs) prevent collisions and enumeration attacks.
 ## Notes
 
 The `ListCreated` event must include the initial participant list.
-A `UserJoined` event should be recorded for each participant.
