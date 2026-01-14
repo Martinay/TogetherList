@@ -14,18 +14,20 @@
 - [x] **Frontend Tech**: React + Vite -> `docs/adr/0002_frontend_tech.md`
 - [x] **Backend Tech**: Go + net/http -> `docs/adr/0003_backend_tech.md`
 - [x] **Deployment**: Azure Container Apps -> `docs/adr/0004_deployment_strategy.md`
-- [ ] **Package Manager**: Bun -> `docs/adr/0005_bun_package_manager.md` (Proposed)
+- [x] **Package Manager**: Bun -> `docs/adr/0005_bun_package_manager.md` (Proposed)
+- [x] **Storage**: Azure Files (via Interface) -> `docs/adr/0006_storage_implementation.md`
+- [x] **API Versioning**: URL Path (`/api/v1`) -> `docs/adr/0007_api_versioning.md`
+- [x] **State Sync**: Short Polling (3s) -> `docs/adr/0008_state_sync_strategy.md`
 
 ## Implementation Tasks (Kanban)
 
 ### Backlog (Ready to Pick)
 
 #### 1. ADR Decisions (Scope: `docs/adr/`)
-- [ ] **0017: Decide Storage Implementation** -> `docs/tasks/0017_next_task.md`
-- [ ] **0018: Decide State Sync Strategy** -> `docs/tasks/0018_decide_state_sync_strategy.md`
-- [ ] **0019: Decide File Locking Strategy** -> `docs/tasks/0019_decide_file_locking_strategy.md`
-- [ ] **0020: Decide API Versioning** -> `docs/tasks/0020_decide_api_versioning.md`
-- [ ] **0021: Decide Error Handling** -> `docs/tasks/0021_decide_error_handling.md`
+- [x] **0017: Decide Storage Implementation** -> `docs/adr/0006_storage_implementation.md`
+- [x] **0018: Decide State Sync Strategy** -> `docs/adr/0008_state_sync_strategy.md`
+- [x] **0020: Decide API Versioning** -> `docs/adr/0007_api_versioning.md`
+- [x] **0021: Decide Error Handling** -> `docs/adr/0021_error_handling.md`
 
 #### 3. Backend Implementation (Scope: `backend/`)
 - [ ] **0007: Implement Event Sourcing** -> `docs/tasks/0007_implement_event_sourcing.md`
@@ -54,6 +56,8 @@
 - [x] **0022: Document Requirements** -> `docs/requirements/` (REQ-0002 to REQ-0012)
 - [x] **0017: Decide Deployment Strategy** -> `docs/adr/0004_deployment_strategy.md`
 - [x] **0006: Implement Backend Core** -> Go HTTP server with `/health` endpoint
+- [x] **0020: Decide API Versioning** -> `docs/adr/0007_api_versioning.md`
+- [x] **0019: Decide File Locking Strategy** -> `docs/adr/0006_storage_implementation.md` (Covered in Storage ADR)
 
 ## Current Recommendation
 Suggested execution order:
