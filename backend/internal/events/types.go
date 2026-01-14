@@ -4,10 +4,17 @@ package events
 // Event type constants.
 const (
 	EventTypeListCreated = "ListCreated"
+	EventTypeItemAdded   = "ItemAdded"
 )
 
 // ListCreatedPayload represents the data for a list creation event.
 type ListCreatedPayload struct {
 	Name         string   `json:"name"`
 	Participants []string `json:"participants"`
+}
+
+// ItemAddedPayload represents the data for an item addition event.
+type ItemAddedPayload struct {
+	ItemID string `json:"item_id"`
+	Title  string `json:"title"`
 }

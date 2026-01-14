@@ -22,6 +22,14 @@
         "you": "You"
     },
     "list": {
-        "placeholder": "List page coming soon..."
+        "placeholder": "List page coming soon...",
+        "loading": "Loading list...",
+        "emptyList": "No items yet. Add your first one!",
+        "addItem": {
+            "placeholder": "What needs to be done?",
+            "button": "Add",
+            "adding": "Adding..."
+        },
+        "error": "Failed to load list"
     }
 }

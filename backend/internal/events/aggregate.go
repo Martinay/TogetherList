@@ -53,6 +53,16 @@ func applyEvent(state *ListState, event Event) error {
 		}
 		state.Name = payload.Name
 		state.Participants = payload.Participants
+	case EventTypeItemAdded:
+		payload, err := parsePayload[ItemAddedPayload](event.Payload)
+		if err != nil {
+			return err
+		}
+		state.Items[payload.ItemID] = &ItemState{
+			ID:        payload.ItemID,
+			Title:     payload.Title,
+			Completed: false,
+		}
 	default:
 		// Unknown event types are ignored for forward compatibility
 		// This allows new event types to be added without breaking old code

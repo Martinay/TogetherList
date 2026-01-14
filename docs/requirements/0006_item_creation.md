@@ -1,6 +1,6 @@
 ---
 id: REQ-0006
-status: Proposed
+status: Implemented
 type: Functional
 priority: P0
 source: docs/vision.md

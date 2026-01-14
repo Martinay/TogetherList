@@ -109,3 +109,135 @@ func TestReconstructListState_UnknownEventType(t *testing.T) {
 		t.Errorf("expected name 'Test List', got '%s'", state.Name)
 	}
 }
+
+func TestReconstructListState_ItemAdded(t *testing.T) {
+	events := []Event{
+		{
+			ID:   "evt-1",
+			Type: EventTypeListCreated,
+			Payload: ListCreatedPayload{
+				Name:         "Shopping List",
+				Participants: []string{"Alice"},
+			},
+			Timestamp: time.Now(),
+		},
+		{
+			ID:   "evt-2",
+			Type: EventTypeItemAdded,
+			Payload: ItemAddedPayload{
+				ItemID: "item-1",
+				Title:  "Buy milk",
+			},
+			Timestamp: time.Now(),
+		},
+	}
+
+	state, err := ReconstructListState(events)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	if len(state.Items) != 1 {
+		t.Fatalf("expected 1 item, got %d", len(state.Items))
+	}
+
+	item, exists := state.Items["item-1"]
+	if !exists {
+		t.Fatal("expected item 'item-1' to exist")
+	}
+	if item.Title != "Buy milk" {
+		t.Errorf("expected title 'Buy milk', got '%s'", item.Title)
+	}
+	if item.Completed {
+		t.Error("expected item to not be completed")
+	}
+}
+
+func TestReconstructListState_MultipleItems(t *testing.T) {
+	events := []Event{
+		{
+			ID:   "evt-1",
+			Type: EventTypeListCreated,
+			Payload: ListCreatedPayload{
+				Name:         "Todo List",
+				Participants: []string{"Bob"},
+			},
+			Timestamp: time.Now(),
+		},
+		{
+			ID:   "evt-2",
+			Type: EventTypeItemAdded,
+			Payload: ItemAddedPayload{
+				ItemID: "item-1",
+				Title:  "Task A",
+			},
+			Timestamp: time.Now(),
+		},
+		{
+			ID:   "evt-3",
+			Type: EventTypeItemAdded,
+			Payload: ItemAddedPayload{
+				ItemID: "item-2",
+				Title:  "Task B",
+			},
+			Timestamp: time.Now(),
+		},
+	}
+
+	state, err := ReconstructListState(events)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	if len(state.Items) != 2 {
+		t.Fatalf("expected 2 items, got %d", len(state.Items))
+	}
+
+	if state.Items["item-1"].Title != "Task A" {
+		t.Errorf("expected item-1 title 'Task A', got '%s'", state.Items["item-1"].Title)
+	}
+	if state.Items["item-2"].Title != "Task B" {
+		t.Errorf("expected item-2 title 'Task B', got '%s'", state.Items["item-2"].Title)
+	}
+}
+
+func TestReconstructListState_ItemAddedFromJSON(t *testing.T) {
+	// Simulates reading from JSONL where payload is unmarshaled as map[string]any
+	events := []Event{
+		{
+			ID:   "evt-1",
+			Type: EventTypeListCreated,
+			Payload: map[string]any{
+				"name":         "Test List",
+				"participants": []any{"User"},
+			},
+			Timestamp: time.Now(),
+		},
+		{
+			ID:   "evt-2",
+			Type: EventTypeItemAdded,
+			Payload: map[string]any{
+				"item_id": "item-123",
+				"title":   "Test item",
+			},
+			Timestamp: time.Now(),
+		},
+	}
+
+	state, err := ReconstructListState(events)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	if len(state.Items) != 1 {
+		t.Fatalf("expected 1 item, got %d", len(state.Items))
+	}
+
+	item, exists := state.Items["item-123"]
+	if !exists {
+		t.Fatal("expected item 'item-123' to exist")
+	}
+	if item.Title != "Test item" {
+		t.Errorf("expected title 'Test item', got '%s'", item.Title)
+	}
+}

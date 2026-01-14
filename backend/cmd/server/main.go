@@ -8,15 +8,17 @@ import (
 
 	"github.com/rs/cors"
 
+	"backend/internal/features/additem"
 	"backend/internal/features/createlist"
 	"backend/internal/features/viewlist"
 )
 
 func main() {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/health", healthHandler)
-	mux.HandleFunc("/api/v1/list/create", createlist.Handler)
-	mux.HandleFunc("/api/v1/list/view", viewlist.Handler)
+	mux.HandleFunc("GET /health", healthHandler)
+	mux.HandleFunc("POST /api/v1/list/create", createlist.Handler)
+	mux.HandleFunc("GET /api/v1/list/{id}", viewlist.Handler)
+	mux.HandleFunc("POST /api/v1/list/{id}/items", additem.Handler)
 
 	// Configure CORS
 	c := cors.New(cors.Options{
