@@ -33,3 +33,6 @@ description: General coding standards including commenting, versioning, testing 
 ### 5. Single Responsibility
 - Each file, method, or class should have a single responsibility.
 - If a entity has multiple responsibilities, split it.
+
+### 6. KISS principle
+- Avoid over-engineering. Keep it simple, stupid.

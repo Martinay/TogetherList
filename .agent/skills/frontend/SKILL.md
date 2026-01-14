@@ -19,7 +19,7 @@ description: Guidelines for frontend development including Vertical Slice Archit
 
 ### 2. Aesthetics & Design
 - **Typography**: Don't just use generic fonts. Pick something interesting.
-- **Color & Theme**: Commit to a cohesive color palette. Instead of using 10 colors, use 2-3 dominant colors with sharp accents.
+- **Color & Theme**: Commit to a cohesive color palette. Instead of using 10 colors, use 2-3 dominant colors with sharp accents. Do not use blue and purple as it is used by all AI applications.
 - **Motion**: Use animations strategically. Do not overload it with animations.
 - **Spatial Composition**: Break the grid. Use asymmetry. Overlap elements. Create unexpected layouts.
 - **Backgrounds & Details**: Don't just use solid colors. Add textures, subtle gradients, decorative elements that match your aesthetic.
