@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
-import LandingPage from '../pages/LandingPage'
+import LandingPage from '../features/create-list/LandingPage'
 import '../i18n'
 
 // Mock useNavigate

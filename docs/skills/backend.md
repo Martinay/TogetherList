@@ -1,0 +1,1 @@
+1. **Architecture**: Implement Vertical Slice Architecture (Feature Folders). Organize code by feature (e.g., `internal/features/myfeature`), encapsulating handlers, logic, and models specific to that feature. Avoid horizontal layers like `handlers/`, `services/`, `repositories/` unless truly generic.

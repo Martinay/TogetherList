@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
-import CreateListPage from '../pages/CreateListPage'
+import CreateListPage from '../features/create-list/CreateListPage'
 
 // Mock useNavigate
 const mockNavigate = vi.fn()

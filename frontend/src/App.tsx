@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
-import LandingPage from './pages/LandingPage'
-import ListPage from './pages/ListPage'
-import CreateListPage from './pages/CreateListPage'
+import LandingPage from './features/create-list/LandingPage'
+import ListPage from './features/view-list/ListPage'
+import CreateListPage from './features/create-list/CreateListPage'
 
 function App() {
     return (

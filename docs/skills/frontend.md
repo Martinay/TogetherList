@@ -1,4 +1,5 @@
-1. Typography - Don't just use generic fonts. Pick something interesting.
+1. **Architecture**: Implement Vertical Slice Architecture (Feature Folders). Organize code by feature (e.g., `src/features/my-feature`), grouping components, hooks, api, and styles together. Avoid grouping by type (e.g., `components/`, `hooks/`) at the top level.
+2. Typography - Don't just use generic fonts. Pick something interesting.
 2. Color & Theme - Commit to a cohesive color palette. Instead of using 10 colors, use 2-3 dominant colors with sharp accents.
 3. Motion - Use animations strategically. Do not overload it with animations.
 4. Spatial Composition - Break the grid. Use asymmetry. Overlap elements. Create unexpected layouts.

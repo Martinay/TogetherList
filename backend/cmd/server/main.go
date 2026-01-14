@@ -4,11 +4,16 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+
+	"backend/internal/features/createlist"
+	"backend/internal/features/viewlist"
 )
 
 func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/health", healthHandler)
+	mux.HandleFunc("/list/create", createlist.Handler)
+	mux.HandleFunc("/list/view", viewlist.Handler)
 
 	log.Println("Server starting on :8080")
 	if err := http.ListenAndServe(":8080", mux); err != nil {
