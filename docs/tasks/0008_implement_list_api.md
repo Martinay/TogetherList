@@ -12,8 +12,8 @@ Create REST API endpoints for list creation and retrieval.
 - **Endpoints needed**: POST /api/lists, GET /api/lists/{id}
 
 ## Granular Instructions
-- [ ] Create `internal/api/handlers.go` with handler functions.
-- [ ] Implement `POST /api/lists`:
+- [x] Create `internal/api/handlers.go` with handler functions.
+- [x] Implement `POST /api/lists`:
     - Generate UUID for new list.
     - Append `ListCreated` event.
     - Return list ID.

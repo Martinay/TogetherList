@@ -36,7 +36,7 @@
 
 #### 4. Frontend Implementation (Scope: `frontend/`)
 - [x] **0005: Implement Landing Page** -> `docs/tasks/0005_implement_landing_page.md`
-- [ ] **0010: Implement Frontend Routing** -> `docs/tasks/0010_implement_frontend_routing.md`
+
 - [ ] **0011: Implement User Identity** -> `docs/tasks/0011_implement_user_identity.md`
 - [ ] **0012: Implement List View UI** -> `docs/tasks/0012_implement_list_view_ui.md`
 - [ ] **0013: Implement Add Item UI** -> `docs/tasks/0013_implement_add_item_ui.md`
@@ -59,6 +59,7 @@
 - [x] **0020: Decide API Versioning** -> `docs/adr/0007_api_versioning.md`
 - [x] **0019: Decide File Locking Strategy** -> `docs/adr/0006_storage_implementation.md` (Covered in Storage ADR)
 - [x] **REQ-0002: List Creation** -> Wizard UI + backend API with event persistence
+- [x] **0010: Implement Frontend Routing** -> `docs/tasks/0010_implement_frontend_routing.md`
 
 ## Current Recommendation
 Suggested execution order:

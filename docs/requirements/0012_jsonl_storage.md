@@ -1,6 +1,6 @@
 ---
 id: REQ-0012
-status: Proposed
+status: Implemented
 type: NonFunctional
 priority: P1
 source: docs/vision.md

@@ -12,7 +12,7 @@ Enable communication between frontend and backend with proper CORS configuration
 - **Prerequisite**: Backend API and Frontend UI tasks completed.
 
 ## Granular Instructions
-- [ ] Add CORS middleware to backend:
+- [x] Add CORS middleware to backend:
     - Allow origin from frontend dev server.
     - Allow required methods (GET, POST, PATCH, OPTIONS).
     - Allow Content-Type header.
