@@ -7,6 +7,7 @@ import Greeting from './Greeting'
 import { ListItem } from './ListItem'
 import ShareButton from './ShareButton'
 import { useUserIdentity } from './useUserIdentity'
+import { fetchListState } from './api'
 import type { ListState } from './types'
 
 function ListPage() {
@@ -19,20 +20,13 @@ function ListPage() {
     // Per-list identity management
     const { selectedName, selectName, clearName } = useUserIdentity(id || '')
 
-    const fetchList = useCallback(async () => {
+    const refreshList = useCallback(async () => {
         if (!id) return
 
         try {
-            const response = await fetch(`http://localhost:8080/api/v1/list/${id}`)
-            if (response.ok) {
-                const data = await response.json()
-                setListState(data)
-                setError(null)
-            } else if (response.status === 404) {
-                setError('List not found')
-            } else {
-                setError('Failed to load list')
-            }
+            const data = await fetchListState(id)
+            setListState(data)
+            setError(null)
         } catch (err) {
             console.error('Failed to fetch list:', err)
             setError('Failed to load list')
@@ -42,12 +36,8 @@ function ListPage() {
     }, [id])
 
     useEffect(() => {
-        fetchList()
-    }, [fetchList])
-
-    const handleItemAdded = () => {
-        fetchList()
-    }
+        refreshList()
+    }, [refreshList])
 
     const handleIdentitySelect = (name: string) => {
         selectName(name)
@@ -104,7 +94,7 @@ function ListPage() {
             </header>
 
             {selectedName && (
-                <AddItemForm listId={id!} createdBy={selectedName} onItemAdded={handleItemAdded} />
+                <AddItemForm listId={id!} createdBy={selectedName} onItemAdded={refreshList} />
             )}
 
             {items.length === 0 ? (
@@ -117,7 +107,9 @@ function ListPage() {
                         <ListItem
                             key={item.id}
                             item={item}
+                            listId={id!}
                             locale={i18n.language}
+                            onItemUpdated={refreshList}
                         />
                     ))}
                 </div>

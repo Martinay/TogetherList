@@ -68,6 +68,14 @@ func applyEvent(state *ListState, event Event) error {
 			CreatedAt: event.Timestamp.Format(time.RFC3339),
 			Completed: false,
 		}
+	case EventTypeItemTitleEdited:
+		payload, err := parsePayload[ItemTitleEditedPayload](event.Payload)
+		if err != nil {
+			return err
+		}
+		if item, exists := state.Items[payload.ItemID]; exists {
+			item.Title = payload.NewTitle
+		}
 	default:
 		// Unknown event types are ignored for forward compatibility
 		// This allows new event types to be added without breaking old code

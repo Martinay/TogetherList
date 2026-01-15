@@ -35,6 +35,9 @@
             "createdBy": "Created by",
             "createdAt": "Created on"
         },
+        "editItem": {
+            "button": "Edit"
+        },
         "greeting": {
             "hello": "Hi, ",
             "suffix": "!",

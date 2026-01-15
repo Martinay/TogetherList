@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
+import { addItem } from './api'
 
 interface AddItemFormProps {
     listId: string
@@ -20,18 +21,9 @@ function AddItemForm({ listId, createdBy, onItemAdded }: AddItemFormProps) {
 
         setIsAdding(true)
         try {
-            const response = await fetch(`http://localhost:8080/api/v1/list/${listId}/items`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ title: trimmedTitle, createdBy }),
-            })
-
-            if (response.ok) {
-                setTitle('')
-                onItemAdded()
-            }
+            await addItem(listId, trimmedTitle, createdBy)
+            setTitle('')
+            onItemAdded()
         } catch (error) {
             console.error('Failed to add item:', error)
         } finally {
