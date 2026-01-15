@@ -25,6 +25,7 @@ description: Guidelines for frontend development including Vertical Slice Archit
 - **Backgrounds & Details**: Don't just use solid colors. Add textures, subtle gradients, decorative elements that match your aesthetic.
 
 ### 3. UX & Internationalization
+- **Responsive Design**: Ensure the UI works seamlessly on mobile phones, tablets, and laptops using fluid layouts, media queries, and responsive components.
 - **UX First**: Create the UI so it is easy to use and intuitive. A 10 year old child should be able to use it without any issues.
 - **i18n**: Make sure that the UI always supports multiple languages. All strings must be loaded from a translation file.
 
