@@ -111,6 +111,7 @@ func TestReconstructListState_UnknownEventType(t *testing.T) {
 }
 
 func TestReconstructListState_ItemAdded(t *testing.T) {
+	eventTime := time.Date(2026, 1, 15, 10, 30, 0, 0, time.UTC)
 	events := []Event{
 		{
 			ID:   "evt-1",
@@ -125,10 +126,11 @@ func TestReconstructListState_ItemAdded(t *testing.T) {
 			ID:   "evt-2",
 			Type: EventTypeItemAdded,
 			Payload: ItemAddedPayload{
-				ItemID: "item-1",
-				Title:  "Buy milk",
+				ItemID:    "item-1",
+				Title:     "Buy milk",
+				CreatedBy: "Alice",
 			},
-			Timestamp: time.Now(),
+			Timestamp: eventTime,
 		},
 	}
 
@@ -147,6 +149,12 @@ func TestReconstructListState_ItemAdded(t *testing.T) {
 	}
 	if item.Title != "Buy milk" {
 		t.Errorf("expected title 'Buy milk', got '%s'", item.Title)
+	}
+	if item.CreatedBy != "Alice" {
+		t.Errorf("expected CreatedBy 'Alice', got '%s'", item.CreatedBy)
+	}
+	if item.CreatedAt != "2026-01-15T10:30:00Z" {
+		t.Errorf("expected CreatedAt '2026-01-15T10:30:00Z', got '%s'", item.CreatedAt)
 	}
 	if item.Completed {
 		t.Error("expected item to not be completed")
@@ -168,8 +176,9 @@ func TestReconstructListState_MultipleItems(t *testing.T) {
 			ID:   "evt-2",
 			Type: EventTypeItemAdded,
 			Payload: ItemAddedPayload{
-				ItemID: "item-1",
-				Title:  "Task A",
+				ItemID:    "item-1",
+				Title:     "Task A",
+				CreatedBy: "Bob",
 			},
 			Timestamp: time.Now(),
 		},
@@ -177,8 +186,9 @@ func TestReconstructListState_MultipleItems(t *testing.T) {
 			ID:   "evt-3",
 			Type: EventTypeItemAdded,
 			Payload: ItemAddedPayload{
-				ItemID: "item-2",
-				Title:  "Task B",
+				ItemID:    "item-2",
+				Title:     "Task B",
+				CreatedBy: "Bob",
 			},
 			Timestamp: time.Now(),
 		},
@@ -217,8 +227,9 @@ func TestReconstructListState_ItemAddedFromJSON(t *testing.T) {
 			ID:   "evt-2",
 			Type: EventTypeItemAdded,
 			Payload: map[string]any{
-				"item_id": "item-123",
-				"title":   "Test item",
+				"item_id":    "item-123",
+				"title":      "Test item",
+				"created_by": "User",
 			},
 			Timestamp: time.Now(),
 		},

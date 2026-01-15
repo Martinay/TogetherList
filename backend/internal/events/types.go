@@ -15,6 +15,7 @@ type ListCreatedPayload struct {
 
 // ItemAddedPayload represents the data for an item addition event.
 type ItemAddedPayload struct {
-	ItemID string `json:"item_id"`
-	Title  string `json:"title"`
+	ItemID    string `json:"item_id"`
+	Title     string `json:"title"`
+	CreatedBy string `json:"created_by"`
 }

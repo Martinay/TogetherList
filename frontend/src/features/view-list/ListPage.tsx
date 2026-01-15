@@ -2,26 +2,21 @@ import { useState, useEffect, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import AddItemForm from './AddItemForm'
-
-interface Item {
-    id: string
-    title: string
-    completed: boolean
-    assigned_to?: string
-}
-
-interface ListState {
-    name: string
-    participants: string[]
-    items: Record<string, Item>
-}
+import IdentityPicker from './IdentityPicker'
+import Greeting from './Greeting'
+import { ListItem } from './ListItem'
+import { useUserIdentity } from './useUserIdentity'
+import type { ListState } from './types'
 
 function ListPage() {
     const { id } = useParams<{ id: string }>()
-    const { t } = useTranslation()
+    const { t, i18n } = useTranslation()
     const [listState, setListState] = useState<ListState | null>(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
+
+    // Per-list identity management
+    const { selectedName, selectName, clearName } = useUserIdentity(id || '')
 
     const fetchList = useCallback(async () => {
         if (!id) return
@@ -53,6 +48,10 @@ function ListPage() {
         fetchList()
     }
 
+    const handleIdentitySelect = (name: string) => {
+        selectName(name)
+    }
+
     if (loading) {
         return (
             <div className="list-page">
@@ -74,10 +73,21 @@ function ListPage() {
         )
     }
 
+    // Show identity picker if no name is set and participants are available
+    if (!selectedName && listState?.participants && listState.participants.length > 0) {
+        return (
+            <IdentityPicker
+                participants={listState.participants}
+                onSelect={handleIdentitySelect}
+            />
+        )
+    }
+
     const items = listState?.items ? Object.values(listState.items) : []
 
     return (
         <div className="list-page">
+            <Greeting name={selectedName!} onClick={clearName} />
             <header className="list-page__header">
                 <h1 className="list-page__title">
                     {listState?.name || 'Shared List'}
@@ -89,7 +99,9 @@ function ListPage() {
                 )}
             </header>
 
-            <AddItemForm listId={id!} onItemAdded={handleItemAdded} />
+            {selectedName && (
+                <AddItemForm listId={id!} createdBy={selectedName} onItemAdded={handleItemAdded} />
+            )}
 
             {items.length === 0 ? (
                 <div className="list-page__empty">
@@ -98,12 +110,11 @@ function ListPage() {
             ) : (
                 <div className="list-page__items">
                     {items.map((item) => (
-                        <div
+                        <ListItem
                             key={item.id}
-                            className={`list-page__item ${item.completed ? 'list-page__item--completed' : ''}`}
-                        >
-                            <span className="list-page__item-title">{item.title}</span>
-                        </div>
+                            item={item}
+                            locale={i18n.language}
+                        />
                     ))}
                 </div>
             )}

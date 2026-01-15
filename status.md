@@ -61,6 +61,7 @@
 - [x] **REQ-0002: List Creation** -> Wizard UI + backend API with event persistence
 - [x] **0010: Implement Frontend Routing** -> `docs/tasks/0010_implement_frontend_routing.md`
 - [x] **REQ-0006: Item Creation** -> Add item form + backend API with ItemAdded event
+- [x] **REQ-0005: Identity Persistence** -> Per-list LocalStorage with `IdentityPicker` component
 
 ## Current Recommendation
 Suggested execution order:

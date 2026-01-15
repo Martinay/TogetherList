@@ -31,6 +31,19 @@
             "button": "Add",
             "adding": "Adding..."
         },
+        "itemDetails": {
+            "createdBy": "Created by",
+            "createdAt": "Created on"
+        },
+        "greeting": {
+            "hello": "Hi, ",
+            "suffix": "!",
+            "switchHint": "(Click to switch user)"
+        },
         "error": "Failed to load list"
+    },
+    "identity": {
+        "title": "Who are you?",
+        "subtitle": "Select your name to continue"
     }
 }

@@ -13,7 +13,8 @@ import (
 
 // AddItemRequest represents the incoming request body.
 type AddItemRequest struct {
-	Title string `json:"title"`
+	Title     string `json:"title"`
+	CreatedBy string `json:"createdBy"`
 }
 
 // AddItemResponse represents the response body.
@@ -50,6 +51,12 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	createdBy := strings.TrimSpace(req.CreatedBy)
+	if createdBy == "" {
+		http.Error(w, "CreatedBy is required", http.StatusBadRequest)
+		return
+	}
+
 	// Generate new item ID
 	itemID := uuid.New().String()
 
@@ -60,8 +67,9 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		Type:      events.EventTypeItemAdded,
 		Timestamp: time.Now().UTC(),
 		Payload: events.ItemAddedPayload{
-			ItemID: itemID,
-			Title:  title,
+			ItemID:    itemID,
+			Title:     title,
+			CreatedBy: createdBy,
 		},
 	}
 

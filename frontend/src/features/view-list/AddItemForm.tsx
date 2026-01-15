@@ -3,10 +3,11 @@ import { useTranslation } from 'react-i18next'
 
 interface AddItemFormProps {
     listId: string
+    createdBy: string
     onItemAdded: () => void
 }
 
-function AddItemForm({ listId, onItemAdded }: AddItemFormProps) {
+function AddItemForm({ listId, createdBy, onItemAdded }: AddItemFormProps) {
     const { t } = useTranslation()
     const [title, setTitle] = useState('')
     const [isAdding, setIsAdding] = useState(false)
@@ -24,7 +25,7 @@ function AddItemForm({ listId, onItemAdded }: AddItemFormProps) {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ title: trimmedTitle }),
+                body: JSON.stringify({ title: trimmedTitle, createdBy }),
             })
 
             if (response.ok) {

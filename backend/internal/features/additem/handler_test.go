@@ -29,7 +29,7 @@ func TestHandler_Success(t *testing.T) {
 		t.Fatalf("failed to create list dir: %v", err)
 	}
 
-	body := bytes.NewBufferString(`{"title":"Buy groceries"}`)
+	body := bytes.NewBufferString(`{"title":"Buy groceries","createdBy":"Alice"}`)
 	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/"+listID+"/items", body)
 	req.Header.Set("Content-Type", "application/json")
 
@@ -64,7 +64,7 @@ func TestHandler_Success(t *testing.T) {
 }
 
 func TestHandler_EmptyTitle(t *testing.T) {
-	body := bytes.NewBufferString(`{"title":""}`)
+	body := bytes.NewBufferString(`{"title":"","createdBy":"Alice"}`)
 	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/test-list/items", body)
 	req.Header.Set("Content-Type", "application/json")
 
@@ -77,7 +77,7 @@ func TestHandler_EmptyTitle(t *testing.T) {
 }
 
 func TestHandler_WhitespaceOnlyTitle(t *testing.T) {
-	body := bytes.NewBufferString(`{"title":"   "}`)
+	body := bytes.NewBufferString(`{"title":"   ","createdBy":"Alice"}`)
 	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/test-list/items", body)
 	req.Header.Set("Content-Type", "application/json")
 
@@ -103,6 +103,32 @@ func TestHandler_MethodNotAllowed(t *testing.T) {
 func TestHandler_InvalidJSON(t *testing.T) {
 	body := bytes.NewBufferString(`{invalid json}`)
 	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/test-list/items", body)
+
+	rr := httptest.NewRecorder()
+	Handler(rr, req)
+
+	if rr.Code != http.StatusBadRequest {
+		t.Errorf("expected status %d, got %d", http.StatusBadRequest, rr.Code)
+	}
+}
+
+func TestHandler_EmptyCreatedBy(t *testing.T) {
+	body := bytes.NewBufferString(`{"title":"Test item","createdBy":""}`)
+	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/test-list/items", body)
+	req.Header.Set("Content-Type", "application/json")
+
+	rr := httptest.NewRecorder()
+	Handler(rr, req)
+
+	if rr.Code != http.StatusBadRequest {
+		t.Errorf("expected status %d, got %d", http.StatusBadRequest, rr.Code)
+	}
+}
+
+func TestHandler_MissingCreatedBy(t *testing.T) {
+	body := bytes.NewBufferString(`{"title":"Test item"}`)
+	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/test-list/items", body)
+	req.Header.Set("Content-Type", "application/json")
 
 	rr := httptest.NewRecorder()
 	Handler(rr, req)

@@ -4,12 +4,15 @@ package events
 import (
 	"encoding/json"
 	"fmt"
+	"time"
 )
 
 // ItemState represents the current state of a list item.
 type ItemState struct {
 	ID         string `json:"id"`
 	Title      string `json:"title"`
+	CreatedBy  string `json:"created_by"`
+	CreatedAt  string `json:"created_at"`
 	AssignedTo string `json:"assigned_to,omitempty"`
 	Completed  bool   `json:"completed"`
 }
@@ -61,6 +64,8 @@ func applyEvent(state *ListState, event Event) error {
 		state.Items[payload.ItemID] = &ItemState{
 			ID:        payload.ItemID,
 			Title:     payload.Title,
+			CreatedBy: payload.CreatedBy,
+			CreatedAt: event.Timestamp.Format(time.RFC3339),
 			Completed: false,
 		}
 	default:
