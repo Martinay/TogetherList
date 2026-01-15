@@ -5,6 +5,7 @@ import AddItemForm from './AddItemForm'
 import IdentityPicker from './IdentityPicker'
 import Greeting from './Greeting'
 import { ListItem } from './ListItem'
+import ShareButton from './ShareButton'
 import { useUserIdentity } from './useUserIdentity'
 import type { ListState } from './types'
 
@@ -89,9 +90,12 @@ function ListPage() {
         <div className="list-page">
             <Greeting name={selectedName!} onClick={clearName} />
             <header className="list-page__header">
-                <h1 className="list-page__title">
-                    {listState?.name || 'Shared List'}
-                </h1>
+                <div className="list-page__header-top">
+                    <h1 className="list-page__title">
+                        {listState?.name || 'Shared List'}
+                    </h1>
+                    <ShareButton listId={id!} />
+                </div>
                 {listState?.participants && listState.participants.length > 0 && (
                     <p className="list-page__participants">
                         {listState.participants.join(', ')}

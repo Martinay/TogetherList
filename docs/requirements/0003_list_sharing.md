@@ -1,11 +1,11 @@
 ---
 id: REQ-0003
-status: Proposed
+status: Implemented
 type: Functional
 priority: P0
 source: docs/vision.md
 created: 2026-01-09
-updated: 2026-01-09
+updated: 2026-01-15
 links:
   adr: []
   requirements: [REQ-0002]
@@ -41,6 +41,12 @@ The trade-off is reduced access control, which is acceptable for this use case.
 - Given a user has a valid list URL
 - When the user navigates to `/list/<uuid>` in their browser
 - Then the list page loads, displaying all items and allowing interaction
+
+### Share Button
+
+- Given a user is viewing a list
+- When the user clicks the "Share" button in the header
+- Then the browser's native share dialog opens (if available) OR the list URL is copied to the clipboard with "Copied!" feedback
 
 ## Verification
 

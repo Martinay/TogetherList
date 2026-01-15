@@ -45,5 +45,10 @@
     "identity": {
         "title": "Who are you?",
         "subtitle": "Select your name to continue"
+    },
+    "share": {
+        "button": "Share",
+        "copied": "Copied!",
+        "message": "Join my shared list"
     }
 }
