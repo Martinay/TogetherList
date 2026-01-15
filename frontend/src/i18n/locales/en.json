@@ -19,7 +19,8 @@
         "step2Create": "Create List",
         "creating": "Creating...",
         "back": "Back",
-        "you": "You"
+        "you": "You",
+        "duplicateError": "This name has already been added"
     },
     "list": {
         "placeholder": "List page coming soon...",

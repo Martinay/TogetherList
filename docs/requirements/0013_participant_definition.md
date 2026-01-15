@@ -56,7 +56,7 @@ Upfront participant definition:
 
 ## Dependencies and Relationships
 
-- Related requirements: REQ-0002 (List Creation), REQ-0004 (User Identity), REQ-0008 (Item Assignment)
+- Related requirements: REQ-0002 (List Creation), REQ-0004 (User Identity), REQ-0008 (Item Assignment), REQ-0014 (Unique Names)
 - Constraining ADRs: None
 - Impacted components: List creation wizard, participant storage, API
 

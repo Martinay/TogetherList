@@ -52,6 +52,16 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		participants = append([]string{req.Creator}, participants...)
 	}
 
+	// Validate no duplicate participants
+	seen := make(map[string]bool)
+	for _, p := range participants {
+		if seen[p] {
+			http.Error(w, "Duplicate participant names are not allowed", http.StatusBadRequest)
+			return
+		}
+		seen[p] = true
+	}
+
 	// Generate new list ID
 	listID := uuid.New().String()
 

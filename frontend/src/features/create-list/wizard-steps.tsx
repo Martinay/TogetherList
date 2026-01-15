@@ -59,13 +59,25 @@ export function AddParticipantsStep({ creatorName, onBack, onCreate, isCreating 
     const { t } = useTranslation()
     const [participants, setParticipants] = useState<string[]>([])
     const [newParticipant, setNewParticipant] = useState('')
+    const [error, setError] = useState('')
+
+    const isDuplicate = (name: string): boolean => {
+        const trimmed = name.trim()
+        return trimmed === creatorName || participants.includes(trimmed)
+    }
 
     const handleAdd = () => {
         const trimmed = newParticipant.trim()
-        if (trimmed && !participants.includes(trimmed) && trimmed !== creatorName) {
-            setParticipants([...participants, trimmed])
-            setNewParticipant('')
+        if (!trimmed) return
+
+        if (isDuplicate(trimmed)) {
+            setError(t('createList.duplicateError'))
+            return
         }
+
+        setParticipants([...participants, trimmed])
+        setNewParticipant('')
+        setError('')
     }
 
     const handleRemove = (name: string) => {
@@ -117,10 +129,13 @@ export function AddParticipantsStep({ creatorName, onBack, onCreate, isCreating 
                 <input
                     id="participant-name-input"
                     type="text"
-                    className="wizard__input"
+                    className={`wizard__input${error ? ' wizard__input--error' : ''}`}
                     placeholder={t('createList.step2Placeholder')}
                     value={newParticipant}
-                    onChange={(e) => setNewParticipant(e.target.value)}
+                    onChange={(e) => {
+                        setNewParticipant(e.target.value)
+                        if (error) setError('')
+                    }}
                     onKeyDown={handleKeyDown}
                 />
                 <button
@@ -133,6 +148,7 @@ export function AddParticipantsStep({ creatorName, onBack, onCreate, isCreating 
                     {t('createList.step2Add')}
                 </button>
             </div>
+            {error && <p className="wizard__error">{error}</p>}
 
             <div className="wizard__actions">
                 <button

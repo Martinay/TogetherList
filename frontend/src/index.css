@@ -386,6 +386,20 @@ body {
   cursor: not-allowed;
 }
 
+.wizard__input--error {
+  border-color: #ef4444;
+}
+
+.wizard__input--error:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+.wizard__error {
+  font-size: 0.875rem;
+  color: #ef4444;
+  margin-top: calc(var(--spacing-xs) * -1);
+}
+
 .wizard__actions {
   display: flex;
   gap: var(--spacing-sm);

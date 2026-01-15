@@ -59,6 +59,13 @@ func TestHandler(t *testing.T) {
 			body:       CreateListRequest{Creator: "Alice"},
 			wantStatus: http.StatusMethodNotAllowed,
 		},
+		{
+			name:           "duplicate participants",
+			method:         http.MethodPost,
+			body:           CreateListRequest{Creator: "Alice", Participants: []string{"Bob", "Bob"}},
+			wantStatus:     http.StatusBadRequest,
+			wantErrMessage: "Duplicate participant names are not allowed",
+		},
 	}
 
 	for _, tt := range tests {
