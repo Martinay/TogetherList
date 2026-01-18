@@ -58,8 +58,11 @@ function CreateListPage() {
     }
 
     return (
-        <main className="wizard">
-            <div className="wizard__content">
+        <main className="flex-1 flex flex-col items-center justify-center p-8 relative overflow-hidden">
+            {/* Radial glow background */}
+            <div className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-[radial-gradient(ellipse_at_center,var(--color-accent-glow)_0%,transparent_50%)] opacity-60 animate-pulse" />
+
+            <div className="relative z-10 w-full max-w-[400px]">
                 <AnimatePresence mode="wait">
                     {step === 'name' && (
                         <EnterNameStep key="name" onNext={handleNameSubmit} />

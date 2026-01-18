@@ -41,12 +41,12 @@ function ShareButton({ listId }: ShareButtonProps) {
 
     return (
         <button
-            className="share-button"
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-accent-primary bg-transparent border border-accent-primary rounded-full cursor-pointer transition-all duration-150 hover:bg-accent-primary hover:text-white hover:-translate-y-0.5 active:translate-y-0"
             onClick={handleShare}
             aria-label={t('share.button')}
         >
             <svg
-                className="share-button__icon"
+                className="w-4 h-4"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -60,7 +60,7 @@ function ShareButton({ listId }: ShareButtonProps) {
                 <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
                 <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
             </svg>
-            <span className="share-button__text">
+            <span className="whitespace-nowrap">
                 {copied ? t('share.copied') : t('share.button')}
             </span>
         </button>

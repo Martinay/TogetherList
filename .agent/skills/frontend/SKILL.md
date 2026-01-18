@@ -34,3 +34,8 @@ All pages must meet these thresholds:
 - **LCP** (Largest Contentful Paint): < 2.5 seconds
 - **FCP** (First Contentful Paint): < 1.8 seconds
 - **Initial Bundle size**: ≤ 200 KB (compressed)
+
+### 5. Tooling
+- **Package Manager**: Use **Bun** for all package operations (`bun install`, `bun add`, `bun run`).
+- **Runtime**: Use Bun as the runtime environment.
+

@@ -77,14 +77,14 @@ export function ListItem({ item, listId, locale, onItemUpdated }: ListItemProps)
 
     return (
         <div
-            className={`list-page__item list-page__item--expandable ${item.completed ? 'list-page__item--completed' : ''} ${isExpanded ? 'list-page__item--expanded' : ''}`}
+            className={`flex flex-col bg-bg-card rounded-xl border border-border-light shadow-[0_1px_3px_rgba(0,0,0,0.02)] overflow-hidden cursor-pointer hover:shadow-[0_4px_12px_rgba(0,0,0,0.05)] ${item.completed ? 'line-through' : ''}`}
         >
-            <div className="list-page__item-header">
+            <div className="flex items-center gap-4 p-4 w-full bg-transparent cursor-pointer text-left transition-colors duration-150 hover:bg-[rgba(0,0,0,0.02)]">
                 {isEditing ? (
                     <input
                         ref={inputRef}
                         type="text"
-                        className="list-page__item-edit-input"
+                        className="flex-1 px-4 py-2 text-base font-[inherit] bg-bg-card border border-accent-primary rounded-lg text-text-primary outline-none shadow-[0_0_0_3px_var(--color-accent-glow)]"
                         value={editTitle}
                         onChange={(e) => setEditTitle(e.target.value)}
                         onKeyDown={handleKeyDown}
@@ -95,18 +95,20 @@ export function ListItem({ item, listId, locale, onItemUpdated }: ListItemProps)
                     <>
                         <button
                             type="button"
-                            className="list-page__item-title-button"
+                            className="flex-1 flex items-center gap-4 bg-transparent border-none cursor-pointer text-left font-[inherit] text-base text-text-primary p-0"
                             onClick={() => setIsExpanded(!isExpanded)}
                             aria-expanded={isExpanded}
                         >
-                            <span className="list-page__item-title">{item.title}</span>
-                            <span className="list-page__item-chevron" aria-hidden="true">
+                            <span className={`flex-1 text-base ${item.completed ? 'line-through text-text-secondary' : 'text-text-primary'}`}>
+                                {item.title}
+                            </span>
+                            <span className={`text-xs text-text-secondary transition-transform duration-250 ${isExpanded ? 'rotate-180' : ''}`} aria-hidden="true">
                                 {isExpanded ? '▲' : '▼'}
                             </span>
                         </button>
                         <button
                             type="button"
-                            className="list-page__item-edit-button"
+                            className="bg-transparent border-none cursor-pointer p-1 text-base opacity-60 transition-all duration-150 hover:opacity-100 hover:scale-110"
                             onClick={startEditing}
                             aria-label={t('list.editItem.button')}
                             title={t('list.editItem.button')}
@@ -116,17 +118,16 @@ export function ListItem({ item, listId, locale, onItemUpdated }: ListItemProps)
                     </>
                 )}
             </div>
-            <div className={`list-page__item-details ${isExpanded ? 'list-page__item-details--visible' : ''}`}>
-                <p className="list-page__item-meta">
-                    <span className="list-page__item-meta-label">{t('list.itemDetails.createdBy')}</span>
-                    <span className="list-page__item-meta-value">{item.created_by}</span>
+            <div className={`overflow-hidden transition-all duration-250 bg-bg-secondary border-t ${isExpanded ? 'max-h-[200px] opacity-100 p-4 border-t-border-light' : 'max-h-0 opacity-0 px-4 py-0 border-t-transparent'}`}>
+                <p className="flex gap-2 items-baseline m-0 text-sm">
+                    <span className="text-text-secondary">{t('list.itemDetails.createdBy')}</span>
+                    <span className="text-text-primary font-medium">{item.created_by}</span>
                 </p>
-                <p className="list-page__item-meta">
-                    <span className="list-page__item-meta-label">{t('list.itemDetails.createdAt')}</span>
-                    <span className="list-page__item-meta-value">{formatTimestamp(item.created_at, locale)}</span>
+                <p className="flex gap-2 items-baseline mt-2 text-sm">
+                    <span className="text-text-secondary">{t('list.itemDetails.createdAt')}</span>
+                    <span className="text-text-primary font-medium">{formatTimestamp(item.created_at, locale)}</span>
                 </p>
             </div>
         </div>
     )
 }
-

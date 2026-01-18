@@ -45,9 +45,9 @@ function ListPage() {
 
     if (loading) {
         return (
-            <div className="list-page">
-                <div className="list-page__loading">
-                    <div className="list-page__spinner" />
+            <div className="flex-1 flex flex-col items-center justify-content p-8 max-w-[600px] mx-auto w-full">
+                <div className="flex flex-col items-center justify-center py-12 text-text-secondary">
+                    <div className="w-8 h-8 border-3 border-bg-secondary border-t-accent-primary rounded-full animate-spin mb-4" />
                     <span>{t('list.loading')}</span>
                 </div>
             </div>
@@ -56,8 +56,8 @@ function ListPage() {
 
     if (error) {
         return (
-            <div className="list-page">
-                <div className="list-page__error">
+            <div className="flex-1 flex flex-col items-center justify-center p-8 max-w-[600px] mx-auto w-full">
+                <div className="text-center p-8 text-error bg-error-light rounded-xl">
                     {t('list.error')}
                 </div>
             </div>
@@ -77,17 +77,17 @@ function ListPage() {
     const items = listState?.items ? Object.values(listState.items) : []
 
     return (
-        <div className="list-page">
+        <div className="flex-1 flex flex-col max-w-[600px] mx-auto w-full p-8">
             <Greeting name={selectedName!} onClick={clearName} />
-            <header className="list-page__header">
-                <div className="list-page__header-top">
-                    <h1 className="list-page__title">
+            <header className="text-center mb-8">
+                <div className="flex items-center justify-center gap-4 flex-wrap">
+                    <h1 className="text-[clamp(1.5rem,4vw,2rem)] font-bold bg-gradient-to-br from-accent-primary to-accent-secondary bg-clip-text text-transparent mb-2">
                         {listState?.name || 'Shared List'}
                     </h1>
                     <ShareButton listId={id!} />
                 </div>
                 {listState?.participants && listState.participants.length > 0 && (
-                    <p className="list-page__participants">
+                    <p className="text-sm text-text-secondary">
                         {listState.participants.join(', ')}
                     </p>
                 )}
@@ -98,11 +98,11 @@ function ListPage() {
             )}
 
             {items.length === 0 ? (
-                <div className="list-page__empty">
+                <div className="text-center py-12 text-text-secondary text-base">
                     {t('list.emptyList')}
                 </div>
             ) : (
-                <div className="list-page__items">
+                <div className="flex flex-col gap-2">
                     {items.map((item) => (
                         <ListItem
                             key={item.id}
