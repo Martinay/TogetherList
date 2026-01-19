@@ -20,7 +20,7 @@ RUN bun run build
 # ==============================================================================
 # Stage 2: Build Backend
 # ==============================================================================
-FROM golang:1.22-alpine AS backend-build
+FROM golang:1.25-alpine AS backend-build
 
 WORKDIR /app/backend
 
