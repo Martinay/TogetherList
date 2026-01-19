@@ -25,7 +25,6 @@ FROM golang:1.25-alpine AS backend-build
 WORKDIR /app/backend
 
 # Install build dependencies
-RUN apk add --no-cache git
 
 # Copy go mod files
 COPY backend/go.mod backend/go.sum ./
@@ -48,9 +47,6 @@ FROM alpine:3.19
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 WORKDIR /app
-
-# Install ca-certificates for HTTPS requests
-RUN apk add --no-cache ca-certificates
 
 # Copy binary from backend build
 COPY --from=backend-build /server /app/server
