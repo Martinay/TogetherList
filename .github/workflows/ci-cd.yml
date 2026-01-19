@@ -59,7 +59,6 @@ jobs:
         run: go install github.com/securego/gosec/v2/cmd/gosec@latest
 
       - name: Run security scan (gosec)
-        # Removed '|| true' to enforce strict security checks
         run: gosec -fmt=json -out=gosec-report.json ./...
 
       - name: Upload security report
@@ -109,8 +108,7 @@ jobs:
           path: frontend/coverage/
 
       - name: Security audit
-        # Removed '|| true' to enforce strict security checks
-        run: bun pm audit
+        run: bun pm scan
 
   # ============================================================================
   # Docker Build & Push to GitHub Container Registry
