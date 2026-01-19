@@ -37,13 +37,13 @@ func NewFileEventStoreWithDir(dataDir string) *FileEventStore {
 
 // eventFilePath returns the path to the events file for a list.
 func (s *FileEventStore) eventFilePath(listID string) string {
-	return filepath.Join(s.dataDir, listID, "events.jsonl")
+	return filepath.Join(s.dataDir, filepath.Base(listID), "events.jsonl")
 }
 
 // ensureDir creates the directory for a list if it doesn't exist.
 func (s *FileEventStore) ensureDir(listID string) error {
 	dir := filepath.Join(s.dataDir, listID)
-	return os.MkdirAll(dir, 0755)
+	return os.MkdirAll(dir, 0750)
 }
 
 // Append adds a new event to the store for a specific list.
@@ -54,7 +54,7 @@ func (s *FileEventStore) Append(listID string, event Event) error {
 	}
 
 	filePath := s.eventFilePath(listID)
-	file, err := os.OpenFile(filePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	file, err := os.OpenFile(filePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0600) // #nosec G304
 	if err != nil {
 		return err
 	}
@@ -74,7 +74,7 @@ func (s *FileEventStore) Append(listID string, event Event) error {
 // ReadAll returns all events from the store for a specific list.
 func (s *FileEventStore) ReadAll(listID string) ([]Event, error) {
 	filePath := s.eventFilePath(listID)
-	file, err := os.Open(filePath)
+	file, err := os.Open(filePath) // #nosec G304
 	if err != nil {
 		if os.IsNotExist(err) {
 			return []Event{}, nil

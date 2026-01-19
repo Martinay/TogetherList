@@ -21,3 +21,12 @@ Implement **Vertical Slice Architecture** (Feature Folders).
 ### 2. Best Practices
 - Follow standard Go project layout where applicable (e.g., `cmd/`, `internal/`).
 - Use `internal/` to hide private packages.
+
+### 3. Quality Assurance
+- **Static Analysis**: All code must pass `staticcheck` and `go vet`.
+- **Security**: All code must pass `gosec` security scanning.
+- **Testing**: Maintain high test coverage with `-race` detection enabled.
+- **Automation**: Use the provided script to run all checks locally:
+  ```bash
+  .agent/skills/backend/scripts/check.sh
+  ```

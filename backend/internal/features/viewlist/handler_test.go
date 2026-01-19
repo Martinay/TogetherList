@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"os"
-	"path/filepath"
 	"testing"
 	"time"
 
@@ -153,12 +152,5 @@ func TestHandler_MethodNotAllowed(t *testing.T) {
 
 	if rr.Code != http.StatusMethodNotAllowed {
 		t.Errorf("expected status %d, got %d", http.StatusMethodNotAllowed, rr.Code)
-	}
-}
-
-func setupTestData(t *testing.T, tempDir, listID string) {
-	listDir := filepath.Join(tempDir, listID)
-	if err := os.MkdirAll(listDir, 0755); err != nil {
-		t.Fatalf("failed to create list dir: %v", err)
 	}
 }
