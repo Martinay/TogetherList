@@ -18,7 +18,7 @@ describe('CreateListPage', () => {
         mockNavigate.mockClear()
         localStorage.clear()
         // Mock fetch for API calls
-        global.fetch = vi.fn().mockResolvedValue({
+        globalThis.fetch = vi.fn().mockResolvedValue({
             ok: true,
             json: () => Promise.resolve({ listId: 'test-uuid-1234-5678-9abc-def012345678' }),
         })
@@ -138,7 +138,7 @@ describe('CreateListPage', () => {
         })
 
         // Verify fetch was called with correct arguments
-        expect(global.fetch).toHaveBeenCalledWith(
+        expect(globalThis.fetch).toHaveBeenCalledWith(
             expect.stringContaining('/api/v1/list/create'),
             expect.objectContaining({
                 method: 'POST',
@@ -169,5 +169,85 @@ describe('CreateListPage', () => {
         await waitFor(() => {
             expect(screen.getByText("What's your name?")).toBeInTheDocument()
         })
+    })
+
+    it('shows error when adding duplicate participant name', async () => {
+        render(
+            <BrowserRouter>
+                <CreateListPage />
+            </BrowserRouter>
+        )
+
+        // Go to step 2
+        fireEvent.change(screen.getByPlaceholderText('Enter your name'), { target: { value: 'Alice' } })
+        fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+
+        await waitFor(() => {
+            expect(screen.getByText('Who else is joining?')).toBeInTheDocument()
+        })
+
+        // Add a participant
+        const participantInput = screen.getByPlaceholderText('Add a participant')
+        fireEvent.change(participantInput, { target: { value: 'Bob' } })
+        fireEvent.click(screen.getByRole('button', { name: /add/i }))
+
+        expect(screen.getByText('Bob')).toBeInTheDocument()
+
+        // Try to add the same participant again
+        fireEvent.change(participantInput, { target: { value: 'Bob' } })
+        fireEvent.click(screen.getByRole('button', { name: /add/i }))
+
+        expect(screen.getByText('This name has already been added')).toBeInTheDocument()
+    })
+
+    it('shows error when adding participant with same name as creator', async () => {
+        render(
+            <BrowserRouter>
+                <CreateListPage />
+            </BrowserRouter>
+        )
+
+        // Go to step 2 with creator name "Alice"
+        fireEvent.change(screen.getByPlaceholderText('Enter your name'), { target: { value: 'Alice' } })
+        fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+
+        await waitFor(() => {
+            expect(screen.getByText('Who else is joining?')).toBeInTheDocument()
+        })
+
+        // Try to add participant with same name as creator
+        const participantInput = screen.getByPlaceholderText('Add a participant')
+        fireEvent.change(participantInput, { target: { value: 'Alice' } })
+        fireEvent.click(screen.getByRole('button', { name: /add/i }))
+
+        expect(screen.getByText('This name has already been added')).toBeInTheDocument()
+    })
+
+    it('clears error when input changes', async () => {
+        render(
+            <BrowserRouter>
+                <CreateListPage />
+            </BrowserRouter>
+        )
+
+        // Go to step 2
+        fireEvent.change(screen.getByPlaceholderText('Enter your name'), { target: { value: 'Alice' } })
+        fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+
+        await waitFor(() => {
+            expect(screen.getByText('Who else is joining?')).toBeInTheDocument()
+        })
+
+        // Try to add participant with same name as creator to trigger error
+        const participantInput = screen.getByPlaceholderText('Add a participant')
+        fireEvent.change(participantInput, { target: { value: 'Alice' } })
+        fireEvent.click(screen.getByRole('button', { name: /add/i }))
+
+        expect(screen.getByText('This name has already been added')).toBeInTheDocument()
+
+        // Modify input - error should clear
+        fireEvent.change(participantInput, { target: { value: 'Bob' } })
+
+        expect(screen.queryByText('This name has already been added')).not.toBeInTheDocument()
     })
 })

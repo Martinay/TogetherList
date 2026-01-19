@@ -21,3 +21,7 @@ You MUST read the relevant skill when working in that domain.
 ## Documentation
 * [Vision](docs/vision.md): Key product ideas.
 * [Tasks](docs/tasks/): Folder containing active and future agent tasks.
+
+## Proactive Actions
+* Update or create requirements in case something changes without the user asking for doing that.
+* Create ADRs proactive in case you see a gap.

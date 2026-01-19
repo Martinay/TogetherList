@@ -1,6 +1,6 @@
 ---
 id: REQ-0014
-status: Proposed
+status: Implemented
 type: Constraint
 priority: P1
 source: User feedback (2026-01-15)
