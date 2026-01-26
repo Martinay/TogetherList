@@ -191,9 +191,9 @@ jobs:
 
       - name: Deploy infrastructure with Bicep
         run: |
-          az deployment sub create \
+          az deployment group create \
             --name "deploy-${{ github.sha }}" \
-            --location ${{ env.AZURE_LOCATION }} \
+            --resource-group togetherlist-rg \
             --template-file infra/main.bicep \
             --parameters \
               containerImage=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} \

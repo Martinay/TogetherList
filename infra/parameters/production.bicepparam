@@ -3,7 +3,6 @@
 
 using '../main.bicep'
 
-param resourceGroupName = 'togetherlist-rg'
 param baseName = 'togetherlist'
 param location = 'westeurope'
 param environment = 'production'
