@@ -9,6 +9,7 @@ env:
   BUN_VERSION: "latest"
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  AZURE_LOCATION: westeurope
 
 jobs:
   # ============================================================================
@@ -111,6 +112,34 @@ jobs:
         run: bun pm scan
 
   # ============================================================================
+  # Infrastructure Validation - Bicep syntax and linting
+  # ============================================================================
+  infra-validate:
+    name: Validate Infrastructure
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Azure CLI
+        uses: azure/cli@v2
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az version
+
+      - name: Validate Bicep files
+        run: |
+          az bicep build --file infra/main.bicep --stdout > /dev/null
+          echo "✓ Bicep syntax validation passed"
+
+      - name: Lint Bicep files
+        run: |
+          az bicep lint --file infra/main.bicep
+          echo "✓ Bicep linting passed"
+
+  # ============================================================================
   # Docker Build & Push to GitHub Container Registry
   # ============================================================================
   docker-build-push:
@@ -155,19 +184,26 @@ jobs:
   deploy:
     name: Deploy to Azure
     runs-on: ubuntu-latest
-    needs: docker-build-push
+    needs: [docker-build-push, infra-validate]
     environment: production
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Log in to Azure
         uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Deploy to Container Apps
-        # Replaced secrets with vars for non-sensitive config
+      - name: Deploy infrastructure with Bicep
         run: |
-          az containerapp update \
-            --name ${{ vars.AZURE_CONTAINER_APP_NAME }} \
-            --resource-group ${{ vars.AZURE_RESOURCE_GROUP }} \
-            --image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          az deployment sub create \
+            --name "deploy-${{ github.sha }}" \
+            --location ${{ env.AZURE_LOCATION }} \
+            --template-file infra/main.bicep \
+            --parameters \
+              containerImage=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} \
+              registryUsername=${{ github.actor }} \
+              registryPassword=${{ secrets.GHCR_PAT }}
+

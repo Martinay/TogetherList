@@ -34,10 +34,9 @@ Navigate to **Repository → Settings → Secrets and variables → Actions** an
 | Secret | Purpose | How to Obtain |
 |--------|---------|---------------|
 | `AZURE_CREDENTIALS` | Azure service principal JSON | See below |
-| `AZURE_CONTAINER_APP_NAME` | Container App name | From Azure portal |
-| `AZURE_RESOURCE_GROUP` | Resource group name | From Azure portal |
+| `GHCR_PAT` | GitHub PAT for GHCR registry access | GitHub → Settings → Developer settings → PATs |
 
-> **Note**: `GITHUB_TOKEN` is automatically provided by GitHub Actions for GHCR authentication.
+> **Note**: `GITHUB_TOKEN` is automatically provided by GitHub Actions for GHCR push. `GHCR_PAT` is needed for Azure to pull images. Resource group name is embedded in `infra/main.bicep`.
 
 ### Creating Azure Credentials
 
@@ -67,46 +66,68 @@ brew install azure-cli  # macOS
 az login
 ```
 
-### Full Setup Script
+### Initial Setup (One-time)
+
+Infrastructure is managed as code using Azure Bicep (see [ADR-0024](./adr/0024_infrastructure_as_code.md)).
 
 ```bash
-# Variables
+# 1. Create resource group (this is the only manual step)
 RESOURCE_GROUP="togetherlist-rg"
 LOCATION="westeurope"
-CONTAINER_APP_ENV="togetherlist-env"
-CONTAINER_APP_NAME="togetherlist"
-GHCR_IMAGE="ghcr.io/YOUR_GITHUB_USERNAME/shared-list:latest"
-
-# Create resource group
 az group create --name $RESOURCE_GROUP --location $LOCATION
 
-# Create Container Apps environment
-az containerapp env create \
-  --name $CONTAINER_APP_ENV \
-  --resource-group $RESOURCE_GROUP \
-  --location $LOCATION
-
-# Create Container App with GHCR image
-az containerapp create \
-  --name $CONTAINER_APP_NAME \
-  --resource-group $RESOURCE_GROUP \
-  --environment $CONTAINER_APP_ENV \
-  --image $GHCR_IMAGE \
-  --target-port 8080 \
-  --ingress external \
-  --registry-server ghcr.io \
-  --registry-username YOUR_GITHUB_USERNAME \
-  --registry-password YOUR_GITHUB_PAT
-
-# Create service principal for GitHub Actions
+# 2. Create service principal for GitHub Actions
 az ad sp create-for-rbac \
   --name "togetherlist-cicd" \
   --role contributor \
   --scopes /subscriptions/$(az account show --query id -o tsv) \
   --sdk-auth
+
+# 3. Create GitHub PAT with read:packages scope for Azure to pull from GHCR
+# Go to: GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
+# Create token with: read:packages scope
+```
+
+### Deploy Infrastructure Manually (Optional)
+
+The CI/CD pipeline handles deployments automatically. To deploy manually:
+
+```bash
+# Deploy using Bicep (creates resource group automatically)
+az deployment sub create \
+  --location westeurope \
+  --template-file infra/main.bicep \
+  --parameters \
+    containerImage=ghcr.io/YOUR_USERNAME/shared-list:latest \
+    registryUsername=YOUR_GITHUB_USERNAME \
+    registryPassword=YOUR_GITHUB_PAT
+
+# Preview changes without applying (what-if)
+az deployment sub what-if \
+  --location westeurope \
+  --template-file infra/main.bicep \
+  --parameters infra/parameters/production.bicepparam
 ```
 
 > **Note**: For GHCR access from Azure, create a GitHub Personal Access Token (PAT) with `read:packages` scope.
+
+## Infrastructure as Code
+
+The `infra/` directory contains Azure Bicep files that define all infrastructure:
+
+| File | Purpose |
+|------|---------|
+| `main.bicep` | Main orchestration file |
+| `modules/container-app-env.bicep` | Container Apps environment |
+| `modules/container-app.bicep` | Container App with ingress and scaling |
+| `parameters/production.bicepparam` | Production environment parameters |
+
+### Making Infrastructure Changes
+
+1. Modify the relevant `.bicep` file
+2. Push to the `cicd` branch
+3. The `infra-validate` job validates syntax and linting
+4. The `deploy` job applies changes to Azure
 
 ## GitHub Container Registry
 
