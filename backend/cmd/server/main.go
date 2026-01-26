@@ -23,6 +23,13 @@ func main() {
 	mux.HandleFunc("POST /api/v1/list/{id}/items", additem.Handler)
 	mux.HandleFunc("PUT /api/v1/list/{id}/items/{itemId}/title", renameitemtitle.Handler)
 
+	// Serve frontend SPA from STATIC_DIR if configured
+	staticDir := os.Getenv("STATIC_DIR")
+	if staticDir != "" {
+		mux.Handle("/", newSPAHandler(staticDir))
+		log.Printf("Serving SPA from: %s", staticDir)
+	}
+
 	// Configure CORS
 	c := cors.New(cors.Options{
 		AllowedOrigins:   []string{"http://localhost:5173", "http://localhost:3000"},
