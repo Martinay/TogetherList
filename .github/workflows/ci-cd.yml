@@ -122,13 +122,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install Azure CLI
-        uses: azure/cli@v2
-        with:
-          azcliversion: latest
-          inlineScript: |
-            az version
-
       - name: Validate Bicep files
         run: |
           az bicep build --file infra/main.bicep --stdout > /dev/null
