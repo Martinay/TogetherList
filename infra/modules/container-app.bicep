@@ -11,6 +11,9 @@ param location string
 @description('Resource ID of the Container Apps environment')
 param environmentId string
 
+@description('Name of the Container Apps environment (for certificate resource)')
+param environmentName string
+
 @description('Container image to deploy (e.g., ghcr.io/owner/repo:tag)')
 param containerImage string
 
@@ -24,8 +27,25 @@ param registryUsername string
 @secure()
 param registryPassword string
 
+@description('Custom domain for the app (leave empty to disable)')
+param customDomain string = ''
+
+@description('Allowed origins for CORS (empty array disables CORS)')
+param corsAllowedOrigins array = []
+
 @description('Tags to apply to resources')
 param tags object = {}
+
+// Managed certificate for custom domain (only created when custom domain is specified)
+resource managedCertificate 'Microsoft.App/managedEnvironments/managedCertificates@2024-03-01' = if (!empty(customDomain)) {
+  name: '${environmentName}/${name}-cert'
+  location: location
+  tags: tags
+  properties: {
+    subjectName: customDomain
+    domainControlValidation: 'CNAME'
+  }
+}
 
 resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
   name: name
@@ -39,6 +59,20 @@ resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
         targetPort: 8080
         transport: 'auto'
         allowInsecure: false
+        customDomains: !empty(customDomain) ? [
+          {
+            name: customDomain
+            certificateId: managedCertificate.id
+            bindingType: 'SniEnabled'
+          }
+        ] : []
+        corsPolicy: !empty(corsAllowedOrigins) ? {
+          allowedOrigins: corsAllowedOrigins
+          allowedMethods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS']
+          allowedHeaders: ['*']
+          allowCredentials: true
+          maxAge: 86400
+        } : null
       }
       registries: [
         {

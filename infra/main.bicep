@@ -32,6 +32,9 @@ param registryPassword string
 @description('Environment tag (e.g., production, staging)')
 param environment string = 'production'
 
+@description('Custom domain for the Container App (leave empty to disable)')
+param customDomain string = ''
+
 // ============================================================================
 // Variables
 // ============================================================================
@@ -44,6 +47,11 @@ var tags = {
 
 var envName = '${baseName}-env'
 var appName = baseName
+
+// CORS allowed origins (derived from custom domain)
+var corsAllowedOrigins = !empty(customDomain) ? [
+  'https://${customDomain}'
+] : []
 
 // ============================================================================
 // Modules
@@ -64,9 +72,12 @@ module containerApp 'modules/container-app.bicep' = {
     name: appName
     location: location
     environmentId: containerAppEnv.outputs.id
+    environmentName: containerAppEnv.outputs.name
     containerImage: containerImage
     registryUsername: registryUsername
     registryPassword: registryPassword
+    customDomain: customDomain
+    corsAllowedOrigins: corsAllowedOrigins
     tags: tags
   }
 }

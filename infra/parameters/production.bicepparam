@@ -6,8 +6,10 @@ using '../main.bicep'
 param baseName = 'togetherlist'
 param location = 'westeurope'
 param environment = 'production'
+param customDomain = 'togetherlist.ayasse.cloud'
 
 // These are overridden at deployment time via --parameters
 param containerImage = 'ghcr.io/OWNER/shared-list:latest'
 param registryUsername = 'GITHUB_USERNAME'
 param registryPassword = '' // Passed securely via CI/CD
+
