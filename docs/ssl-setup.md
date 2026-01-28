@@ -54,10 +54,10 @@ az deployment group create \
 ```
 
 This deployment:
-- Creates the Container App with the custom domain (binding disabled)
-- Creates the managed certificate for the domain
+- Creates the Container App with the custom domain registered (binding disabled)
+- Does NOT create the certificate yet (Azure requires the hostname to be registered first)
 
-### Phase 2: Enable Certificate Binding
+### Phase 2: Create Certificate and Enable Binding
 
 ```bash
 az deployment group create \
@@ -73,7 +73,8 @@ az deployment group create \
 ```
 
 This deployment:
-- Updates the Container App to use the certificate
+- Creates the managed certificate for the domain (now possible because the hostname exists)
+- Updates the Container App to bind the certificate with SNI
 - Enables SSL for the custom domain
 
 ## Subsequent Deployments

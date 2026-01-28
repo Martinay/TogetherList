@@ -39,8 +39,10 @@ param corsAllowedOrigins array = []
 @description('Tags to apply to resources')
 param tags object = {}
 
-// Managed certificate for custom domain (only created when custom domain is specified)
-resource managedCertificate 'Microsoft.App/managedEnvironments/managedCertificates@2024-03-01' = if (!empty(customDomain)) {
+// Managed certificate for custom domain
+// Only created in Phase 2 (enableCertificateBinding=true) because the hostname must be
+// registered on the container app first (Phase 1) before a certificate can be created
+resource managedCertificate 'Microsoft.App/managedEnvironments/managedCertificates@2024-03-01' = if (!empty(customDomain) && enableCertificateBinding) {
   name: '${environmentName}/${name}-cert'
   location: location
   tags: tags
