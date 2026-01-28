@@ -200,6 +200,7 @@ jobs:
             --name "deploy-${{ github.sha }}" \
             --resource-group togetherlist-rg \
             --template-file infra/main.bicep \
+            --parameters infra/parameters/production.bicepparam \
             --parameters \
               containerImage=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} \
               registryUsername=${{ github.actor }} \
