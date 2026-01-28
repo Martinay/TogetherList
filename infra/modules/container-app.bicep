@@ -1,6 +1,5 @@
 // Container App Module
-// Deploys the TogetherList application container
-// Uses Consumption tier (free tier) with pay-per-use pricing
+// Deploys TogetherList container with NFS volume mount
 
 @description('Name of the Container App')
 param name string
@@ -11,10 +10,10 @@ param location string
 @description('Resource ID of the Container Apps environment')
 param environmentId string
 
-@description('Name of the Container Apps environment (for certificate resource)')
+@description('Name of the Container Apps environment')
 param environmentName string
 
-@description('Container image to deploy (e.g., ghcr.io/owner/repo:tag)')
+@description('Container image to deploy')
 param containerImage string
 
 @description('GitHub Container Registry server')
@@ -27,21 +26,22 @@ param registryUsername string
 @secure()
 param registryPassword string
 
-@description('Custom domain for the app (leave empty to disable)')
+@description('Custom domain for the app')
 param customDomain string = ''
 
-@description('Enable certificate binding (false for initial deployment to create cert, true afterwards)')
+@description('Enable certificate binding (false for initial deployment, true afterwards)')
 param enableCertificateBinding bool = true
 
-@description('Allowed origins for CORS (empty array disables CORS)')
+@description('Allowed origins for CORS')
 param corsAllowedOrigins array = []
 
 @description('Tags to apply to resources')
 param tags object = {}
 
-// Managed certificate for custom domain
-// Only created in Phase 2 (enableCertificateBinding=true) because the hostname must be
-// registered on the container app first (Phase 1) before a certificate can be created
+@description('Name of the storage mount in the environment')
+param storageMountName string
+
+// Two-phase deployment: hostname must be registered before certificate can be created
 resource managedCertificate 'Microsoft.App/managedEnvironments/managedCertificates@2024-03-01' = if (!empty(customDomain) && enableCertificateBinding) {
   name: '${environmentName}/${name}-cert'
   location: location
@@ -64,9 +64,6 @@ resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
         targetPort: 8080
         transport: 'auto'
         allowInsecure: false
-        // Two-phase deployment for managed certificates:
-        // Phase 1 (enableCertificateBinding=false): bindingType='Disabled' allows certificate creation
-        // Phase 2 (enableCertificateBinding=true): bindingType='SniEnabled' binds the certificate
         customDomains: !empty(customDomain) ? (enableCertificateBinding ? [
           {
             name: customDomain
@@ -124,6 +121,19 @@ resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
               value: '/data'
             }
           ]
+          volumeMounts: [
+            {
+              volumeName: 'data-volume'
+              mountPath: '/data'
+            }
+          ]
+        }
+      ]
+      volumes: [
+        {
+          name: 'data-volume'
+          storageType: 'NfsAzureFile'
+          storageName: storageMountName
         }
       ]
       scale: {

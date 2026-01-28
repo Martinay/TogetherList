@@ -50,7 +50,9 @@ infra/
 ├── bicepconfig.json        # Linter configuration
 ├── modules/
 │   ├── container-app.bicep      # Container App resource
-│   └── container-app-env.bicep  # Container Apps Environment
+│   ├── container-app-env.bicep  # Container Apps Environment
+│   ├── storage-account.bicep    # Premium storage with NFS (RBAC-only)
+│   └── vnet.bicep               # Virtual Network for NFS access
 └── parameters/
     └── production.bicepparam    # Production parameters
 ```
@@ -74,7 +76,19 @@ az bicep lint --file infra/main.bicep
 
 ---
 
-### 4. Required Secrets
+### 4. Persistent Storage
+
+The application uses **NFS Azure Files** for persistent storage with **RBAC-only authentication** (no storage keys).
+
+**Key Components:**
+- **VNet**: Container Apps environment is VNet-integrated for NFS access
+- **Premium FileStorage**: Required for NFS protocol support
+- **Private Endpoint**: Secure access to storage without public exposure
+- **Storage Mount**: NFS share mounted at `/data` in containers
+
+---
+
+### 5. Required Secrets
 
 The following GitHub secrets must be configured:
 
@@ -85,7 +99,7 @@ The following GitHub secrets must be configured:
 
 ---
 
-### 5. Adding a New Environment
+### 6. Adding a New Environment
 
 1. Create `infra/parameters/<env>.bicepparam`.
 2. Add a new job in the workflow or parameterize the existing `deploy` job.
@@ -93,7 +107,7 @@ The following GitHub secrets must be configured:
 
 ---
 
-### 6. Troubleshooting
+### 7. Troubleshooting
 
 | Issue | Solution |
 |-------|----------|
@@ -105,7 +119,7 @@ The following GitHub secrets must be configured:
 
 ---
 
-### 7. Quality Gates
+### 8. Quality Gates
 
 All changes must pass:
 - ✅ Backend: `go vet`, `staticcheck`, `gosec`, tests with `-race`

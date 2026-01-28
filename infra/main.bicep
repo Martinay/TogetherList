@@ -1,5 +1,5 @@
 // TogetherList Infrastructure
-// Main orchestration file for Azure Container Apps deployment
+// Main orchestration file for Azure Container Apps deployment with persistent NFS storage
 // 
 // Usage:
 //   az deployment group create \
@@ -50,8 +50,10 @@ var tags = {
 
 var envName = '${baseName}-env'
 var appName = baseName
+var vnetName = '${baseName}-vnet'
+var storageAccountName = replace('${baseName}storage', '-', '')
+var storageMountName = 'data-storage'
 
-// CORS allowed origins (derived from custom domain)
 var corsAllowedOrigins = !empty(customDomain) ? [
   'https://${customDomain}'
 ] : []
@@ -60,12 +62,36 @@ var corsAllowedOrigins = !empty(customDomain) ? [
 // Modules
 // ============================================================================
 
+module vnet 'modules/vnet.bicep' = {
+  name: 'deploy-vnet'
+  params: {
+    name: vnetName
+    location: location
+    tags: tags
+  }
+}
+
+module storageAccount 'modules/storage-account.bicep' = {
+  name: 'deploy-storage-account'
+  params: {
+    name: storageAccountName
+    location: location
+    tags: tags
+    privateEndpointSubnetId: vnet.outputs.privateEndpointSubnetId
+    vnetId: vnet.outputs.id
+  }
+}
+
 module containerAppEnv 'modules/container-app-env.bicep' = {
   name: 'deploy-container-app-env'
   params: {
     name: envName
     location: location
     tags: tags
+    infrastructureSubnetId: vnet.outputs.containerAppsSubnetId
+    storageMountName: storageMountName
+    nfsServer: storageAccount.outputs.nfsServer
+    nfsSharePath: storageAccount.outputs.nfsSharePath
   }
 }
 
@@ -83,6 +109,7 @@ module containerApp 'modules/container-app.bicep' = {
     enableCertificateBinding: enableCertificateBinding
     corsAllowedOrigins: corsAllowedOrigins
     tags: tags
+    storageMountName: containerAppEnv.outputs.storageMountName
   }
 }
 
@@ -101,3 +128,9 @@ output appFqdn string = containerApp.outputs.fqdn
 
 @description('Container Apps Environment name')
 output environmentName string = containerAppEnv.outputs.name
+
+@description('Storage Account name')
+output storageAccountName string = storageAccount.outputs.name
+
+@description('VNet name')
+output vnetName string = vnet.outputs.name
