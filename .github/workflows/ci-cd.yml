@@ -204,5 +204,6 @@ jobs:
             --parameters \
               containerImage=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} \
               registryUsername=${{ github.actor }} \
-              registryPassword=${{ secrets.GHCR_PAT }}
+              registryPassword=${{ secrets.GHCR_PAT }} \
+              enableCertificateBinding=false
 

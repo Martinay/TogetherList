@@ -30,6 +30,9 @@ param registryPassword string
 @description('Custom domain for the app (leave empty to disable)')
 param customDomain string = ''
 
+@description('Enable certificate binding (false for initial deployment to create cert, true afterwards)')
+param enableCertificateBinding bool = true
+
 @description('Allowed origins for CORS (empty array disables CORS)')
 param corsAllowedOrigins array = []
 
@@ -59,13 +62,21 @@ resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
         targetPort: 8080
         transport: 'auto'
         allowInsecure: false
-        customDomains: !empty(customDomain) ? [
+        // Two-phase deployment for managed certificates:
+        // Phase 1 (enableCertificateBinding=false): bindingType='Disabled' allows certificate creation
+        // Phase 2 (enableCertificateBinding=true): bindingType='SniEnabled' binds the certificate
+        customDomains: !empty(customDomain) ? (enableCertificateBinding ? [
           {
             name: customDomain
             certificateId: managedCertificate.id
             bindingType: 'SniEnabled'
           }
-        ] : []
+        ] : [
+          {
+            name: customDomain
+            bindingType: 'Disabled'
+          }
+        ]) : []
         corsPolicy: !empty(corsAllowedOrigins) ? {
           allowedOrigins: corsAllowedOrigins
           allowedMethods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS']

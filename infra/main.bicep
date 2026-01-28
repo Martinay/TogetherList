@@ -35,6 +35,9 @@ param environment string = 'production'
 @description('Custom domain for the Container App (leave empty to disable)')
 param customDomain string = ''
 
+@description('Enable certificate binding (false for initial deployment, true afterwards)')
+param enableCertificateBinding bool = true
+
 // ============================================================================
 // Variables
 // ============================================================================
@@ -77,6 +80,7 @@ module containerApp 'modules/container-app.bicep' = {
     registryUsername: registryUsername
     registryPassword: registryPassword
     customDomain: customDomain
+    enableCertificateBinding: enableCertificateBinding
     corsAllowedOrigins: corsAllowedOrigins
     tags: tags
   }

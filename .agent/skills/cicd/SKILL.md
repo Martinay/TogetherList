@@ -101,6 +101,7 @@ The following GitHub secrets must be configured:
 | Docker push unauthorized | Verify `GITHUB_TOKEN` has `packages: write` permission |
 | Azure deployment fails | Check `az deployment group show --name <deployment-name>` for details |
 | GHCR image pull fails | Ensure `GHCR_PAT` has `read:packages` scope |
+| SSL certificate chicken-egg | See [SSL Setup Guide](file:///Users/martin/repos/shared-list/docs/ssl-setup.md) for two-phase deployment |
 
 ---
 
