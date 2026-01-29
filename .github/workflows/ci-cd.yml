@@ -3,6 +3,7 @@ name: CI/CD Pipeline
 on:
   push:
     branches: [cicd]
+  pull_request:
 
 env:
   GO_VERSION: "1.25"
@@ -137,6 +138,7 @@ jobs:
   docker-build-push:
     name: Docker Build & Push
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: [backend-ci, frontend-ci]
     permissions:
       contents: read
@@ -179,6 +181,7 @@ jobs:
   deploy:
     name: Deploy to Azure
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: [docker-build-push, infra-validate]
     environment: production
 

@@ -65,7 +65,7 @@ resource fileShare 'Microsoft.Storage/storageAccounts/fileServices/shares@2023-0
   properties: {
     shareQuota: fileShareQuotaGB
     enabledProtocols: 'NFS'
-    rootSquash: 'NoRootSquash'
+    rootSquash: 'RootSquash'
   }
 }
 
@@ -119,6 +119,15 @@ resource privateDnsZoneGroup 'Microsoft.Network/privateEndpoints/privateDnsZoneG
         }
       }
     ]
+  }
+}
+
+resource storageAccountLock 'Microsoft.Authorization/locks@2020-05-01' = {
+  name: '${name}-lock'
+  scope: storageAccount
+  properties: {
+    level: 'CanNotDelete'
+    notes: 'Prevents accidental deletion of storage account containing persistent data'
   }
 }
 
