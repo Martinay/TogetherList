@@ -80,9 +80,6 @@ describe('useUserIdentity', () => {
 
     it('handles localStorage not available gracefully', () => {
         // Mock localStorage to throw an error
-        const originalGetItem = localStorage.getItem
-        const originalSetItem = localStorage.setItem
-
         vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
             throw new Error('localStorage not available')
         })
