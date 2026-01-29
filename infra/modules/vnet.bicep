@@ -52,15 +52,6 @@ resource vnet 'Microsoft.Network/virtualNetworks@2023-11-01' = {
   }
 }
 
-resource vnetLock 'Microsoft.Authorization/locks@2020-05-01' = {
-  name: '${name}-lock'
-  scope: vnet
-  properties: {
-    level: 'CanNotDelete'
-    notes: 'Prevents accidental deletion of VNet which would break container app connectivity'
-  }
-}
-
 @description('Resource ID of the Virtual Network')
 output id string = vnet.id
 

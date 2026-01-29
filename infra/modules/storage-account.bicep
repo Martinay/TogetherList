@@ -122,15 +122,6 @@ resource privateDnsZoneGroup 'Microsoft.Network/privateEndpoints/privateDnsZoneG
   }
 }
 
-resource storageAccountLock 'Microsoft.Authorization/locks@2020-05-01' = {
-  name: '${name}-lock'
-  scope: storageAccount
-  properties: {
-    level: 'CanNotDelete'
-    notes: 'Prevents accidental deletion of storage account containing persistent data'
-  }
-}
-
 @description('Resource ID of the storage account')
 output id string = storageAccount.id
 
