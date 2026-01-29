@@ -32,6 +32,12 @@ resource containerAppEnv 'Microsoft.App/managedEnvironments@2024-03-01' = {
       infrastructureSubnetId: infrastructureSubnetId
       internal: false
     }
+    workloadProfiles: [
+      {
+        name: 'Consumption'
+        workloadProfileType: 'Consumption'
+      }
+    ]
   }
 }
 
