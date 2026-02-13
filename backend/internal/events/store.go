@@ -61,10 +61,10 @@ func (s *FileEventStore) Append(listID string, event Event) error {
 	defer file.Close()
 
 	// Acquire exclusive lock (flock)
-	if err := syscall.Flock(int(file.Fd()), syscall.LOCK_EX); err != nil {
+	if err := syscall.Flock(int(file.Fd()), syscall.LOCK_EX); err != nil { // #nosec G115
 		return err
 	}
-	defer syscall.Flock(int(file.Fd()), syscall.LOCK_UN)
+	defer syscall.Flock(int(file.Fd()), syscall.LOCK_UN) // #nosec G115
 
 	// Write event as JSON line
 	encoder := json.NewEncoder(file)
