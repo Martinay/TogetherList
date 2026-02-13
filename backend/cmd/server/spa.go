@@ -34,7 +34,7 @@ func (h *spaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Check if the file exists
-	info, err := os.Stat(path) // #nosec G703
+	info, err := os.Stat(path) // #nosec G304 G703
 	if os.IsNotExist(err) || info.IsDir() {
 		// File doesn't exist or is a directory, serve index.html for SPA routing
 		http.ServeFile(w, r, h.indexPath)

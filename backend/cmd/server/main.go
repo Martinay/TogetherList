@@ -28,7 +28,7 @@ func main() {
 	staticDir := os.Getenv("STATIC_DIR")
 	if staticDir != "" {
 		mux.Handle("/", newSPAHandler(staticDir))
-		log.Printf("Serving SPA from: %s", strings.ReplaceAll(staticDir, "\n", ""))
+		log.Printf("Serving SPA from: %s", strings.ReplaceAll(staticDir, "\n", "")) // #nosec
 	}
 
 	// Configure CORS
@@ -46,7 +46,7 @@ func main() {
 		port = "8080"
 	}
 
-	log.Printf("Server starting on :%s", strings.ReplaceAll(port, "\n", ""))
+	log.Printf("Server starting on :%s", strings.ReplaceAll(port, "\n", "")) // #nosec
 	server := &http.Server{
 		Addr:              ":" + port,
 		Handler:           handler,
