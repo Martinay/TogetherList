@@ -8,7 +8,7 @@ import { ListItem } from './ListItem'
 import ShareButton from './ShareButton'
 import { useUserIdentity } from './useUserIdentity'
 import { fetchListState } from './api'
-import type { ListState } from './types'
+import type { ListState, Item } from './types'
 
 function ListPage() {
     const { id } = useParams<{ id: string }>()
@@ -16,6 +16,7 @@ function ListPage() {
     const [listState, setListState] = useState<ListState | null>(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
+    const [sessionToggledIds, setSessionToggledIds] = useState<Set<string>>(new Set())
 
     // Per-list identity management
     const { selectedName, selectName, clearName } = useUserIdentity(id || '')
@@ -41,6 +42,10 @@ function ListPage() {
 
     const handleIdentitySelect = (name: string) => {
         selectName(name)
+    }
+
+    const handleItemToggled = (itemId: string) => {
+        setSessionToggledIds(prev => new Set(prev).add(itemId))
     }
 
     if (loading) {
@@ -74,7 +79,27 @@ function ListPage() {
         )
     }
 
-    const items = listState?.items ? Object.values(listState.items) : []
+    const allItems = listState?.items ? Object.values(listState.items) : []
+
+    // Split items: active items + session-toggled completed items stay in place
+    // Completed items NOT toggled this session go to the "Completed" section
+    const activeItems: Item[] = []
+    const completedSectionItems: Item[] = []
+
+    for (const item of allItems) {
+        if (!item.completed || sessionToggledIds.has(item.id)) {
+            activeItems.push(item)
+        } else {
+            completedSectionItems.push(item)
+        }
+    }
+
+    // Sort completed section by completed_at descending (latest first)
+    completedSectionItems.sort((a, b) => {
+        const aTime = a.completed_at ? new Date(a.completed_at).getTime() : 0
+        const bTime = b.completed_at ? new Date(b.completed_at).getTime() : 0
+        return bTime - aTime
+    })
 
     return (
         <div className="flex-1 flex flex-col max-w-[600px] mx-auto w-full p-8">
@@ -97,22 +122,50 @@ function ListPage() {
                 <AddItemForm listId={id!} createdBy={selectedName} onItemAdded={refreshList} />
             )}
 
-            {items.length === 0 ? (
+            {activeItems.length === 0 && completedSectionItems.length === 0 ? (
                 <div className="text-center py-12 text-text-secondary text-base">
                     {t('list.emptyList')}
                 </div>
             ) : (
-                <div className="flex flex-col gap-2">
-                    {items.map((item) => (
-                        <ListItem
-                            key={item.id}
-                            item={item}
-                            listId={id!}
-                            locale={i18n.language}
-                            onItemUpdated={refreshList}
-                        />
-                    ))}
-                </div>
+                <>
+                    <div className="flex flex-col gap-2">
+                        {activeItems.map((item) => (
+                            <ListItem
+                                key={item.id}
+                                item={item}
+                                listId={id!}
+                                locale={i18n.language}
+                                currentUser={selectedName!}
+                                onItemUpdated={refreshList}
+                                onItemToggled={handleItemToggled}
+                            />
+                        ))}
+                    </div>
+
+                    {completedSectionItems.length > 0 && (
+                        <div className="mt-8">
+                            <h2 className="text-sm font-semibold text-text-secondary uppercase tracking-wider mb-3 flex items-center gap-2">
+                                {t('list.completed.section')}
+                                <span className="text-xs font-normal">
+                                    {t('list.completed.count', { count: completedSectionItems.length })}
+                                </span>
+                            </h2>
+                            <div className="flex flex-col gap-2">
+                                {completedSectionItems.map((item) => (
+                                    <ListItem
+                                        key={item.id}
+                                        item={item}
+                                        listId={id!}
+                                        locale={i18n.language}
+                                        currentUser={selectedName!}
+                                        onItemUpdated={refreshList}
+                                        onItemToggled={handleItemToggled}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </>
             )}
         </div>
     )

@@ -1,13 +1,15 @@
 import { useState, useRef, useEffect, type KeyboardEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { renameItemTitle } from './api'
+import { renameItemTitle, toggleItemCompleted } from './api'
 import type { Item } from './types'
 
 interface ListItemProps {
     item: Item
     listId: string
     locale: string
+    currentUser: string
     onItemUpdated: () => void
+    onItemToggled?: (itemId: string) => void
 }
 
 function formatTimestamp(isoString: string, locale: string): string {
@@ -22,12 +24,13 @@ function formatTimestamp(isoString: string, locale: string): string {
     }
 }
 
-export function ListItem({ item, listId, locale, onItemUpdated }: ListItemProps) {
+export function ListItem({ item, listId, locale, currentUser, onItemUpdated, onItemToggled }: ListItemProps) {
     const { t } = useTranslation()
     const [isExpanded, setIsExpanded] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
     const [editTitle, setEditTitle] = useState(item.title)
     const [isSaving, setIsSaving] = useState(false)
+    const [isToggling, setIsToggling] = useState(false)
     const inputRef = useRef<HTMLInputElement>(null)
 
     useEffect(() => {
@@ -66,6 +69,20 @@ export function ListItem({ item, listId, locale, onItemUpdated }: ListItemProps)
         }
     }
 
+    const handleToggleCompleted = async () => {
+        if (isToggling) return
+        setIsToggling(true)
+        try {
+            await toggleItemCompleted(listId, item.id, !item.completed, currentUser)
+            onItemToggled?.(item.id)
+            onItemUpdated()
+        } catch (error) {
+            console.error('Failed to toggle item completion:', error)
+        } finally {
+            setIsToggling(false)
+        }
+    }
+
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             e.preventDefault()
@@ -75,11 +92,28 @@ export function ListItem({ item, listId, locale, onItemUpdated }: ListItemProps)
         }
     }
 
+    const isCompleted = item.completed
+
     return (
         <div
-            className={`flex flex-col bg-bg-card rounded-xl border border-border-light shadow-[0_1px_3px_rgba(0,0,0,0.02)] overflow-hidden cursor-pointer hover:shadow-[0_4px_12px_rgba(0,0,0,0.05)] ${item.completed ? 'line-through' : ''}`}
+            className={`flex flex-col rounded-xl border shadow-[0_1px_3px_rgba(0,0,0,0.02)] overflow-hidden transition-all duration-200 ${isCompleted ? 'bg-bg-secondary border-border-light opacity-60' : 'bg-bg-card border-border-light hover:shadow-[0_4px_12px_rgba(0,0,0,0.05)]'}`}
         >
-            <div className="flex items-center gap-4 p-4 w-full bg-transparent cursor-pointer text-left transition-colors duration-150 hover:bg-[rgba(0,0,0,0.02)]">
+            <div className="flex items-center gap-3 p-4 w-full bg-transparent text-left transition-colors duration-150 hover:bg-[rgba(0,0,0,0.02)]">
+                <button
+                    type="button"
+                    className={`flex-shrink-0 w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all duration-200 cursor-pointer ${isCompleted ? 'bg-accent-primary border-accent-primary' : 'bg-transparent border-text-secondary hover:border-accent-primary'} ${isToggling ? 'opacity-50' : ''}`}
+                    onClick={handleToggleCompleted}
+                    disabled={isToggling}
+                    aria-label={isCompleted ? t('list.completeItem.uncomplete') : t('list.completeItem.complete')}
+                    title={isCompleted ? t('list.completeItem.uncomplete') : t('list.completeItem.complete')}
+                >
+                    {isCompleted && (
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                            <path d="M2 6L5 9L10 3" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                    )}
+                </button>
+
                 {isEditing ? (
                     <input
                         ref={inputRef}
@@ -99,22 +133,24 @@ export function ListItem({ item, listId, locale, onItemUpdated }: ListItemProps)
                             onClick={() => setIsExpanded(!isExpanded)}
                             aria-expanded={isExpanded}
                         >
-                            <span className={`flex-1 text-base ${item.completed ? 'line-through text-text-secondary' : 'text-text-primary'}`}>
+                            <span className={`flex-1 text-base transition-all duration-200 ${isCompleted ? 'line-through text-text-secondary' : 'text-text-primary'}`}>
                                 {item.title}
                             </span>
                             <span className={`text-xs text-text-secondary transition-transform duration-250 ${isExpanded ? 'rotate-180' : ''}`} aria-hidden="true">
                                 {isExpanded ? '▲' : '▼'}
                             </span>
                         </button>
-                        <button
-                            type="button"
-                            className="bg-transparent border-none cursor-pointer p-1 text-base opacity-60 transition-all duration-150 hover:opacity-100 hover:scale-110"
-                            onClick={startEditing}
-                            aria-label={t('list.editItem.button')}
-                            title={t('list.editItem.button')}
-                        >
-                            ✏️
-                        </button>
+                        {!isCompleted && (
+                            <button
+                                type="button"
+                                className="bg-transparent border-none cursor-pointer p-1 text-base opacity-60 transition-all duration-150 hover:opacity-100 hover:scale-110"
+                                onClick={startEditing}
+                                aria-label={t('list.editItem.button')}
+                                title={t('list.editItem.button')}
+                            >
+                                ✏️
+                            </button>
+                        )}
                     </>
                 )}
             </div>
@@ -127,6 +163,12 @@ export function ListItem({ item, listId, locale, onItemUpdated }: ListItemProps)
                     <span className="text-text-secondary">{t('list.itemDetails.createdAt')}</span>
                     <span className="text-text-primary font-medium">{formatTimestamp(item.created_at, locale)}</span>
                 </p>
+                {item.completed && item.completed_by && (
+                    <p className="flex gap-2 items-baseline mt-2 text-sm">
+                        <span className="text-text-secondary">{t('list.itemDetails.completedBy', 'Completed by')}</span>
+                        <span className="text-text-primary font-medium">{item.completed_by}</span>
+                    </p>
+                )}
             </div>
         </div>
     )

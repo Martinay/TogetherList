@@ -38,6 +38,14 @@
         "editItem": {
             "button": "Edit"
         },
+        "completeItem": {
+            "complete": "Mark complete",
+            "uncomplete": "Mark incomplete"
+        },
+        "completed": {
+            "section": "Completed",
+            "count": "({{count}})"
+        },
         "greeting": {
             "hello": "Hi, ",
             "suffix": "!",

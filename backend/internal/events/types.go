@@ -6,6 +6,7 @@ const (
 	EventTypeListCreated     = "ListCreated"
 	EventTypeItemAdded       = "ItemAdded"
 	EventTypeItemTitleEdited = "ItemTitleEdited"
+	EventTypeItemCompleted   = "ItemCompleted"
 )
 
 // ListCreatedPayload represents the data for a list creation event.
@@ -25,4 +26,11 @@ type ItemAddedPayload struct {
 type ItemTitleEditedPayload struct {
 	ItemID   string `json:"item_id"`
 	NewTitle string `json:"new_title"`
+}
+
+// ItemCompletedPayload represents the data for an item completion toggle event.
+type ItemCompletedPayload struct {
+	ItemID      string `json:"item_id"`
+	IsCompleted bool   `json:"is_completed"`
+	CompletedBy string `json:"completed_by"`
 }

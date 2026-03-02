@@ -252,3 +252,194 @@ func TestReconstructListState_ItemAddedFromJSON(t *testing.T) {
 		t.Errorf("expected title 'Test item', got '%s'", item.Title)
 	}
 }
+
+func TestReconstructListState_ItemCompleted(t *testing.T) {
+	completedTime := time.Date(2026, 3, 1, 14, 0, 0, 0, time.UTC)
+	events := []Event{
+		{
+			ID:   "evt-1",
+			Type: EventTypeListCreated,
+			Payload: ListCreatedPayload{
+				Name:         "Test List",
+				Participants: []string{"Alice"},
+			},
+			Timestamp: time.Now(),
+		},
+		{
+			ID:   "evt-2",
+			Type: EventTypeItemAdded,
+			Payload: ItemAddedPayload{
+				ItemID:    "item-1",
+				Title:     "Buy milk",
+				CreatedBy: "Alice",
+			},
+			Timestamp: time.Now(),
+		},
+		{
+			ID:   "evt-3",
+			Type: EventTypeItemCompleted,
+			Payload: ItemCompletedPayload{
+				ItemID:      "item-1",
+				IsCompleted: true,
+				CompletedBy: "Alice",
+			},
+			Timestamp: completedTime,
+		},
+	}
+
+	state, err := ReconstructListState(events)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	item := state.Items["item-1"]
+	if !item.Completed {
+		t.Error("expected item to be completed")
+	}
+	if item.CompletedBy != "Alice" {
+		t.Errorf("expected CompletedBy 'Alice', got '%s'", item.CompletedBy)
+	}
+	if item.CompletedAt != "2026-03-01T14:00:00Z" {
+		t.Errorf("expected CompletedAt '2026-03-01T14:00:00Z', got '%s'", item.CompletedAt)
+	}
+}
+
+func TestReconstructListState_ItemUncompleted(t *testing.T) {
+	events := []Event{
+		{
+			ID:   "evt-1",
+			Type: EventTypeListCreated,
+			Payload: ListCreatedPayload{
+				Name:         "Test List",
+				Participants: []string{"Alice", "Bob"},
+			},
+			Timestamp: time.Now(),
+		},
+		{
+			ID:   "evt-2",
+			Type: EventTypeItemAdded,
+			Payload: ItemAddedPayload{
+				ItemID:    "item-1",
+				Title:     "Buy milk",
+				CreatedBy: "Alice",
+			},
+			Timestamp: time.Now(),
+		},
+		{
+			ID:   "evt-3",
+			Type: EventTypeItemCompleted,
+			Payload: ItemCompletedPayload{
+				ItemID:      "item-1",
+				IsCompleted: true,
+				CompletedBy: "Alice",
+			},
+			Timestamp: time.Now(),
+		},
+		{
+			ID:   "evt-4",
+			Type: EventTypeItemCompleted,
+			Payload: ItemCompletedPayload{
+				ItemID:      "item-1",
+				IsCompleted: false,
+				CompletedBy: "Bob",
+			},
+			Timestamp: time.Now(),
+		},
+	}
+
+	state, err := ReconstructListState(events)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	item := state.Items["item-1"]
+	if item.Completed {
+		t.Error("expected item to not be completed after uncompleting")
+	}
+	if item.CompletedBy != "" {
+		t.Errorf("expected CompletedBy to be empty, got '%s'", item.CompletedBy)
+	}
+	if item.CompletedAt != "" {
+		t.Errorf("expected CompletedAt to be empty, got '%s'", item.CompletedAt)
+	}
+}
+
+func TestReconstructListState_ItemCompletedFromJSON(t *testing.T) {
+	events := []Event{
+		{
+			ID:   "evt-1",
+			Type: EventTypeListCreated,
+			Payload: map[string]any{
+				"name":         "Test List",
+				"participants": []any{"User"},
+			},
+			Timestamp: time.Now(),
+		},
+		{
+			ID:   "evt-2",
+			Type: EventTypeItemAdded,
+			Payload: map[string]any{
+				"item_id":    "item-1",
+				"title":      "Test item",
+				"created_by": "User",
+			},
+			Timestamp: time.Now(),
+		},
+		{
+			ID:   "evt-3",
+			Type: EventTypeItemCompleted,
+			Payload: map[string]any{
+				"item_id":      "item-1",
+				"is_completed": true,
+				"completed_by": "User",
+			},
+			Timestamp: time.Now(),
+		},
+	}
+
+	state, err := ReconstructListState(events)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	item := state.Items["item-1"]
+	if !item.Completed {
+		t.Error("expected item to be completed")
+	}
+	if item.CompletedBy != "User" {
+		t.Errorf("expected CompletedBy 'User', got '%s'", item.CompletedBy)
+	}
+}
+
+func TestReconstructListState_ItemCompletedNonExistent(t *testing.T) {
+	events := []Event{
+		{
+			ID:   "evt-1",
+			Type: EventTypeListCreated,
+			Payload: ListCreatedPayload{
+				Name:         "Test List",
+				Participants: []string{"Alice"},
+			},
+			Timestamp: time.Now(),
+		},
+		{
+			ID:   "evt-2",
+			Type: EventTypeItemCompleted,
+			Payload: ItemCompletedPayload{
+				ItemID:      "non-existent",
+				IsCompleted: true,
+				CompletedBy: "Alice",
+			},
+			Timestamp: time.Now(),
+		},
+	}
+
+	state, err := ReconstructListState(events)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	if len(state.Items) != 0 {
+		t.Errorf("expected no items, got %d", len(state.Items))
+	}
+}

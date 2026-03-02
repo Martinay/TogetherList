@@ -9,12 +9,14 @@ import (
 
 // ItemState represents the current state of a list item.
 type ItemState struct {
-	ID         string `json:"id"`
-	Title      string `json:"title"`
-	CreatedBy  string `json:"created_by"`
-	CreatedAt  string `json:"created_at"`
-	AssignedTo string `json:"assigned_to,omitempty"`
-	Completed  bool   `json:"completed"`
+	ID          string `json:"id"`
+	Title       string `json:"title"`
+	CreatedBy   string `json:"created_by"`
+	CreatedAt   string `json:"created_at"`
+	AssignedTo  string `json:"assigned_to,omitempty"`
+	Completed   bool   `json:"completed"`
+	CompletedBy string `json:"completed_by,omitempty"`
+	CompletedAt string `json:"completed_at,omitempty"`
 }
 
 // ListState represents the current state of a list, reconstructed from events.
@@ -75,6 +77,21 @@ func applyEvent(state *ListState, event Event) error {
 		}
 		if item, exists := state.Items[payload.ItemID]; exists {
 			item.Title = payload.NewTitle
+		}
+	case EventTypeItemCompleted:
+		payload, err := parsePayload[ItemCompletedPayload](event.Payload)
+		if err != nil {
+			return err
+		}
+		if item, exists := state.Items[payload.ItemID]; exists {
+			item.Completed = payload.IsCompleted
+			if payload.IsCompleted {
+				item.CompletedBy = payload.CompletedBy
+				item.CompletedAt = event.Timestamp.Format(time.RFC3339)
+			} else {
+				item.CompletedBy = ""
+				item.CompletedAt = ""
+			}
 		}
 	default:
 		// Unknown event types are ignored for forward compatibility

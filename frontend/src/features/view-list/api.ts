@@ -22,3 +22,10 @@ export async function addItem(listId: string, title: string, createdBy: string) 
 export async function renameItemTitle(listId: string, itemId: string, newTitle: string) {
     return apiPut(`/list/${listId}/items/${itemId}/title`, { newTitle })
 }
+
+/**
+ * Toggle an item's completion status
+ */
+export async function toggleItemCompleted(listId: string, itemId: string, isCompleted: boolean, completedBy: string) {
+    return apiPut(`/list/${listId}/items/${itemId}/completed`, { isCompleted, completedBy })
+}
