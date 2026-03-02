@@ -102,6 +102,9 @@ jobs:
       - name: Run tests with coverage
         run: bun run test:run -- --coverage
 
+      - name: Run E2E tests (headless)
+        run: bun run test:e2e:run
+
       - name: Upload coverage artifact
         uses: actions/upload-artifact@v6
         with:
