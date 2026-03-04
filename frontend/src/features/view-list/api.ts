@@ -24,6 +24,13 @@ export async function renameItemTitle(listId: string, itemId: string, newTitle: 
 }
 
 /**
+ * Edit an item's description
+ */
+export async function editItemDescription(listId: string, itemId: string, description: string) {
+    return apiPut(`/list/${listId}/items/${itemId}/description`, { description })
+}
+
+/**
  * Toggle an item's completion status
  */
 export async function toggleItemCompleted(listId: string, itemId: string, isCompleted: boolean, completedBy: string) {

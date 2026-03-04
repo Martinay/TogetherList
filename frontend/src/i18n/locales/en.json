@@ -33,7 +33,11 @@
         },
         "itemDetails": {
             "createdBy": "Created by",
-            "createdAt": "Created on"
+            "createdAt": "Created on",
+            "descriptionPlaceholder": "Add description...",
+            "saving": "Saving...",
+            "saved": "Saved",
+            "saveError": "Failed to save"
         },
         "editItem": {
             "button": "Edit"

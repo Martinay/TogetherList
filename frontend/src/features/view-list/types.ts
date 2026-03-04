@@ -1,6 +1,7 @@
 export interface Item {
     id: string
     title: string
+    description?: string
     completed: boolean
     completed_by?: string
     completed_at?: string

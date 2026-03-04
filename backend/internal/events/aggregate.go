@@ -17,6 +17,7 @@ type ItemState struct {
 	Completed   bool   `json:"completed"`
 	CompletedBy string `json:"completed_by,omitempty"`
 	CompletedAt string `json:"completed_at,omitempty"`
+	Description string `json:"description,omitempty"`
 }
 
 // ListState represents the current state of a list, reconstructed from events.
@@ -92,6 +93,14 @@ func applyEvent(state *ListState, event Event) error {
 				item.CompletedBy = ""
 				item.CompletedAt = ""
 			}
+		}
+	case EventTypeItemDescriptionEdited:
+		payload, err := parsePayload[ItemDescriptionEditedPayload](event.Payload)
+		if err != nil {
+			return err
+		}
+		if item, exists := state.Items[payload.ItemID]; exists {
+			item.Description = payload.Description
 		}
 	default:
 		// Unknown event types are ignored for forward compatibility

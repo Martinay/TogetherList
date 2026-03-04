@@ -7,9 +7,10 @@ import '../i18n'
 vi.mock('../features/view-list/api', () => ({
     renameItemTitle: vi.fn().mockResolvedValue({}),
     toggleItemCompleted: vi.fn().mockResolvedValue({}),
+    editItemDescription: vi.fn().mockResolvedValue({}),
 }))
 
-import { toggleItemCompleted } from '../features/view-list/api'
+import { toggleItemCompleted, editItemDescription } from '../features/view-list/api'
 
 const baseItem = {
     id: 'item-1',
@@ -115,6 +116,61 @@ describe('ListItem completion', () => {
 
         await waitFor(() => {
             expect(toggleItemCompleted).toHaveBeenCalledWith('list-1', 'item-1', false, 'Alice')
+        })
+    })
+})
+
+describe('ListItem description', () => {
+    beforeEach(() => {
+        vi.clearAllMocks()
+    })
+
+    it('shows saving and saved indicators when editing description', async () => {
+        // We'll mock editItemDescription to take a short, measurable time (100ms)
+        // so we can reliably assert the "Saving..." state before it resolves.
+        vi.mocked(editItemDescription).mockImplementation(
+            () => new Promise((resolve) => setTimeout(() => resolve({}), 100))
+        )
+
+        render(<ListItem item={baseItem} {...defaultProps} />)
+
+        const textarea = screen.getByRole('textbox', { name: "Item description" })
+
+        // Change the value and blur to trigger auto-save
+        fireEvent.change(textarea, { target: { value: 'New description text' } })
+        fireEvent.blur(textarea)
+
+        // Verify "Saving..." indicator appears synchronously or almost immediately
+        await waitFor(() => {
+            expect(screen.getByText('Saving...')).toBeInTheDocument()
+        })
+
+        // Wait for the UI to update to "Saved" (after 100ms when promise resolves)
+        await waitFor(() => {
+            expect(screen.getByText('Saved')).toBeInTheDocument()
+        })
+
+        // Verify the mock was called with correct arguments
+        expect(editItemDescription).toHaveBeenCalledWith('list-1', 'item-1', 'New description text')
+
+        // Wait for the indicator to disappear (2000ms delay defined in ListItem.tsx)
+        await waitFor(() => {
+            expect(screen.queryByText('Saved')).not.toBeInTheDocument()
+        }, { timeout: 3000 })
+    })
+
+    it('shows error indicator when save fails', async () => {
+        vi.mocked(editItemDescription).mockRejectedValue(new Error('Network error'))
+
+        render(<ListItem item={baseItem} {...defaultProps} />)
+
+        const textarea = screen.getByRole('textbox', { name: "Item description" })
+
+        fireEvent.change(textarea, { target: { value: 'This will fail to save' } })
+        fireEvent.blur(textarea)
+
+        await waitFor(() => {
+            expect(screen.getByText('Failed to save')).toBeInTheDocument()
         })
     })
 })

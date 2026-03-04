@@ -13,6 +13,7 @@ import (
 	"backend/internal/features/additem"
 	"backend/internal/features/completeitem"
 	"backend/internal/features/createlist"
+	"backend/internal/features/edititemdescription"
 	"backend/internal/features/renameitemtitle"
 	"backend/internal/features/viewlist"
 )
@@ -24,6 +25,7 @@ func main() {
 	mux.HandleFunc("GET /api/v1/list/{id}", viewlist.Handler)
 	mux.HandleFunc("POST /api/v1/list/{id}/items", additem.Handler)
 	mux.HandleFunc("PUT /api/v1/list/{id}/items/{itemId}/title", renameitemtitle.Handler)
+	mux.HandleFunc("PUT /api/v1/list/{id}/items/{itemId}/description", edititemdescription.Handler)
 	mux.HandleFunc("PUT /api/v1/list/{id}/items/{itemId}/completed", completeitem.Handler)
 
 	// Serve frontend SPA from STATIC_DIR if configured

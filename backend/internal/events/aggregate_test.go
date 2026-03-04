@@ -443,3 +443,95 @@ func TestReconstructListState_ItemCompletedNonExistent(t *testing.T) {
 		t.Errorf("expected no items, got %d", len(state.Items))
 	}
 }
+
+func TestReconstructListState_ItemDescriptionEdited(t *testing.T) {
+	events := []Event{
+		{
+			ID:   "evt-1",
+			Type: EventTypeListCreated,
+			Payload: ListCreatedPayload{
+				Name:         "Test List",
+				Participants: []string{"Alice"},
+			},
+			Timestamp: time.Now(),
+		},
+		{
+			ID:   "evt-2",
+			Type: EventTypeItemAdded,
+			Payload: ItemAddedPayload{
+				ItemID:    "item-1",
+				Title:     "Buy milk",
+				CreatedBy: "Alice",
+			},
+			Timestamp: time.Now(),
+		},
+		{
+			ID:   "evt-3",
+			Type: EventTypeItemDescriptionEdited,
+			Payload: ItemDescriptionEditedPayload{
+				ItemID:      "item-1",
+				Description: "Get 2% milk",
+			},
+			Timestamp: time.Now(),
+		},
+	}
+
+	state, err := ReconstructListState(events)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	item, exists := state.Items["item-1"]
+	if !exists {
+		t.Fatal("expected item 'item-1' to exist")
+	}
+	if item.Title != "Buy milk" {
+		t.Errorf("expected title 'Buy milk', got '%s'", item.Title)
+	}
+	if item.Description != "Get 2% milk" {
+		t.Errorf("expected description 'Get 2%% milk', got '%s'", item.Description)
+	}
+}
+
+func TestReconstructListState_ItemDescriptionEditedFromJSON(t *testing.T) {
+	events := []Event{
+		{
+			ID:   "evt-1",
+			Type: EventTypeListCreated,
+			Payload: map[string]any{
+				"name":         "Test List",
+				"participants": []any{"User"},
+			},
+			Timestamp: time.Now(),
+		},
+		{
+			ID:   "evt-2",
+			Type: EventTypeItemAdded,
+			Payload: map[string]any{
+				"item_id":    "item-1",
+				"title":      "Test item",
+				"created_by": "User",
+			},
+			Timestamp: time.Now(),
+		},
+		{
+			ID:   "evt-3",
+			Type: EventTypeItemDescriptionEdited,
+			Payload: map[string]any{
+				"item_id":     "item-1",
+				"description": "Item description here",
+			},
+			Timestamp: time.Now(),
+		},
+	}
+
+	state, err := ReconstructListState(events)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	item := state.Items["item-1"]
+	if item.Description != "Item description here" {
+		t.Errorf("expected Description 'Item description here', got '%s'", item.Description)
+	}
+}

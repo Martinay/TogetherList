@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, type KeyboardEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { renameItemTitle, toggleItemCompleted } from './api'
+import { renameItemTitle, toggleItemCompleted, editItemDescription } from './api'
 import type { Item } from './types'
 
 interface ListItemProps {
@@ -31,6 +31,13 @@ export function ListItem({ item, listId, locale, currentUser, onItemUpdated, onI
     const [editTitle, setEditTitle] = useState(item.title)
     const [isSaving, setIsSaving] = useState(false)
     const [isToggling, setIsToggling] = useState(false)
+
+    // Description state
+    const [editDescription, setEditDescription] = useState(item.description || '')
+    const [isSavingDesc, setIsSavingDesc] = useState(false)
+    const [saveDescStatus, setSaveDescStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
+    const descTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
     const inputRef = useRef<HTMLInputElement>(null)
 
     useEffect(() => {
@@ -83,6 +90,33 @@ export function ListItem({ item, listId, locale, currentUser, onItemUpdated, onI
         }
     }
 
+    const saveDescription = async (newDesc: string) => {
+        if (newDesc === item.description) return
+
+        setIsSavingDesc(true)
+        setSaveDescStatus('saving')
+        try {
+            await editItemDescription(listId, item.id, newDesc)
+            setSaveDescStatus('saved')
+            onItemUpdated()
+
+            // Clear "saved" status after 2 seconds
+            if (descTimeoutRef.current) clearTimeout(descTimeoutRef.current)
+            descTimeoutRef.current = setTimeout(() => {
+                setSaveDescStatus('idle')
+            }, 2000)
+        } catch (error) {
+            console.error('Failed to update description:', error)
+            setSaveDescStatus('error')
+        } finally {
+            setIsSavingDesc(false)
+        }
+    }
+
+    const handleDescriptionBlur = () => {
+        saveDescription(editDescription)
+    }
+
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             e.preventDefault()
@@ -129,14 +163,24 @@ export function ListItem({ item, listId, locale, currentUser, onItemUpdated, onI
                     <>
                         <button
                             type="button"
-                            className="flex-1 flex items-center gap-4 bg-transparent border-none cursor-pointer text-left font-[inherit] text-base text-text-primary p-0"
+                            className="flex-1 flex flex-col items-start gap-1 bg-transparent border-none cursor-pointer text-left font-[inherit] p-0 pr-8 relative"
                             onClick={() => setIsExpanded(!isExpanded)}
                             aria-expanded={isExpanded}
                         >
                             <span className={`flex-1 text-base transition-all duration-200 ${isCompleted ? 'line-through text-text-secondary' : 'text-text-primary'}`}>
                                 {item.title}
                             </span>
-                            <span className={`text-xs text-text-secondary transition-transform duration-250 ${isExpanded ? 'rotate-180' : ''}`} aria-hidden="true">
+
+                            {!isExpanded && item.description && (
+                                <span
+                                    data-testid="item-description-preview"
+                                    className={`w-full text-xs text-text-secondary mt-1 truncate ${isCompleted ? 'opacity-50' : ''}`}
+                                >
+                                    {item.description}
+                                </span>
+                            )}
+
+                            <span className={`absolute right-4 top-4 text-xs text-text-secondary transition-transform duration-250 ${isExpanded ? 'rotate-180' : ''}`} aria-hidden="true">
                                 {isExpanded ? '▲' : '▼'}
                             </span>
                         </button>
@@ -154,22 +198,53 @@ export function ListItem({ item, listId, locale, currentUser, onItemUpdated, onI
                     </>
                 )}
             </div>
-            <div className={`overflow-hidden transition-all duration-250 bg-bg-secondary border-t ${isExpanded ? 'max-h-[200px] opacity-100 p-4 border-t-border-light' : 'max-h-0 opacity-0 px-4 py-0 border-t-transparent'}`}>
-                <p className="flex gap-2 items-baseline m-0 text-sm">
-                    <span className="text-text-secondary">{t('list.itemDetails.createdBy')}</span>
-                    <span className="text-text-primary font-medium">{item.created_by}</span>
-                </p>
-                <p className="flex gap-2 items-baseline mt-2 text-sm">
-                    <span className="text-text-secondary">{t('list.itemDetails.createdAt')}</span>
-                    <span className="text-text-primary font-medium">{formatTimestamp(item.created_at, locale)}</span>
-                </p>
-                {item.completed && item.completed_by && (
-                    <p className="flex gap-2 items-baseline mt-2 text-sm">
-                        <span className="text-text-secondary">{t('list.itemDetails.completedBy', 'Completed by')}</span>
-                        <span className="text-text-primary font-medium">{item.completed_by}</span>
-                    </p>
-                )}
+            <div className={`overflow-hidden transition-all duration-250 bg-bg-secondary border-t flex flex-col ${isExpanded ? 'max-h-[500px] opacity-100 p-4 border-t-border-light' : 'max-h-0 opacity-0 px-4 py-0 border-t-transparent'}`}>
+
+                <div className="mb-4 relative">
+                    <textarea
+                        className={`w-full bg-bg-card border rounded-lg p-3 text-sm text-text-primary min-h-[80px] max-h-[120px] resize-none overflow-y-auto outline-none transition-colors 
+                            ${isCompleted ? 'opacity-60 cursor-not-allowed' : 'focus:border-accent-primary focus:ring-1 focus:ring-accent-primary'}
+                            ${saveDescStatus === 'error' ? 'border-error' : 'border-border-light'}`}
+                        placeholder={t('list.itemDetails.descriptionPlaceholder', 'Add description...')}
+                        value={editDescription}
+                        onChange={(e) => setEditDescription(e.target.value)}
+                        onBlur={handleDescriptionBlur}
+                        disabled={isCompleted || isSavingDesc}
+                        aria-label="Item description"
+                    />
+
+                    {saveDescStatus !== 'idle' && (
+                        <div className={`absolute right-3 bottom-3 text-xs flex items-center gap-1 bg-bg-card px-2 py-1 rounded shadow-sm border border-border-light
+                            ${saveDescStatus === 'error' ? 'text-error' : 'text-text-secondary'}`}>
+                            {saveDescStatus === 'saving' && <span className="w-3 h-3 border-2 border-text-secondary border-t-transparent rounded-full animate-spin" />}
+                            {saveDescStatus === 'saved' && <span>✓</span>}
+                            <span>
+                                {saveDescStatus === 'saving' && t('list.itemDetails.saving', 'Saving...')}
+                                {saveDescStatus === 'saved' && t('list.itemDetails.saved', 'Saved')}
+                                {saveDescStatus === 'error' && t('list.itemDetails.saveError', 'Failed to save')}
+                            </span>
+                        </div>
+                    )}
+                </div>
+
+                <div className="flex flex-wrap gap-x-6 gap-y-2 mt-auto pt-2 border-t border-border-light border-opacity-50">
+                    <div className="flex gap-2 items-baseline text-sm">
+                        <span className="text-text-secondary">{t('list.itemDetails.createdBy')}</span>
+                        <span className="text-text-primary font-medium">{item.created_by}</span>
+                    </div>
+                    <div className="flex gap-2 items-baseline text-sm">
+                        <span className="text-text-secondary">{t('list.itemDetails.createdAt')}</span>
+                        <span className="text-text-primary font-medium">{formatTimestamp(item.created_at, locale)}</span>
+                    </div>
+                    {item.completed && item.completed_by && (
+                        <div className="flex gap-2 items-baseline text-sm">
+                            <span className="text-text-secondary">{t('list.itemDetails.completedBy', 'Completed by')}</span>
+                            <span className="text-text-primary font-medium">{item.completed_by}</span>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     )
 }
+

@@ -3,10 +3,11 @@ package events
 
 // Event type constants.
 const (
-	EventTypeListCreated     = "ListCreated"
-	EventTypeItemAdded       = "ItemAdded"
-	EventTypeItemTitleEdited = "ItemTitleEdited"
-	EventTypeItemCompleted   = "ItemCompleted"
+	EventTypeListCreated           = "ListCreated"
+	EventTypeItemAdded             = "ItemAdded"
+	EventTypeItemTitleEdited       = "ItemTitleEdited"
+	EventTypeItemDescriptionEdited = "ItemDescriptionEdited"
+	EventTypeItemCompleted         = "ItemCompleted"
 )
 
 // ListCreatedPayload represents the data for a list creation event.
@@ -33,4 +34,10 @@ type ItemCompletedPayload struct {
 	ItemID      string `json:"item_id"`
 	IsCompleted bool   `json:"is_completed"`
 	CompletedBy string `json:"completed_by"`
+}
+
+// ItemDescriptionEditedPayload represents the data for an item description edit event.
+type ItemDescriptionEditedPayload struct {
+	ItemID      string `json:"item_id"`
+	Description string `json:"description"`
 }
