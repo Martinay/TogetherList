@@ -4,9 +4,17 @@ import { motion } from 'framer-motion'
 
 interface EnterNameStepProps {
     onNext: (name: string) => void
+    titleKey?: string
+    placeholderKey?: string
+    nextKey?: string
 }
 
-export function EnterNameStep({ onNext }: EnterNameStepProps) {
+export function EnterNameStep({
+    onNext,
+    titleKey = 'createList.step1Title',
+    placeholderKey = 'createList.step1Placeholder',
+    nextKey = 'createList.step1Next'
+}: EnterNameStepProps) {
     const { t } = useTranslation()
     const [name, setName] = useState('')
 
@@ -27,13 +35,13 @@ export function EnterNameStep({ onNext }: EnterNameStepProps) {
             transition={{ duration: 0.3 }}
         >
             <h2 className="text-[clamp(1.5rem,5vw,2rem)] font-bold bg-gradient-to-br from-accent-primary to-accent-secondary bg-clip-text text-transparent text-center">
-                {t('createList.step1Title')}
+                {t(titleKey)}
             </h2>
             <input
                 id="creator-name-input"
                 type="text"
                 className="p-4 text-base font-[inherit] bg-bg-card border border-border-medium rounded-xl text-text-primary outline-none transition-all duration-150 shadow-[0_1px_2px_rgba(0,0,0,0.05)] placeholder:text-stone-400 focus:border-accent-primary focus:shadow-[0_0_0_3px_var(--color-accent-glow)]"
-                placeholder={t('createList.step1Placeholder')}
+                placeholder={t(placeholderKey)}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 autoFocus
@@ -44,7 +52,7 @@ export function EnterNameStep({ onNext }: EnterNameStepProps) {
                 className="px-8 py-4 text-base font-semibold text-white bg-gradient-to-br from-accent-primary to-accent-secondary rounded-full cursor-pointer transition-all duration-250 shadow-[0_4px_12px_var(--color-accent-glow)] disabled:opacity-50 disabled:cursor-not-allowed hover:enabled:-translate-y-0.5 hover:enabled:shadow-[0_8px_24px_var(--color-accent-glow)]"
                 disabled={!name.trim()}
             >
-                {t('createList.step1Next')}
+                {t(nextKey)}
             </button>
         </motion.form>
     )

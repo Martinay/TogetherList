@@ -22,14 +22,21 @@ describe('Item Completion', () => {
         await createButton.waitForDisplayed({ timeout: 5_000 })
         await createButton.click()
 
-        // Step 1: Enter creator name
-        const nameInput = await browser.$('input[type="text"]')
+        // Step 1: Enter list name
+        const listNameInput = await browser.$('input[placeholder="e.g., Weekend Trip"]')
+        await listNameInput.waitForDisplayed({ timeout: 5_000 })
+        await listNameInput.setValue('Test E2E List')
+        const continueButton1 = await browser.$('button=Continue')
+        await continueButton1.click()
+
+        // Step 2: Enter creator name
+        const nameInput = await browser.$('input[placeholder="Enter your name"]')
         await nameInput.waitForDisplayed({ timeout: 5_000 })
         await nameInput.setValue('TestUser')
-        const continueButton = await browser.$('button=Continue')
-        await continueButton.click()
+        const continueButton2 = await browser.$('button=Continue')
+        await continueButton2.click()
 
-        // Step 2: Create list (no extra participants needed)
+        // Step 3: Create list (no extra participants needed)
         const createListButton = await browser.$('button=Create List')
         await createListButton.waitForDisplayed({ timeout: 5_000 })
         await createListButton.click()

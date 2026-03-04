@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next'
 import AddItemForm from './AddItemForm'
 import IdentityPicker from './IdentityPicker'
 import Greeting from './Greeting'
+import ListHeader from './ListHeader'
 import { ListItem } from './ListItem'
-import ShareButton from './ShareButton'
 import { useUserIdentity } from './useUserIdentity'
 import { fetchListState } from './api'
 import type { ListState, Item } from './types'
@@ -104,19 +104,14 @@ function ListPage() {
     return (
         <div className="flex-1 flex flex-col max-w-[600px] mx-auto w-full p-8">
             <Greeting name={selectedName!} onClick={clearName} />
-            <header className="text-center mb-8">
-                <div className="flex items-center justify-center gap-4 flex-wrap">
-                    <h1 className="text-[clamp(1.5rem,4vw,2rem)] font-bold bg-gradient-to-br from-accent-primary to-accent-secondary bg-clip-text text-transparent mb-2">
-                        {listState?.name || 'Shared List'}
-                    </h1>
-                    <ShareButton listId={id!} />
-                </div>
-                {listState?.participants && listState.participants.length > 0 && (
-                    <p className="text-sm text-text-secondary">
-                        {listState.participants.join(', ')}
-                    </p>
-                )}
-            </header>
+
+            <ListHeader
+                listId={id!}
+                currentName={listState?.name || 'Shared List'}
+                participants={listState?.participants || []}
+                currentUser={selectedName!}
+                onNameUpdated={refreshList}
+            />
 
             {selectedName && (
                 <AddItemForm listId={id!} createdBy={selectedName} onItemAdded={refreshList} />

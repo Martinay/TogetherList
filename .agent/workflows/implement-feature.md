@@ -25,6 +25,7 @@ Follow these steps to implement a new feature from requirements to verified code
   - Data tracking (what metadata to store in events?)
   - Error handling and undo behavior
   - Visual treatment and styling
+  - Do not ask trivial questions
 - **Do not proceed** until the user answers.
 
 ## 3. Create an Implementation Plan

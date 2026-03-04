@@ -24,15 +24,36 @@ describe('CreateListPage', () => {
         })
     })
 
-    it('renders step 1 with name input initially', () => {
+    const navigateToStep2 = async () => {
+        const nameInput = screen.getByPlaceholderText('e.g., Weekend Trip')
+        fireEvent.change(nameInput, { target: { value: 'My List' } })
+        fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+
+        await waitFor(() => {
+            expect(screen.getByText("What's your name?")).toBeInTheDocument()
+        })
+    }
+
+    const navigateToStep3 = async () => {
+        await navigateToStep2()
+        const nameInput = screen.getByPlaceholderText('Enter your name')
+        fireEvent.change(nameInput, { target: { value: 'Alice' } })
+        fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+
+        await waitFor(() => {
+            expect(screen.getByText('Who else is joining?')).toBeInTheDocument()
+        })
+    }
+
+    it('renders step 1 with list name input initially', () => {
         render(
             <BrowserRouter>
                 <CreateListPage />
             </BrowserRouter>
         )
 
-        expect(screen.getByText("What's your name?")).toBeInTheDocument()
-        expect(screen.getByPlaceholderText('Enter your name')).toBeInTheDocument()
+        expect(screen.getByText("Name your list")).toBeInTheDocument()
+        expect(screen.getByPlaceholderText('e.g., Weekend Trip')).toBeInTheDocument()
         expect(screen.getByRole('button', { name: /continue/i })).toBeInTheDocument()
     })
 
@@ -47,15 +68,15 @@ describe('CreateListPage', () => {
         expect(continueButton).toBeDisabled()
     })
 
-    it('advances to step 2 when name is entered', async () => {
+    it('advances to step 2 when list name is entered', async () => {
         render(
             <BrowserRouter>
                 <CreateListPage />
             </BrowserRouter>
         )
 
-        const nameInput = screen.getByPlaceholderText('Enter your name')
-        fireEvent.change(nameInput, { target: { value: 'Alice' } })
+        const nameInput = screen.getByPlaceholderText('e.g., Weekend Trip')
+        fireEvent.change(nameInput, { target: { value: 'My List' } })
 
         const continueButton = screen.getByRole('button', { name: /continue/i })
         expect(continueButton).not.toBeDisabled()
@@ -63,20 +84,18 @@ describe('CreateListPage', () => {
         fireEvent.click(continueButton)
 
         await waitFor(() => {
-            expect(screen.getByText('Who else is joining?')).toBeInTheDocument()
+            expect(screen.getByText("What's your name?")).toBeInTheDocument()
         })
     })
 
-    it('shows creator name in participant list on step 2', async () => {
+    it('shows creator name in participant list on step 3', async () => {
         render(
             <BrowserRouter>
                 <CreateListPage />
             </BrowserRouter>
         )
 
-        const nameInput = screen.getByPlaceholderText('Enter your name')
-        fireEvent.change(nameInput, { target: { value: 'Alice' } })
-        fireEvent.click(screen.getByRole('button', { name: /continue/i }))
+        await navigateToStep3()
 
         await waitFor(() => {
             expect(screen.getByText('Alice')).toBeInTheDocument()
@@ -91,13 +110,7 @@ describe('CreateListPage', () => {
             </BrowserRouter>
         )
 
-        // Go to step 2
-        fireEvent.change(screen.getByPlaceholderText('Enter your name'), { target: { value: 'Alice' } })
-        fireEvent.click(screen.getByRole('button', { name: /continue/i }))
-
-        await waitFor(() => {
-            expect(screen.getByText('Who else is joining?')).toBeInTheDocument()
-        })
+        await navigateToStep3()
 
         // Add a participant
         const participantInput = screen.getByPlaceholderText('Add a participant')
@@ -118,13 +131,7 @@ describe('CreateListPage', () => {
             </BrowserRouter>
         )
 
-        // Go to step 2
-        fireEvent.change(screen.getByPlaceholderText('Enter your name'), { target: { value: 'Alice' } })
-        fireEvent.click(screen.getByRole('button', { name: /continue/i }))
-
-        await waitFor(() => {
-            expect(screen.getByText('Who else is joining?')).toBeInTheDocument()
-        })
+        await navigateToStep3()
 
         // Click create
         fireEvent.click(screen.getByRole('button', { name: /create list/i }))
@@ -143,25 +150,19 @@ describe('CreateListPage', () => {
             expect.objectContaining({
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ creator: 'Alice', participants: [] }),
+                body: JSON.stringify({ name: 'My List', creator: 'Alice', participants: [] }),
             })
         )
     })
 
-    it('can go back from step 2 to step 1', async () => {
+    it('can go back from step 3 to step 2', async () => {
         render(
             <BrowserRouter>
                 <CreateListPage />
             </BrowserRouter>
         )
 
-        // Go to step 2
-        fireEvent.change(screen.getByPlaceholderText('Enter your name'), { target: { value: 'Alice' } })
-        fireEvent.click(screen.getByRole('button', { name: /continue/i }))
-
-        await waitFor(() => {
-            expect(screen.getByText('Who else is joining?')).toBeInTheDocument()
-        })
+        await navigateToStep3()
 
         // Go back
         fireEvent.click(screen.getByRole('button', { name: /back/i }))
@@ -178,13 +179,7 @@ describe('CreateListPage', () => {
             </BrowserRouter>
         )
 
-        // Go to step 2
-        fireEvent.change(screen.getByPlaceholderText('Enter your name'), { target: { value: 'Alice' } })
-        fireEvent.click(screen.getByRole('button', { name: /continue/i }))
-
-        await waitFor(() => {
-            expect(screen.getByText('Who else is joining?')).toBeInTheDocument()
-        })
+        await navigateToStep3()
 
         // Add a participant
         const participantInput = screen.getByPlaceholderText('Add a participant')
@@ -207,13 +202,7 @@ describe('CreateListPage', () => {
             </BrowserRouter>
         )
 
-        // Go to step 2 with creator name "Alice"
-        fireEvent.change(screen.getByPlaceholderText('Enter your name'), { target: { value: 'Alice' } })
-        fireEvent.click(screen.getByRole('button', { name: /continue/i }))
-
-        await waitFor(() => {
-            expect(screen.getByText('Who else is joining?')).toBeInTheDocument()
-        })
+        await navigateToStep3()
 
         // Try to add participant with same name as creator
         const participantInput = screen.getByPlaceholderText('Add a participant')
@@ -230,13 +219,7 @@ describe('CreateListPage', () => {
             </BrowserRouter>
         )
 
-        // Go to step 2
-        fireEvent.change(screen.getByPlaceholderText('Enter your name'), { target: { value: 'Alice' } })
-        fireEvent.click(screen.getByRole('button', { name: /continue/i }))
-
-        await waitFor(() => {
-            expect(screen.getByText('Who else is joining?')).toBeInTheDocument()
-        })
+        await navigateToStep3()
 
         // Try to add participant with same name as creator to trigger error
         const participantInput = screen.getByPlaceholderText('Add a participant')

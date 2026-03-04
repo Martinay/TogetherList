@@ -4,7 +4,7 @@ import { AnimatePresence } from 'framer-motion'
 import { EnterNameStep, AddParticipantsStep } from './wizard-steps'
 import { apiPost } from '../../api/client'
 
-type WizardStep = 'name' | 'participants'
+type WizardStep = 'listName' | 'creatorName' | 'participants'
 
 interface CreateListResponse {
     listId: string
@@ -12,17 +12,23 @@ interface CreateListResponse {
 
 function CreateListPage() {
     const navigate = useNavigate()
-    const [step, setStep] = useState<WizardStep>('name')
+    const [step, setStep] = useState<WizardStep>('listName')
+    const [listName, setListName] = useState('')
     const [creatorName, setCreatorName] = useState('')
     const [isCreating, setIsCreating] = useState(false)
 
-    const handleNameSubmit = (name: string) => {
+    const handleListNameSubmit = (name: string) => {
+        setListName(name)
+        setStep('creatorName')
+    }
+
+    const handleCreatorNameSubmit = (name: string) => {
         setCreatorName(name)
         setStep('participants')
     }
 
-    const handleBack = () => {
-        setStep('name')
+    const handleBackToCreator = () => {
+        setStep('creatorName')
     }
 
     const handleCreate = async (participants: string[]) => {
@@ -30,6 +36,7 @@ function CreateListPage() {
 
         try {
             const data = await apiPost<CreateListResponse>('/list/create', {
+                name: listName,
                 creator: creatorName,
                 participants: participants,
             })
@@ -51,14 +58,23 @@ function CreateListPage() {
 
             <div className="relative z-10 w-full max-w-[400px]">
                 <AnimatePresence mode="wait">
-                    {step === 'name' && (
-                        <EnterNameStep key="name" onNext={handleNameSubmit} />
+                    {step === 'listName' && (
+                        <EnterNameStep
+                            key="listName"
+                            onNext={handleListNameSubmit}
+                            titleKey="createList.step0Title"
+                            placeholderKey="createList.step0Placeholder"
+                            nextKey="createList.step0Next"
+                        />
+                    )}
+                    {step === 'creatorName' && (
+                        <EnterNameStep key="creatorName" onNext={handleCreatorNameSubmit} />
                     )}
                     {step === 'participants' && (
                         <AddParticipantsStep
                             key="participants"
                             creatorName={creatorName}
-                            onBack={handleBack}
+                            onBack={handleBackToCreator}
                             onCreate={handleCreate}
                             isCreating={isCreating}
                         />

@@ -59,6 +59,12 @@ func applyEvent(state *ListState, event Event) error {
 		}
 		state.Name = payload.Name
 		state.Participants = payload.Participants
+	case EventTypeListRenamed:
+		payload, err := parsePayload[ListRenamedPayload](event.Payload)
+		if err != nil {
+			return err
+		}
+		state.Name = payload.Name
 	case EventTypeItemAdded:
 		payload, err := parsePayload[ItemAddedPayload](event.Payload)
 		if err != nil {

@@ -110,6 +110,38 @@ func TestReconstructListState_UnknownEventType(t *testing.T) {
 	}
 }
 
+func TestReconstructListState_ListRenamed(t *testing.T) {
+	events := []Event{
+		{
+			ID:   "evt-1",
+			Type: EventTypeListCreated,
+			Payload: ListCreatedPayload{
+				Name:         "Shopping List",
+				Participants: []string{"Alice", "Bob"},
+			},
+			Timestamp: time.Now(),
+		},
+		{
+			ID:   "evt-2",
+			Type: EventTypeListRenamed,
+			Payload: ListRenamedPayload{
+				Name:      "Groceries",
+				RenamedBy: "Bob",
+			},
+			Timestamp: time.Now(),
+		},
+	}
+
+	state, err := ReconstructListState(events)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	if state.Name != "Groceries" {
+		t.Errorf("expected name 'Groceries', got '%s'", state.Name)
+	}
+}
+
 func TestReconstructListState_ItemAdded(t *testing.T) {
 	eventTime := time.Date(2026, 1, 15, 10, 30, 0, 0, time.UTC)
 	events := []Event{

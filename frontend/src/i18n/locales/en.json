@@ -10,6 +10,9 @@
         }
     },
     "createList": {
+        "step0Title": "Name your list",
+        "step0Placeholder": "e.g., Weekend Trip",
+        "step0Next": "Continue",
         "step1Title": "What's your name?",
         "step1Placeholder": "Enter your name",
         "step1Next": "Continue",
@@ -23,6 +26,13 @@
         "duplicateError": "This name has already been added"
     },
     "list": {
+        "name": {
+            "edit": "Edit list name",
+            "save": "Save",
+            "cancel": "Cancel",
+            "required": "List name is required",
+            "saving": "Saving..."
+        },
         "placeholder": "List page coming soon...",
         "loading": "Loading list...",
         "emptyList": "No items yet. Add your first one!",

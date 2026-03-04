@@ -15,6 +15,7 @@ import (
 	"backend/internal/features/createlist"
 	"backend/internal/features/edititemdescription"
 	"backend/internal/features/renameitemtitle"
+	"backend/internal/features/renamelist"
 	"backend/internal/features/viewlist"
 )
 
@@ -23,6 +24,7 @@ func main() {
 	mux.HandleFunc("GET /health", healthHandler)
 	mux.HandleFunc("POST /api/v1/list/create", createlist.Handler)
 	mux.HandleFunc("GET /api/v1/list/{id}", viewlist.Handler)
+	mux.HandleFunc("PUT /api/v1/list/{id}/name", renamelist.Handler)
 	mux.HandleFunc("POST /api/v1/list/{id}/items", additem.Handler)
 	mux.HandleFunc("PUT /api/v1/list/{id}/items/{itemId}/title", renameitemtitle.Handler)
 	mux.HandleFunc("PUT /api/v1/list/{id}/items/{itemId}/description", edititemdescription.Handler)

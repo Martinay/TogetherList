@@ -12,6 +12,7 @@ import (
 
 // CreateListRequest represents the incoming request body.
 type CreateListRequest struct {
+	Name         string   `json:"name"`
 	Creator      string   `json:"creator"`
 	Participants []string `json:"participants"`
 }
@@ -36,6 +37,11 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	if req.Creator == "" {
 		http.Error(w, "Creator name is required", http.StatusBadRequest)
+		return
+	}
+
+	if req.Name == "" {
+		http.Error(w, "List name is required", http.StatusBadRequest)
 		return
 	}
 
@@ -72,7 +78,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		Type:      events.EventTypeListCreated,
 		Timestamp: time.Now().UTC(),
 		Payload: events.ListCreatedPayload{
-			Name:         "",
+			Name:         req.Name,
 			Participants: participants,
 		},
 	}

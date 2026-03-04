@@ -10,6 +10,13 @@ export async function fetchListState(listId: string): Promise<ListState> {
 }
 
 /**
+ * Rename a list
+ */
+export async function renameList(listId: string, name: string, renamedBy: string) {
+    return apiPut(`/list/${listId}/name`, { name, renamedBy })
+}
+
+/**
  * Add a new item to a list
  */
 export async function addItem(listId: string, title: string, createdBy: string) {
