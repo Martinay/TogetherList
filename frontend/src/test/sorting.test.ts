@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import {
     DEFAULT_SORT_MODE,
     getSortStorageKey,
@@ -44,6 +44,26 @@ describe('view-list sorting helpers', () => {
     it('falls back to default mode for invalid stored values', () => {
         localStorage.setItem(getSortStorageKey('list-a'), 'invalid-mode')
         expect(getStoredSortMode('list-a')).toBe(DEFAULT_SORT_MODE)
+    })
+
+    it('returns default mode when localStorage read throws', () => {
+        const getItemSpy = vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+            throw new Error('storage blocked')
+        })
+
+        expect(getStoredSortMode('list-a')).toBe(DEFAULT_SORT_MODE)
+
+        getItemSpy.mockRestore()
+    })
+
+    it('does not throw when localStorage write fails', () => {
+        const setItemSpy = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+            throw new Error('quota exceeded')
+        })
+
+        expect(() => persistSortMode('list-a', 'title_desc')).not.toThrow()
+
+        setItemSpy.mockRestore()
     })
 
     it('validates all supported modes', () => {

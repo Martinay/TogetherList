@@ -16,12 +16,20 @@ export function isSortMode(value: string | null): value is SortMode {
 }
 
 export function getStoredSortMode(listId: string): SortMode {
-    const storedValue = localStorage.getItem(getSortStorageKey(listId))
-    return isSortMode(storedValue) ? storedValue : DEFAULT_SORT_MODE
+    try {
+        const storedValue = localStorage.getItem(getSortStorageKey(listId))
+        return isSortMode(storedValue) ? storedValue : DEFAULT_SORT_MODE
+    } catch {
+        return DEFAULT_SORT_MODE
+    }
 }
 
 export function persistSortMode(listId: string, mode: SortMode): void {
-    localStorage.setItem(getSortStorageKey(listId), mode)
+    try {
+        localStorage.setItem(getSortStorageKey(listId), mode)
+    } catch {
+        // Ignore storage write failures and keep in-memory selection
+    }
 }
 
 function compareCreatedAt(a: Item, b: Item): number {
