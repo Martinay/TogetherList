@@ -125,10 +125,14 @@ describe('Uncompleted item sorting', () => {
         await (await browser.$('input[placeholder="What needs to be done?"]')).waitForDisplayed({ timeout: 5_000 })
         expect(await activeItemOrder(['zebra', 'apple', 'banana'])).toEqual(['apple', 'banana', 'zebra'])
 
-        // Move two items to completed section and verify completed order remains based on completion time
+        // Move two items to completed section.
+        // Items toggled in-session stay visually stable in active list until refresh by design.
         await toggleItem('zebra')
         await browser.pause(1_100)
         await toggleItem('apple')
+
+        await browser.refresh()
+        await (await browser.$('input[placeholder="What needs to be done?"]')).waitForDisplayed({ timeout: 5_000 })
 
         const completedBeforeSortChange = await completedItemOrder(['zebra', 'apple'])
         expect(completedBeforeSortChange).toEqual(['apple', 'zebra'])
