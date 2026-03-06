@@ -60,6 +60,15 @@
             "section": "Completed",
             "count": "({{count}})"
         },
+        "sort": {
+            "label": "Sort",
+            "options": {
+                "newestFirst": "Newest first",
+                "oldestFirst": "Oldest first",
+                "aToZ": "A–Z",
+                "zToA": "Z–A"
+            }
+        },
         "greeting": {
             "hello": "Hi, ",
             "suffix": "!",
