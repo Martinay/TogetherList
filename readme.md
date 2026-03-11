@@ -22,7 +22,7 @@ A modern micro-SaaS application enabling instant shared lists for shopping, task
 | Layer | Technology | Why |
 |-------|------------|-----|
 | **Frontend** | React + Vite + TypeScript | Fast builds, excellent DX, tree-shaking for <200KB bundles |
-| **Backend** | Go (stdlib) |
+| **Backend** | Go (stdlib) | Minimal dependencies, predictable performance, easy containerization |
 | **Architecture** | Event Sourcing | Full audit trail, time-travel debugging, conflict-free collaboration |
 | **Infrastructure** | Azure Container Apps + Bicep | Infrastructure as Code, auto-scaling, managed SSL |
 | **CI/CD** | GitHub Actions | Automated testing, security scanning, containerized deployments |
@@ -31,7 +31,16 @@ A modern micro-SaaS application enabling instant shared lists for shopping, task
 
 ## 🎯 Architecture Decisions
 
-Decision-making through documented Architecture Decision Records (ADRs).
+Decision-making is documented through Architecture Decision Records (ADRs) in `docs/adr/`.
+
+## 📚 Documentation
+
+- `docs/vision.md` — Product vision and direction
+- `docs/requirements/` — Functional requirements (EARS format)
+- `docs/tasks/` — Implementation tasks and execution units
+- `docs/adr/` — Architecture Decision Records
+- `docs/CICD_SETUP.md` — CI/CD setup and pipeline notes
+- `docs/ssl-setup.md` — TLS/SSL setup notes
 
 ---
 
