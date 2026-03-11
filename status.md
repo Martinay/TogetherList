@@ -62,6 +62,7 @@
 - [x] **0010: Implement Frontend Routing** -> `docs/tasks/0010_implement_frontend_routing.md`
 - [x] **REQ-0006: Item Creation** -> Add item form + backend API with ItemAdded event
 - [x] **REQ-0005: Identity Persistence** -> Per-list LocalStorage with `IdentityPicker` component
+- [x] **REQ-0017: Uncompleted Item Sorting** -> `docs/requirements/0017_uncompleted_item_sorting.md` (Implemented in PR #15)
 
 ## Current Recommendation
 Suggested execution order:

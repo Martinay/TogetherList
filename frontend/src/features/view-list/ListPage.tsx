@@ -8,6 +8,7 @@ import ListHeader from './ListHeader'
 import { ListItem } from './ListItem'
 import { useUserIdentity } from './useUserIdentity'
 import { fetchListState } from './api'
+import { DEFAULT_SORT_MODE, getStoredSortMode, persistSortMode, sortActiveItems, type SortMode } from './sorting'
 import type { ListState, Item } from './types'
 
 function ListPage() {
@@ -17,6 +18,7 @@ function ListPage() {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
     const [sessionToggledIds, setSessionToggledIds] = useState<Set<string>>(new Set())
+    const [sortMode, setSortMode] = useState<SortMode>(DEFAULT_SORT_MODE)
 
     // Per-list identity management
     const { selectedName, selectName, clearName } = useUserIdentity(id || '')
@@ -39,6 +41,22 @@ function ListPage() {
     useEffect(() => {
         refreshList()
     }, [refreshList])
+
+    useEffect(() => {
+        if (!id) {
+            setSortMode(DEFAULT_SORT_MODE)
+            return
+        }
+
+        setSortMode(getStoredSortMode(id))
+    }, [id])
+
+    const handleSortModeChange = (mode: SortMode) => {
+        if (!id) return
+
+        setSortMode(mode)
+        persistSortMode(id, mode)
+    }
 
     const handleIdentitySelect = (name: string) => {
         selectName(name)
@@ -94,6 +112,8 @@ function ListPage() {
         }
     }
 
+    const sortedActiveItems = sortActiveItems(activeItems, sortMode, i18n.language)
+
     // Sort completed section by completed_at descending (latest first)
     completedSectionItems.sort((a, b) => {
         const aTime = a.completed_at ? new Date(a.completed_at).getTime() : 0
@@ -117,6 +137,26 @@ function ListPage() {
                 <AddItemForm listId={id!} createdBy={selectedName} onItemAdded={refreshList} />
             )}
 
+            {activeItems.length > 0 && (
+                <div className="mb-3 flex items-center justify-end gap-2">
+                    <label htmlFor="active-sort" className="text-sm text-text-secondary">
+                        {t('list.sort.label')}
+                    </label>
+                    <select
+                        id="active-sort"
+                        value={sortMode}
+                        onChange={(e) => handleSortModeChange(e.target.value as SortMode)}
+                        className="text-sm rounded-md border border-border-light bg-bg-card text-text-primary px-2 py-1"
+                        aria-label={t('list.sort.label')}
+                    >
+                        <option value="created_desc">{t('list.sort.options.newestFirst')}</option>
+                        <option value="created_asc">{t('list.sort.options.oldestFirst')}</option>
+                        <option value="title_asc">{t('list.sort.options.aToZ')}</option>
+                        <option value="title_desc">{t('list.sort.options.zToA')}</option>
+                    </select>
+                </div>
+            )}
+
             {activeItems.length === 0 && completedSectionItems.length === 0 ? (
                 <div className="text-center py-12 text-text-secondary text-base">
                     {t('list.emptyList')}
@@ -124,7 +164,7 @@ function ListPage() {
             ) : (
                 <>
                     <div className="flex flex-col gap-2">
-                        {activeItems.map((item) => (
+                        {sortedActiveItems.map((item) => (
                             <ListItem
                                 key={item.id}
                                 item={item}
