@@ -8,6 +8,7 @@ const (
 	EventTypeItemTitleEdited       = "ItemTitleEdited"
 	EventTypeItemDescriptionEdited = "ItemDescriptionEdited"
 	EventTypeItemCompleted         = "ItemCompleted"
+	EventTypeItemAssigned          = "ItemAssigned"
 	EventTypeListRenamed           = "ListRenamed"
 )
 
@@ -41,6 +42,12 @@ type ItemCompletedPayload struct {
 type ItemDescriptionEditedPayload struct {
 	ItemID      string `json:"item_id"`
 	Description string `json:"description"`
+}
+
+// ItemAssignedPayload represents the data for an item assignment event.
+type ItemAssignedPayload struct {
+	ItemID     string   `json:"item_id"`
+	AssignedTo []string `json:"assigned_to"`
 }
 
 // ListRenamedPayload represents the data for a list rename event.

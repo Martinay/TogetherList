@@ -43,3 +43,10 @@ export async function editItemDescription(listId: string, itemId: string, descri
 export async function toggleItemCompleted(listId: string, itemId: string, isCompleted: boolean, completedBy: string) {
     return apiPut(`/list/${listId}/items/${itemId}/completed`, { isCompleted, completedBy })
 }
+
+/**
+ * Assign participants to an item (empty array clears assignment)
+ */
+export async function assignItemParticipants(listId: string, itemId: string, assignedTo: string[]) {
+    return apiPut(`/list/${listId}/items/${itemId}/assigned-to`, { assignedTo })
+}

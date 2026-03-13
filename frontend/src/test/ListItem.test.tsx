@@ -8,9 +8,10 @@ vi.mock('../features/view-list/api', () => ({
     renameItemTitle: vi.fn().mockResolvedValue({}),
     toggleItemCompleted: vi.fn().mockResolvedValue({}),
     editItemDescription: vi.fn().mockResolvedValue({}),
+    assignItemParticipants: vi.fn().mockResolvedValue({}),
 }))
 
-import { toggleItemCompleted, editItemDescription } from '../features/view-list/api'
+import { toggleItemCompleted, editItemDescription, assignItemParticipants } from '../features/view-list/api'
 
 const baseItem = {
     id: 'item-1',
@@ -31,6 +32,7 @@ const defaultProps = {
     listId: 'list-1',
     locale: 'en',
     currentUser: 'Alice',
+    participants: ['Alice', 'Bob', 'Carol'],
     onItemUpdated: vi.fn(),
     onItemToggled: vi.fn(),
 }
@@ -116,6 +118,35 @@ describe('ListItem completion', () => {
 
         await waitFor(() => {
             expect(toggleItemCompleted).toHaveBeenCalledWith('list-1', 'item-1', false, 'Alice')
+        })
+    })
+})
+
+describe('ListItem assignment', () => {
+    beforeEach(() => {
+        vi.clearAllMocks()
+    })
+
+    it('assigns a participant from details panel', async () => {
+        render(<ListItem item={baseItem} {...defaultProps} />)
+
+        fireEvent.click(screen.getByRole('button', { name: /buy groceries/i }))
+        fireEvent.click(screen.getByLabelText('Alice'))
+
+        await waitFor(() => {
+            expect(assignItemParticipants).toHaveBeenCalledWith('list-1', 'item-1', ['Alice'])
+        })
+    })
+
+    it('clears assignment', async () => {
+        const itemWithAssignees = { ...baseItem, assigned_to: ['Alice', 'Bob'] }
+        render(<ListItem item={itemWithAssignees} {...defaultProps} />)
+
+        fireEvent.click(screen.getByRole('button', { name: /buy groceries/i }))
+        fireEvent.click(screen.getByRole('button', { name: /clear assignment/i }))
+
+        await waitFor(() => {
+            expect(assignItemParticipants).toHaveBeenCalledWith('list-1', 'item-1', [])
         })
     })
 })

@@ -44,6 +44,8 @@
         "itemDetails": {
             "createdBy": "Created by",
             "createdAt": "Created on",
+            "assignedTo": "Assigned to",
+            "clearAssignment": "Clear assignment",
             "descriptionPlaceholder": "Add description...",
             "saving": "Saving...",
             "saved": "Saved",

@@ -5,7 +5,7 @@ export interface Item {
     completed: boolean
     completed_by?: string
     completed_at?: string
-    assigned_to?: string
+    assigned_to?: string[]
     created_by: string
     created_at: string
 }

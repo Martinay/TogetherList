@@ -11,6 +11,7 @@ import (
 	"github.com/rs/cors"
 
 	"backend/internal/features/additem"
+	"backend/internal/features/assignitem"
 	"backend/internal/features/completeitem"
 	"backend/internal/features/createlist"
 	"backend/internal/features/edititemdescription"
@@ -29,6 +30,7 @@ func main() {
 	mux.HandleFunc("PUT /api/v1/list/{id}/items/{itemId}/title", renameitemtitle.Handler)
 	mux.HandleFunc("PUT /api/v1/list/{id}/items/{itemId}/description", edititemdescription.Handler)
 	mux.HandleFunc("PUT /api/v1/list/{id}/items/{itemId}/completed", completeitem.Handler)
+	mux.HandleFunc("PUT /api/v1/list/{id}/items/{itemId}/assigned-to", assignitem.Handler)
 
 	// Serve frontend SPA from STATIC_DIR if configured
 	staticDir := os.Getenv("STATIC_DIR")

@@ -525,6 +525,45 @@ func TestReconstructListState_ItemDescriptionEdited(t *testing.T) {
 	}
 }
 
+func TestReconstructListState_ItemAssigned(t *testing.T) {
+	events := []Event{
+		{ID: "evt-1", Type: EventTypeListCreated, Payload: ListCreatedPayload{Name: "Test", Participants: []string{"Alice", "Bob"}}, Timestamp: time.Now()},
+		{ID: "evt-2", Type: EventTypeItemAdded, Payload: ItemAddedPayload{ItemID: "item-1", Title: "Task", CreatedBy: "Alice"}, Timestamp: time.Now()},
+		{ID: "evt-3", Type: EventTypeItemAssigned, Payload: ItemAssignedPayload{ItemID: "item-1", AssignedTo: []string{"Alice", "Bob"}}, Timestamp: time.Now()},
+	}
+
+	state, err := ReconstructListState(events)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	item := state.Items["item-1"]
+	if len(item.AssignedTo) != 2 {
+		t.Fatalf("expected 2 assignees, got %d", len(item.AssignedTo))
+	}
+	if item.AssignedTo[0] != "Alice" || item.AssignedTo[1] != "Bob" {
+		t.Errorf("unexpected assignees: %#v", item.AssignedTo)
+	}
+}
+
+func TestReconstructListState_ItemAssignedFromJSON(t *testing.T) {
+	events := []Event{
+		{ID: "evt-1", Type: EventTypeListCreated, Payload: map[string]any{"name": "Test", "participants": []any{"Alice", "Bob"}}, Timestamp: time.Now()},
+		{ID: "evt-2", Type: EventTypeItemAdded, Payload: map[string]any{"item_id": "item-1", "title": "Task", "created_by": "Alice"}, Timestamp: time.Now()},
+		{ID: "evt-3", Type: EventTypeItemAssigned, Payload: map[string]any{"item_id": "item-1", "assigned_to": []any{"Alice", "Bob"}}, Timestamp: time.Now()},
+	}
+
+	state, err := ReconstructListState(events)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	item := state.Items["item-1"]
+	if len(item.AssignedTo) != 2 {
+		t.Fatalf("expected 2 assignees, got %d", len(item.AssignedTo))
+	}
+}
+
 func TestReconstructListState_ItemDescriptionEditedFromJSON(t *testing.T) {
 	events := []Event{
 		{
