@@ -13,7 +13,7 @@ type ItemState struct {
 	Title       string `json:"title"`
 	CreatedBy   string `json:"created_by"`
 	CreatedAt   string `json:"created_at"`
-	AssignedTo  string `json:"assigned_to,omitempty"`
+	AssignedTo  []string `json:"assigned_to,omitempty"`
 	Completed   bool   `json:"completed"`
 	CompletedBy string `json:"completed_by,omitempty"`
 	CompletedAt string `json:"completed_at,omitempty"`
@@ -107,6 +107,14 @@ func applyEvent(state *ListState, event Event) error {
 		}
 		if item, exists := state.Items[payload.ItemID]; exists {
 			item.Description = payload.Description
+		}
+	case EventTypeItemAssigned:
+		payload, err := parsePayload[ItemAssignedPayload](event.Payload)
+		if err != nil {
+			return err
+		}
+		if item, exists := state.Items[payload.ItemID]; exists {
+			item.AssignedTo = payload.AssignedTo
 		}
 	default:
 		// Unknown event types are ignored for forward compatibility

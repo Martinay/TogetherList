@@ -173,6 +173,7 @@ function ListPage() {
                                 currentUser={selectedName!}
                                 onItemUpdated={refreshList}
                                 onItemToggled={handleItemToggled}
+                                participants={listState?.participants || []}
                             />
                         ))}
                     </div>
@@ -195,6 +196,7 @@ function ListPage() {
                                         currentUser={selectedName!}
                                         onItemUpdated={refreshList}
                                         onItemToggled={handleItemToggled}
+                                        participants={listState?.participants || []}
                                     />
                                 ))}
                             </div>
