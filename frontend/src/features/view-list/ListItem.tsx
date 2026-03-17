@@ -40,7 +40,7 @@ export function ListItem({ item, listId, locale, currentUser, participants, onIt
     const descTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
     const inputRef = useRef<HTMLInputElement>(null)
-    const assignedTo = item.assigned_to || []
+    const [assignedTo, setAssignedTo] = useState<string[]>(item.assigned_to || [])
 
     useEffect(() => {
         if (isEditing && inputRef.current) {
@@ -48,6 +48,10 @@ export function ListItem({ item, listId, locale, currentUser, participants, onIt
             inputRef.current.select()
         }
     }, [isEditing])
+
+    useEffect(() => {
+        setAssignedTo(item.assigned_to || [])
+    }, [item.id, item.assigned_to])
 
     const startEditing = () => {
         setEditTitle(item.title)
@@ -128,30 +132,38 @@ export function ListItem({ item, listId, locale, currentUser, participants, onIt
     }
 
     const handleToggleAssignee = async (participant: string) => {
-        if (isAssigning) return
+        if (isAssigning || isCompleted) return
+
+        const previous = assignedTo
         const next = assignedTo.includes(participant)
             ? assignedTo.filter((name) => name !== participant)
             : [...assignedTo, participant]
 
+        setAssignedTo(next)
         setIsAssigning(true)
         try {
             await assignItemParticipants(listId, item.id, next)
-            onItemUpdated()
+            await onItemUpdated()
         } catch (error) {
             console.error('Failed to update assignees:', error)
+            setAssignedTo(previous)
         } finally {
             setIsAssigning(false)
         }
     }
 
     const handleClearAssignment = async () => {
-        if (isAssigning || assignedTo.length === 0) return
+        if (isAssigning || isCompleted || assignedTo.length === 0) return
+
+        const previous = assignedTo
+        setAssignedTo([])
         setIsAssigning(true)
         try {
             await assignItemParticipants(listId, item.id, [])
-            onItemUpdated()
+            await onItemUpdated()
         } catch (error) {
             console.error('Failed to clear assignees:', error)
+            setAssignedTo(previous)
         } finally {
             setIsAssigning(false)
         }
@@ -242,7 +254,7 @@ export function ListItem({ item, listId, locale, currentUser, participants, onIt
                                         type="checkbox"
                                         checked={checked}
                                         onChange={() => handleToggleAssignee(participant)}
-                                        disabled={isAssigning}
+                                        disabled={isAssigning || isCompleted}
                                     />
                                     <span>{participant}</span>
                                 </label>
@@ -253,7 +265,7 @@ export function ListItem({ item, listId, locale, currentUser, participants, onIt
                         type="button"
                         className="text-xs px-2 py-1 rounded border border-border-light text-text-secondary hover:text-text-primary disabled:opacity-50"
                         onClick={handleClearAssignment}
-                        disabled={isAssigning || assignedTo.length === 0}
+                        disabled={isAssigning || isCompleted || assignedTo.length === 0}
                     >
                         {t('list.itemDetails.clearAssignment')}
                     </button>

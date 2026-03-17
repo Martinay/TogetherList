@@ -149,6 +149,16 @@ describe('ListItem assignment', () => {
             expect(assignItemParticipants).toHaveBeenCalledWith('list-1', 'item-1', [])
         })
     })
+
+    it('disables assignment controls for completed items', () => {
+        const completedWithAssignee = { ...completedItem, assigned_to: ['Alice'] }
+        render(<ListItem item={completedWithAssignee} {...defaultProps} />)
+
+        fireEvent.click(screen.getByRole('button', { name: /buy groceries/i }))
+
+        expect(screen.getByLabelText('Alice')).toBeDisabled()
+        expect(screen.getByRole('button', { name: /clear assignment/i })).toBeDisabled()
+    })
 })
 
 describe('ListItem description', () => {
