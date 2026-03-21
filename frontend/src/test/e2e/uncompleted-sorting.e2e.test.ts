@@ -35,10 +35,6 @@ describe('Uncompleted item sorting', () => {
         await createListButton.waitForDisplayed({ timeout: 5_000 })
         await createListButton.click()
 
-        const identityButton = await browser.$('button=SortUser')
-        await identityButton.waitForDisplayed({ timeout: 5_000 })
-        await identityButton.click()
-
         const addInput = await browser.$('input[placeholder="What needs to be done?"]')
         await addInput.waitForDisplayed({ timeout: 5_000 })
     }

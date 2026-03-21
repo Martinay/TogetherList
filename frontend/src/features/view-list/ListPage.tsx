@@ -5,6 +5,7 @@ import AddItemForm from './AddItemForm'
 import IdentityPicker from './IdentityPicker'
 import Greeting from './Greeting'
 import ListHeader from './ListHeader'
+import { LanguageSwitcher } from '../../components/LanguageSwitcher'
 import { ListItem } from './ListItem'
 import { useUserIdentity } from './useUserIdentity'
 import { fetchListState } from './api'
@@ -122,7 +123,11 @@ function ListPage() {
     })
 
     return (
-        <div className="flex-1 flex flex-col max-w-[600px] mx-auto w-full p-8">
+        <div className="flex-1 flex flex-col max-w-[600px] mx-auto w-full p-8 relative">
+            <div className="absolute top-4 right-4 z-50">
+                <LanguageSwitcher />
+            </div>
+            
             <Greeting name={selectedName!} onClick={clearName} />
 
             <ListHeader

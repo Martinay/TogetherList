@@ -41,7 +41,6 @@ describe('Item Completion', () => {
         await createListButton.waitForDisplayed({ timeout: 5_000 })
         await createListButton.click()
 
-        // Wait for the add item form to appear (indicates list is loaded)
         const addInput = await browser.$('input[placeholder="What needs to be done?"]')
         await addInput.waitForDisplayed({ timeout: 10_000 })
     }

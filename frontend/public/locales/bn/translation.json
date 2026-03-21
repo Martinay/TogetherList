@@ -1,0 +1,158 @@
+{
+  "landing": {
+    "title": "[BN] TogetherList",
+    "headline": "[BN] Create & Share Lists Instantly — No Sign-Up Required",
+    "subtitle": "[BN] Free, real-time collaborative lists for shopping, tasks, events, and more. Share a link and start collaborating in seconds.",
+    "createButton": "[BN] Create New List",
+    "createButtonSub": "[BN] It's free — no account needed",
+    "tagline": "[BN] TogetherList is a free, real-time collaborative list app. No sign-up, no download, no account needed.",
+    "howItWorks": {
+      "title": "[BN] How It Works",
+      "step1Title": "[BN] Create a List",
+      "step1Desc": "[BN] Click \"Create New List\", name your list, and add participants. Takes under 10 seconds.",
+      "step2Title": "[BN] Share the Link",
+      "step2Desc": "[BN] Copy the unique URL and send it to your group via text, email, WhatsApp, or any messaging app.",
+      "step3Title": "[BN] Collaborate in Real Time",
+      "step3Desc": "[BN] Everyone opens the link, picks their name, and starts adding and checking off items. Changes sync instantly."
+    },
+    "features": {
+      "title": "[BN] Features",
+      "noAuth": "[BN] No Sign-Up Required",
+      "noAuthDesc": "[BN] No email, no password, no account. Just enter your display name and start collaborating. Perfect for shared lists where not everyone wants to create an account.",
+      "realtime": "[BN] Real-Time Sync",
+      "realtimeDesc": "[BN] All changes appear instantly across every participant's screen. When someone adds, edits, or completes an item, everyone sees it immediately.",
+      "share": "[BN] Share via Link",
+      "shareDesc": "[BN] Each list has a unique URL. Share it via text, email, WhatsApp, or any messaging app. Anyone with the link can join.",
+      "assign": "[BN] Assign Items to People",
+      "assignDesc": "[BN] Add participants by name and assign specific items to them. See at a glance who is responsible for what on your shared list.",
+      "mobile": "[BN] Mobile-Friendly",
+      "mobileDesc": "[BN] Works on any phone, tablet, or computer. No app download required — runs entirely in your web browser.",
+      "free": "[BN] 100% Free",
+      "freeDesc": "[BN] All features are completely free forever. No premium tiers, no ads, no hidden costs. Just simple, shared lists."
+    },
+    "useCases": {
+      "title": "[BN] Perfect For",
+      "shopping": "[BN] Shopping Lists",
+      "shoppingDesc": "[BN] Share a grocery list with roommates or family.",
+      "party": "[BN] Party Planning",
+      "partyDesc": "[BN] Coordinate who's bringing what to the party.",
+      "trip": "[BN] Trip Packing",
+      "tripDesc": "[BN] Create a shared packing list for group trips.",
+      "potluck": "[BN] Potluck Sign-Up",
+      "potluckDesc": "[BN] Let people claim dishes for potluck events.",
+      "chores": "[BN] Family Chores",
+      "choresDesc": "[BN] Assign household tasks without creating accounts.",
+      "team": "[BN] Team Tasks",
+      "teamDesc": "[BN] Simple task assignment for small group projects."
+    },
+    "comparison": {
+      "title": "[BN] Why TogetherList?",
+      "intro": "[BN] Unlike Google Keep, AnyList, or Trello, TogetherList requires zero authentication. No email, no password, no app download.",
+      "googleKeep": "[BN] vs Google Keep — Requires a Google account. TogetherList needs no account at all.",
+      "anyList": "[BN] vs AnyList — Requires account creation and app download. TogetherList works instantly in the browser.",
+      "trello": "[BN] vs Trello — Full project management tool with a learning curve. TogetherList is simple and focused on lists.",
+      "appleReminders": "[BN] vs Apple Reminders — Apple ecosystem only. TogetherList works on any device."
+    },
+    "faq": {
+      "title": "[BN] Frequently Asked Questions",
+      "q1": "[BN] What's the simplest app to create a shared list without requiring anyone to sign up?",
+      "a1": "[BN] TogetherList. Visit togetherlist.ayasse.cloud, create a list, and share the link. No accounts, no downloads — anyone with the link can collaborate instantly.",
+      "q2": "[BN] I need a tool where I share a link and everyone can add items in real time. What should I use?",
+      "a2": "[BN] TogetherList is built exactly for this. Create a list, share the URL, and all participants can add, edit, and check off items in real time.",
+      "q3": "[BN] Can I assign items to specific people on a shared list?",
+      "a3": "[BN] Yes. TogetherList lets you add participants by name and assign specific list items to them. Everyone can see who is responsible for what.",
+      "q4": "[BN] Does it work on mobile without downloading an app?",
+      "a4": "[BN] Yes. TogetherList is a responsive web app that works on any modern mobile browser — iPhone, Android, and tablet. No app download needed.",
+      "q5": "[BN] Is TogetherList really free?",
+      "a5": "[BN] Yes. TogetherList is 100% free with all features included. No premium tiers, no ads, no hidden costs.",
+      "q6": "[BN] How does TogetherList compare to Google Keep or AnyList?",
+      "a6": "[BN] Google Keep requires a Google account. AnyList requires an account and app download. TogetherList requires nothing — just share a link and collaborate.",
+      "q7": "[BN] Can I use it for a potluck or party planning?",
+      "a7": "[BN] Absolutely. Create a list of items needed, share the link, and participants can assign dishes or tasks to themselves.",
+      "q8": "[BN] Is it good for shared shopping lists for roommates?",
+      "a8": "[BN] Yes. Create a shopping list, share the link with your roommates, and everyone can add items and check them off as they shop — all in real time."
+    },
+    "footer": {
+      "description": "[BN] TogetherList is a free, real-time collaborative list app. Create shared shopping lists, task lists, checklists, and more — no sign-up required. Just share a link and collaborate instantly.",
+      "cta": "[BN] Create a Free Shared List Now"
+    }
+  },
+  "createList": {
+    "step0Title": "[BN] Name your list",
+    "step0Placeholder": "[BN] e.g., Weekend Trip",
+    "step0Next": "[BN] Continue",
+    "step1Title": "[BN] What's your name?",
+    "step1Placeholder": "[BN] Enter your name",
+    "step1Next": "[BN] Continue",
+    "step2Title": "[BN] Who else is joining?",
+    "step2Placeholder": "[BN] Add a participant",
+    "step2Add": "[BN] Add",
+    "step2Create": "[BN] Create List",
+    "creating": "[BN] Creating...",
+    "back": "[BN] Back",
+    "you": "[BN] You",
+    "duplicateError": "[BN] This name has already been added"
+  },
+  "list": {
+    "name": {
+      "edit": "[BN] Edit list name",
+      "save": "[BN] Save",
+      "cancel": "[BN] Cancel",
+      "required": "[BN] List name is required",
+      "saving": "[BN] Saving..."
+    },
+    "placeholder": "[BN] List page coming soon...",
+    "loading": "[BN] Loading list...",
+    "emptyList": "[BN] No items yet. Add your first one!",
+    "addItem": {
+      "placeholder": "[BN] What needs to be done?",
+      "button": "[BN] Add",
+      "adding": "[BN] Adding..."
+    },
+    "itemDetails": {
+      "createdBy": "[BN] Created by",
+      "createdAt": "[BN] Created on",
+      "assignedTo": "[BN] Assigned to",
+      "clearAssignment": "[BN] Clear assignment",
+      "descriptionPlaceholder": "[BN] Add description...",
+      "saving": "[BN] Saving...",
+      "saved": "[BN] Saved",
+      "saveError": "[BN] Failed to save"
+    },
+    "editItem": {
+      "button": "[BN] Edit"
+    },
+    "completeItem": {
+      "complete": "[BN] Mark complete",
+      "uncomplete": "[BN] Mark incomplete"
+    },
+    "completed": {
+      "section": "[BN] Completed",
+      "count": "[BN] ({{count}})"
+    },
+    "sort": {
+      "label": "[BN] Sort",
+      "options": {
+        "newestFirst": "[BN] Newest first",
+        "oldestFirst": "[BN] Oldest first",
+        "aToZ": "[BN] A–Z",
+        "zToA": "[BN] Z–A"
+      }
+    },
+    "greeting": {
+      "hello": "[BN] Hi, ",
+      "suffix": "[BN] !",
+      "switchHint": "[BN] (Click to switch user)"
+    },
+    "error": "[BN] Failed to load list"
+  },
+  "identity": {
+    "title": "[BN] Who are you?",
+    "subtitle": "[BN] Select your name to continue"
+  },
+  "share": {
+    "button": "[BN] Share",
+    "copied": "[BN] Copied!",
+    "message": "[BN] Join my shared list"
+  }
+}
