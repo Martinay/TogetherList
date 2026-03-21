@@ -35,7 +35,7 @@
 - [ ] **0009: Implement Item API** -> `docs/tasks/0009_implement_item_api.md`
 
 #### 4. Frontend Implementation (Scope: `frontend/`)
-- [x] **0005: Implement Landing Page** -> `docs/tasks/0005_implement_landing_page.md`
+- [x] **0005: Implement Landing Page** -> `docs/tasks/0005_implement_landing_page.md` (Completed: SEO & GEO Optimized)
 
 - [ ] **0011: Implement User Identity** -> `docs/tasks/0011_implement_user_identity.md`
 - [x] **0012: Implement List View UI** -> `docs/tasks/0012_implement_list_view_ui.md`

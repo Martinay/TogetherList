@@ -24,6 +24,9 @@ description: General coding standards including commenting, versioning, testing 
 - Use **Test-Driven Development (TDD)** approach when applicable.
 - Propose code changes only *after* the corresponding tests have been written and passed.
 - **Every new functionality must be covered by automated tests.**
+- **E2E Testing (WebDriverIO)**: 
+  - When selecting multiple elements using `await browser.$$('selector')`, iterating via a traditional `for(let i=0; i<els.length; i++)` can cause TypeScript errors because `.length` on `ElementArray` is typed as a Promise (`Promise<number>`). 
+  - *Fix*: Instead, use a `for-of` loop: `for (const el of await browser.$$('selector')) { ... }` or explicitly await the length `const count = await els.length;`.
 
 ### 4. CLI Warnings
 - If any CLI command produces warnings or notices, **resolve them before continuing**.

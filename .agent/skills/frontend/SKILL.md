@@ -35,7 +35,13 @@ All pages must meet these thresholds:
 - **FCP** (First Contentful Paint): < 1.8 seconds
 - **Initial Bundle size**: ≤ 200 KB (compressed)
 
-### 5. Tooling
+### 5. SEO & GEO (Generative Engine Optimization)
+- **Dual-Layer Strategy for SPAs**: Since SPAs use a generic `index.html` fallback, serve a fully prerendered static HTML file (e.g., `landing.html`) explicitly to crawlers via backend user-agent detection. Serve the normal SPA to human users.
+- **Open Graph (OG) Tags in SPAs**: Avoid hardcoding landing-page specific OG/Twitter tags in the generic SPA fallback `index.html`. Otherwise, deep links shared in chat apps will incorrectly unfurl as the homepage. 
+- **LLM Context Files**: Implement emerging standards like `llms.txt` and `llms-full.txt` at the root path to provide AI systems with structured product information, use cases, and technical details.
+- **Semantic HTML & JSON-LD**: Use tags like `<article>`, `<details>` and embed JSON-LD schemas (`WebApplication`, `FAQPage`) to ensure crawlers can confidently interpret page structure and FAQs.
+
+### 6. Tooling
 - **Package Manager**: Use **Bun** for all package operations (`bun install`, `bun add`, `bun run`).
 - **Runtime**: Use Bun as the runtime environment.
 
