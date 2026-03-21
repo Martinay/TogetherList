@@ -20,56 +20,78 @@ describe('Rename List E2E', () => {
 
         // Click create list
         const createBtn = await browser.$('button=Create New List')
+        await createBtn.waitForDisplayed({ timeout: 5000 })
         await createBtn.click()
 
-        // Name list step
+        // Step 1: Name list
         const listNameInput = await browser.$('input[placeholder="e.g., Weekend Trip"]')
-        await listNameInput.waitForDisplayed()
+        await listNameInput.waitForDisplayed({ timeout: 5000 })
         await listNameInput.setValue('Test E2E List')
         const continueBtn1 = await browser.$('button=Continue')
         await continueBtn1.click()
 
-        // Name creator step
+        // Step 2: Name creator
         const creatorNameInput = await browser.$('input[placeholder="Enter your name"]')
-        await creatorNameInput.waitForDisplayed()
+        await creatorNameInput.waitForDisplayed({ timeout: 5000 })
         await creatorNameInput.setValue('E2E User')
         const continueBtn2 = await browser.$('button=Continue')
         await continueBtn2.click()
 
-        // Participants step
-        const createListFinalBtn = await browser.$('#create-list-button')
-        await createListFinalBtn.waitForDisplayed()
-        await createListFinalBtn.click()
+        // Step 3: Participants — click create
+        const createListBtn = await browser.$('button=Create List')
+        await createListBtn.waitForDisplayed({ timeout: 5000 })
+        await createListBtn.click()
 
-        // Give it time to load the list page
-        const header = await browser.$('h1')
-        await header.waitForDisplayed()
+        // Wait for list page to load with the correct list name
+        await browser.waitUntil(
+            async () => {
+                const h1 = await browser.$('h1')
+                if (!await h1.isDisplayed()) return false
+                const text = await h1.getText()
+                return text === 'Test E2E List'
+            },
+            { timeout: 10000, timeoutMsg: 'h1 did not show list name "Test E2E List"' }
+        )
     }
 
-    it('creates a list and allows renaming it', async () => {
-        await createListAndJoin()
-
-        // 1. Check initial title
-        let title = await browser.$('h1')
-        expect(await title.getText()).toBe('Test E2E List')
-
-        // 2. Click the edit button
+    async function renameList(newName: string) {
+        // Click the edit button
         const editBtn = await browser.$('button[title="Edit list name"]')
-        await editBtn.waitForDisplayed()
+        await editBtn.waitForDisplayed({ timeout: 5000 })
         await editBtn.click()
 
-        // 3. Edit title in input
+        // Edit title in input
         const input = await browser.$('input[type="text"]')
-        await input.waitForDisplayed()
-        await input.setValue('Renamed E2E List')
+        await input.waitForDisplayed({ timeout: 5000 })
+        await input.setValue(newName)
 
-        // 4. Save
+        // Save
         const saveBtn = await browser.$('button[title="Save"]')
+        await saveBtn.waitForDisplayed({ timeout: 5000 })
         await saveBtn.click()
 
-        // 5. Verify the new title is displayed
-        title = await browser.$('h1')
-        await title.waitForDisplayed()
-        expect(await title.getText()).toBe('Renamed E2E List')
+        // Verify the new title is displayed
+        const title = await browser.$('h1')
+        await title.waitForDisplayed({ timeout: 5000 })
+        expect(await title.getText()).toBe(newName)
+    }
+
+    it('creates a list and verifies initial title', async () => {
+        await createListAndJoin()
+
+        // Check initial title
+        const title = await browser.$('h1')
+        await title.waitForDisplayed({ timeout: 5000 })
+        expect(await title.getText()).toBe('Test E2E List')
+    })
+
+    it('allows renaming the list to standard text', async () => {
+        // Relies on the previous test having created the list
+        await renameList('Renamed E2E List')
+    })
+
+    it('allows renaming the list with emojis and special characters', async () => {
+        // Relies on the previous test having created the list
+        await renameList('Renamed E2E List 😊❤️🛳️')
     })
 })

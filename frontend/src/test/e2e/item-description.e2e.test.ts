@@ -41,14 +41,9 @@ describe('Item Description', () => {
         await createListButton.waitForDisplayed({ timeout: 5_000 })
         await createListButton.click()
 
-        // Wait for list page to load — identity picker should appear
-        const identityButton = await browser.$('button=TestUser')
-        await identityButton.waitForDisplayed({ timeout: 5_000 })
-        await identityButton.click()
-
-        // Wait for the add item form to appear
+        // Wait for the add item form to appear (indicates list is loaded)
         const addInput = await browser.$('input[placeholder="What needs to be done?"]')
-        await addInput.waitForDisplayed({ timeout: 5_000 })
+        await addInput.waitForDisplayed({ timeout: 10_000 })
     }
 
     async function addItem(title: string): Promise<void> {

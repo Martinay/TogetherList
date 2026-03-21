@@ -32,10 +32,12 @@ func main() {
 	mux.HandleFunc("PUT /api/v1/list/{id}/items/{itemId}/completed", completeitem.Handler)
 	mux.HandleFunc("PUT /api/v1/list/{id}/items/{itemId}/assigned-to", assignitem.Handler)
 
-	// Serve frontend SPA from STATIC_DIR if configured
+	// Serve frontend SPA from STATIC_DIR if configured.
+	// Bot-rendering middleware serves pre-rendered HTML to AI/search crawlers.
 	staticDir := os.Getenv("STATIC_DIR")
 	if staticDir != "" {
-		mux.Handle("/", newSPAHandler(staticDir))
+		spaHandler := newSPAHandler(staticDir)
+		mux.Handle("/", newBotRenderHandler(spaHandler, staticDir))
 		log.Printf("Serving SPA from: %s", strings.ReplaceAll(staticDir, "\n", "")) // #nosec
 	}
 

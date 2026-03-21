@@ -42,7 +42,7 @@ function CreateListPage() {
             })
 
             // Store creator name in localStorage for this list
-            localStorage.setItem(`list-${data.listId}-username`, creatorName)
+            localStorage.setItem(`list:${data.listId}:username`, creatorName)
 
             navigate(`/list/${data.listId}`, { replace: true })
         } catch (error) {

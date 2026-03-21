@@ -1,0 +1,40 @@
+# https://togetherlist.ayasse.cloud robots.txt
+
+# Welcome all crawlers — AI and search engines alike
+User-agent: *
+Allow: /
+
+# AI crawlers are explicitly welcome
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# LLM-specific content
+# See https://llmstxt.org for the llms.txt standard
+# /llms.txt — concise product summary for AI systems
+# /llms-full.txt — extended documentation for AI systems
+
+Sitemap: https://togetherlist.ayasse.cloud/sitemap.xml
