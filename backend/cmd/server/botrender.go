@@ -63,7 +63,9 @@ func (h *botRenderHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	ua := r.UserAgent()
 	if ua != "" && isCrawler(ua) {
+		// #nosec G304 G703 -- landingHTMLPath is built from a trusted environment variable
 		if _, err := os.Stat(h.landingHTMLPath); err == nil {
+			// #nosec G304 G703 -- trusted path
 			http.ServeFile(w, r, h.landingHTMLPath)
 			return
 		}
