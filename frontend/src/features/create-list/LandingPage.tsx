@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
+import { LanguageSwitcher } from '../../components/LanguageSwitcher'
 
 const fadeIn = (delay: number) => ({
     initial: { opacity: 0, y: 20 },
@@ -43,6 +44,11 @@ function LandingPage() {
         <main className="flex-1 flex flex-col items-center relative overflow-hidden">
             {/* Radial glow background */}
             <div className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-[radial-gradient(ellipse_at_center,var(--color-accent-glow)_0%,transparent_50%)] opacity-60 animate-pulse" />
+
+            {/* Language Switcher */}
+            <div className="absolute top-4 right-4 z-50">
+                <LanguageSwitcher />
+            </div>
 
             {/* ─── HERO SECTION ─── */}
             <section id="hero" className="relative z-10 max-w-[700px] text-center px-6 pt-16 pb-12">

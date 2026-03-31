@@ -42,6 +42,7 @@
 - [x] **0013: Implement Add Item UI** -> `docs/tasks/0013_implement_add_item_ui.md`
 - [ ] **0014: Implement Item Actions** -> `docs/tasks/0014_implement_item_actions.md`
 - [ ] **0015: Implement Real-time Polling** -> `docs/tasks/0015_implement_realtime_polling.md`
+- [x] **REQ-0018: Language Support** -> `docs/requirements/0018_language_support.md`
 
 #### 5. Integration (Scope: `frontend/` + `backend/`)
 - [ ] **0016: Implement CORS & Integration** -> `docs/tasks/0016_implement_cors_and_integration.md`

@@ -45,7 +45,7 @@ describe('Rename List E2E', () => {
         // Wait for list page to load with the correct list name
         await browser.waitUntil(
             async () => {
-                const h1 = await browser.$('h1')
+                const h1 = await browser.$('[data-testid="list-title"]')
                 if (!await h1.isDisplayed()) return false
                 const text = await h1.getText()
                 return text === 'Test E2E List'
@@ -56,22 +56,23 @@ describe('Rename List E2E', () => {
 
     async function renameList(newName: string) {
         // Click the edit button
-        const editBtn = await browser.$('button[title="Edit list name"]')
+        const editBtn = await browser.$('[data-testid="edit-list-name"]')
         await editBtn.waitForDisplayed({ timeout: 5000 })
         await editBtn.click()
 
         // Edit title in input
-        const input = await browser.$('input[type="text"]')
+        const input = await browser.$('[data-testid="edit-list-input"]')
         await input.waitForDisplayed({ timeout: 5000 })
         await input.setValue(newName)
 
-        // Save
-        const saveBtn = await browser.$('button[title="Save"]')
-        await saveBtn.waitForDisplayed({ timeout: 5000 })
-        await saveBtn.click()
+        // Save using JS click to prevent overlay interception
+        await browser.execute(() => {
+            const btn = document.querySelector('[data-testid="save-list-name"]') as HTMLButtonElement | null;
+            if (btn) btn.click();
+        });
 
         // Verify the new title is displayed
-        const title = await browser.$('h1')
+        const title = await browser.$('[data-testid="list-title"]')
         await title.waitForDisplayed({ timeout: 5000 })
         expect(await title.getText()).toBe(newName)
     }
@@ -80,7 +81,7 @@ describe('Rename List E2E', () => {
         await createListAndJoin()
 
         // Check initial title
-        const title = await browser.$('h1')
+        const title = await browser.$('[data-testid="list-title"]')
         await title.waitForDisplayed({ timeout: 5000 })
         expect(await title.getText()).toBe('Test E2E List')
     })

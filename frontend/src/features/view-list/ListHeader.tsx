@@ -95,6 +95,7 @@ export default function ListHeader({ listId, currentName, participants, currentU
                                 }}
                                 onKeyDown={handleKeyDown}
                                 disabled={isSaving}
+                                data-testid="edit-list-input"
                             />
                             <button
                                 onClick={handleSave}
@@ -102,6 +103,7 @@ export default function ListHeader({ listId, currentName, participants, currentU
                                 className="p-2 text-accent-primary hover:bg-accent-primary hover:text-white border border-accent-primary rounded-lg transition-colors disabled:opacity-50"
                                 aria-label={t('list.name.save')}
                                 title={t('list.name.save')}
+                                data-testid="save-list-name"
                             >
                                 <FiCheck size={20} />
                             </button>
@@ -111,6 +113,7 @@ export default function ListHeader({ listId, currentName, participants, currentU
                                 className="p-2 text-text-secondary hover:text-error hover:bg-error-light rounded-lg transition-colors disabled:opacity-50"
                                 aria-label={t('list.name.cancel')}
                                 title={t('list.name.cancel')}
+                                data-testid="cancel-list-name"
                             >
                                 <FiX size={20} />
                             </button>
@@ -119,7 +122,7 @@ export default function ListHeader({ listId, currentName, participants, currentU
                     </div>
                 ) : (
                     <div className="flex items-center justify-center gap-2 flex-wrap">
-                        <h1 className="text-[clamp(1.5rem,4vw,2rem)] font-bold bg-gradient-to-br from-accent-primary to-accent-secondary bg-clip-text text-transparent mb-2">
+                        <h1 className="text-[clamp(1.5rem,4vw,2rem)] font-bold bg-gradient-to-br from-accent-primary to-accent-secondary bg-clip-text text-transparent mb-2" data-testid="list-title">
                             {currentName || 'Shared List'}
                         </h1>
                         <button
@@ -127,6 +130,7 @@ export default function ListHeader({ listId, currentName, participants, currentU
                             className="p-2 text-text-secondary hover:text-accent-primary transition-colors hover:bg-bg-secondary rounded-full -mt-2"
                             aria-label={t('list.name.edit')}
                             title={t('list.name.edit')}
+                            data-testid="edit-list-name"
                         >
                             <FiEdit2 size={16} />
                         </button>
