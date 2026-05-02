@@ -67,4 +67,4 @@ None.
 
 ### Implementation Details
 - The language selection interface was redesigned to include a searchable dropdown menu to make it easier for users to find their language from the list of 21 supported languages.
-- As of May 2026, fully native translations are available for English, German, Spanish, French, Arabic, and Portuguese. The remaining 15 supported languages use clean English fallback text until native translations are sourced.
+- As of May 2026, fully native translations are available for all 21 supported languages. The application name "TogetherList" has been preserved across all translations.
