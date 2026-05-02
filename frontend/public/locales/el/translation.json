@@ -1,158 +1,158 @@
 {
   "landing": {
-    "title": "[EL] TogetherList",
-    "headline": "[EL] Create & Share Lists Instantly — No Sign-Up Required",
-    "subtitle": "[EL] Free, real-time collaborative lists for shopping, tasks, events, and more. Share a link and start collaborating in seconds.",
-    "createButton": "[EL] Create New List",
-    "createButtonSub": "[EL] It's free — no account needed",
-    "tagline": "[EL] TogetherList is a free, real-time collaborative list app. No sign-up, no download, no account needed.",
+    "title": "TogetherList",
+    "headline": "Δημιουργήστε & Μοιραστείτε Λίστες Άμεσα — Χωρίς Εγγραφή",
+    "subtitle": "Δωρεάν, συνεργατικές λίστες σε πραγματικό χρόνο.",
+    "createButton": "Δημιουργία Νέας Λίστας",
+    "createButtonSub": "Είναι δωρεάν — δεν απαιτείται λογαριασμός",
+    "tagline": "Το TogetherList είναι μια δωρεάν εφαρμογή για συνεργατικές λίστες.",
     "howItWorks": {
-      "title": "[EL] How It Works",
-      "step1Title": "[EL] Create a List",
-      "step1Desc": "[EL] Click \"Create New List\", name your list, and add participants. Takes under 10 seconds.",
-      "step2Title": "[EL] Share the Link",
-      "step2Desc": "[EL] Copy the unique URL and send it to your group via text, email, WhatsApp, or any messaging app.",
-      "step3Title": "[EL] Collaborate in Real Time",
-      "step3Desc": "[EL] Everyone opens the link, picks their name, and starts adding and checking off items. Changes sync instantly."
+      "title": "Πώς Λειτουργεί",
+      "step1Title": "Δημιουργήστε Λίστα",
+      "step1Desc": "Ονομάστε τη λίστα και προσθέστε συμμετέχοντες.",
+      "step2Title": "Μοιραστείτε τον Σύνδεσμο",
+      "step2Desc": "Αντιγράψτε το URL και στείλτε το.",
+      "step3Title": "Συνεργαστείτε σε Πραγματικό Χρόνο",
+      "step3Desc": "Όλοι μπορούν να προσθέτουν στοιχεία άμεσα."
     },
     "features": {
-      "title": "[EL] Features",
-      "noAuth": "[EL] No Sign-Up Required",
-      "noAuthDesc": "[EL] No email, no password, no account. Just enter your display name and start collaborating. Perfect for shared lists where not everyone wants to create an account.",
-      "realtime": "[EL] Real-Time Sync",
-      "realtimeDesc": "[EL] All changes appear instantly across every participant's screen. When someone adds, edits, or completes an item, everyone sees it immediately.",
-      "share": "[EL] Share via Link",
-      "shareDesc": "[EL] Each list has a unique URL. Share it via text, email, WhatsApp, or any messaging app. Anyone with the link can join.",
-      "assign": "[EL] Assign Items to People",
-      "assignDesc": "[EL] Add participants by name and assign specific items to them. See at a glance who is responsible for what on your shared list.",
-      "mobile": "[EL] Mobile-Friendly",
-      "mobileDesc": "[EL] Works on any phone, tablet, or computer. No app download required — runs entirely in your web browser.",
-      "free": "[EL] 100% Free",
-      "freeDesc": "[EL] All features are completely free forever. No premium tiers, no ads, no hidden costs. Just simple, shared lists."
+      "title": "Χαρακτηριστικά",
+      "noAuth": "Χωρίς Εγγραφή",
+      "noAuthDesc": "Απλά βάλτε το όνομά σας.",
+      "realtime": "Συγχρονισμός σε Πραγματικό Χρόνο",
+      "realtimeDesc": "Οι αλλαγές εμφανίζονται άμεσα.",
+      "share": "Κοινοποίηση μέσω Συνδέσμου",
+      "shareDesc": "Κάθε λίστα έχει μοναδικό URL.",
+      "assign": "Ανάθεση Στοιχείων",
+      "assignDesc": "Αναθέστε στοιχεία σε συμμετέχοντες.",
+      "mobile": "Φιλικό προς Κινητά",
+      "mobileDesc": "Λειτουργεί σε κάθε συσκευή.",
+      "free": "100% Δωρεάν",
+      "freeDesc": "Χωρίς κρυφές χρεώσεις."
     },
     "useCases": {
-      "title": "[EL] Perfect For",
-      "shopping": "[EL] Shopping Lists",
-      "shoppingDesc": "[EL] Share a grocery list with roommates or family.",
-      "party": "[EL] Party Planning",
-      "partyDesc": "[EL] Coordinate who's bringing what to the party.",
-      "trip": "[EL] Trip Packing",
-      "tripDesc": "[EL] Create a shared packing list for group trips.",
-      "potluck": "[EL] Potluck Sign-Up",
-      "potluckDesc": "[EL] Let people claim dishes for potluck events.",
-      "chores": "[EL] Family Chores",
-      "choresDesc": "[EL] Assign household tasks without creating accounts.",
-      "team": "[EL] Team Tasks",
-      "teamDesc": "[EL] Simple task assignment for small group projects."
+      "title": "Ιδανικό Για",
+      "shopping": "Λίστες Αγορών",
+      "shoppingDesc": "Μοιραστείτε με συγκατοίκους.",
+      "party": "Οργάνωση Πάρτι",
+      "partyDesc": "Συντονίστε ποιος φέρνει τι.",
+      "trip": "Προετοιμασία Ταξιδιού",
+      "tripDesc": "Κοινή λίστα αποσκευών.",
+      "potluck": "Γεύματα Ρεφενέ",
+      "potluckDesc": "Όλοι επιλέγουν τι θα φέρουν.",
+      "chores": "Δουλειές Σπιτιού",
+      "choresDesc": "Μοιράστε τις δουλειές.",
+      "team": "Ομαδικές Εργασίες",
+      "teamDesc": "Απλή ανάθεση καθηκόντων."
     },
     "comparison": {
-      "title": "[EL] Why TogetherList?",
-      "intro": "[EL] Unlike Google Keep, AnyList, or Trello, TogetherList requires zero authentication. No email, no password, no app download.",
-      "googleKeep": "[EL] vs Google Keep — Requires a Google account. TogetherList needs no account at all.",
-      "anyList": "[EL] vs AnyList — Requires account creation and app download. TogetherList works instantly in the browser.",
-      "trello": "[EL] vs Trello — Full project management tool with a learning curve. TogetherList is simple and focused on lists.",
-      "appleReminders": "[EL] vs Apple Reminders — Apple ecosystem only. TogetherList works on any device."
+      "title": "Γιατί TogetherList;",
+      "intro": "Καμία ανάγκη για λογαριασμό.",
+      "googleKeep": "vs Google Keep — Χωρίς λογαριασμό Google.",
+      "anyList": "vs AnyList — Δεν χρειάζεται εφαρμογή.",
+      "trello": "vs Trello — Πιο απλό.",
+      "appleReminders": "vs Apple Reminders — Σε όλες τις συσκευές."
     },
     "faq": {
-      "title": "[EL] Frequently Asked Questions",
-      "q1": "[EL] What's the simplest app to create a shared list without requiring anyone to sign up?",
-      "a1": "[EL] TogetherList. Visit togetherlist.ayasse.cloud, create a list, and share the link. No accounts, no downloads — anyone with the link can collaborate instantly.",
-      "q2": "[EL] I need a tool where I share a link and everyone can add items in real time. What should I use?",
-      "a2": "[EL] TogetherList is built exactly for this. Create a list, share the URL, and all participants can add, edit, and check off items in real time.",
-      "q3": "[EL] Can I assign items to specific people on a shared list?",
-      "a3": "[EL] Yes. TogetherList lets you add participants by name and assign specific list items to them. Everyone can see who is responsible for what.",
-      "q4": "[EL] Does it work on mobile without downloading an app?",
-      "a4": "[EL] Yes. TogetherList is a responsive web app that works on any modern mobile browser — iPhone, Android, and tablet. No app download needed.",
-      "q5": "[EL] Is TogetherList really free?",
-      "a5": "[EL] Yes. TogetherList is 100% free with all features included. No premium tiers, no ads, no hidden costs.",
-      "q6": "[EL] How does TogetherList compare to Google Keep or AnyList?",
-      "a6": "[EL] Google Keep requires a Google account. AnyList requires an account and app download. TogetherList requires nothing — just share a link and collaborate.",
-      "q7": "[EL] Can I use it for a potluck or party planning?",
-      "a7": "[EL] Absolutely. Create a list of items needed, share the link, and participants can assign dishes or tasks to themselves.",
-      "q8": "[EL] Is it good for shared shopping lists for roommates?",
-      "a8": "[EL] Yes. Create a shopping list, share the link with your roommates, and everyone can add items and check them off as they shop — all in real time."
+      "title": "Συχνές Ερωτήσεις",
+      "q1": "Ποια είναι η πιο απλή εφαρμογή για λίστες;",
+      "a1": "Το TogetherList. Μοιραστείτε μόνο τον σύνδεσμο.",
+      "q2": "Τι να χρησιμοποιήσω για συνεργασία;",
+      "a2": "Το TogetherList είναι τέλειο γι' αυτό.",
+      "q3": "Μπορώ να αναθέσω στοιχεία;",
+      "a3": "Ναι, μπορείτε.",
+      "q4": "Λειτουργεί σε κινητό;",
+      "a4": "Ναι, μέσω browser.",
+      "q5": "Είναι πραγματικά δωρεάν;",
+      "a5": "Ναι, 100% δωρεάν.",
+      "q6": "Ποια η διαφορά με άλλες εφαρμογές;",
+      "a6": "Δεν απαιτείται κανένας λογαριασμός.",
+      "q7": "Κάνει για πάρτι;",
+      "a7": "Απολύτως.",
+      "q8": "Κάνει για λίστα για ψώνια;",
+      "a8": "Ναι, είναι πολύ βολικό."
     },
     "footer": {
-      "description": "[EL] TogetherList is a free, real-time collaborative list app. Create shared shopping lists, task lists, checklists, and more — no sign-up required. Just share a link and collaborate instantly.",
-      "cta": "[EL] Create a Free Shared List Now"
+      "description": "Το TogetherList είναι μια δωρεάν εφαρμογή λιστών.",
+      "cta": "Δημιουργήστε Δωρεάν Λίστα Τώρα"
     }
   },
   "createList": {
-    "step0Title": "[EL] Name your list",
-    "step0Placeholder": "[EL] e.g., Weekend Trip",
-    "step0Next": "[EL] Continue",
-    "step1Title": "[EL] What's your name?",
-    "step1Placeholder": "[EL] Enter your name",
-    "step1Next": "[EL] Continue",
-    "step2Title": "[EL] Who else is joining?",
-    "step2Placeholder": "[EL] Add a participant",
-    "step2Add": "[EL] Add",
-    "step2Create": "[EL] Create List",
-    "creating": "[EL] Creating...",
-    "back": "[EL] Back",
-    "you": "[EL] You",
-    "duplicateError": "[EL] This name has already been added"
+    "step0Title": "Όνομα λίστας",
+    "step0Placeholder": "π.χ. Ταξίδι",
+    "step0Next": "Συνέχεια",
+    "step1Title": "Πώς σας λένε;",
+    "step1Placeholder": "Εισάγετε όνομα",
+    "step1Next": "Συνέχεια",
+    "step2Title": "Ποιος άλλος συμμετέχει;",
+    "step2Placeholder": "Προσθήκη συμμετέχοντα",
+    "step2Add": "Προσθήκη",
+    "step2Create": "Δημιουργία Λίστας",
+    "creating": "Δημιουργία…",
+    "back": "Πίσω",
+    "you": "Εσείς",
+    "duplicateError": "Αυτό το όνομα έχει ήδη προστεθεί"
   },
   "list": {
     "name": {
-      "edit": "[EL] Edit list name",
-      "save": "[EL] Save",
-      "cancel": "[EL] Cancel",
-      "required": "[EL] List name is required",
-      "saving": "[EL] Saving..."
+      "edit": "Επεξεργασία ονόματος",
+      "save": "Αποθήκευση",
+      "cancel": "Ακύρωση",
+      "required": "Το όνομα είναι υποχρεωτικό",
+      "saving": "Αποθήκευση…"
     },
-    "placeholder": "[EL] List page coming soon...",
-    "loading": "[EL] Loading list...",
-    "emptyList": "[EL] No items yet. Add your first one!",
+    "placeholder": "Σύντομα κοντά σας…",
+    "loading": "Φόρτωση…",
+    "emptyList": "Δεν υπάρχουν στοιχεία. Προσθέστε το πρώτο!",
     "addItem": {
-      "placeholder": "[EL] What needs to be done?",
-      "button": "[EL] Add",
-      "adding": "[EL] Adding..."
+      "placeholder": "Τι πρέπει να γίνει;",
+      "button": "Προσθήκη",
+      "adding": "Προσθήκη…"
     },
     "itemDetails": {
-      "createdBy": "[EL] Created by",
-      "createdAt": "[EL] Created on",
-      "assignedTo": "[EL] Assigned to",
-      "clearAssignment": "[EL] Clear assignment",
-      "descriptionPlaceholder": "[EL] Add description...",
-      "saving": "[EL] Saving...",
-      "saved": "[EL] Saved",
-      "saveError": "[EL] Failed to save"
+      "createdBy": "Δημιουργήθηκε από",
+      "createdAt": "Δημιουργήθηκε στις",
+      "assignedTo": "Ανατέθηκε σε",
+      "clearAssignment": "Αφαίρεση ανάθεσης",
+      "descriptionPlaceholder": "Προσθήκη περιγραφής…",
+      "saving": "Αποθήκευση…",
+      "saved": "Αποθηκεύτηκε",
+      "saveError": "Σφάλμα αποθήκευσης"
     },
     "editItem": {
-      "button": "[EL] Edit"
+      "button": "Επεξεργασία"
     },
     "completeItem": {
-      "complete": "[EL] Mark complete",
-      "uncomplete": "[EL] Mark incomplete"
+      "complete": "Ολοκληρώθηκε",
+      "uncomplete": "Δεν ολοκληρώθηκε"
     },
     "completed": {
-      "section": "[EL] Completed",
-      "count": "[EL] ({{count}})"
+      "section": "Ολοκληρωμένα",
+      "count": "({{count}})"
     },
     "sort": {
-      "label": "[EL] Sort",
+      "label": "Ταξινόμηση",
       "options": {
-        "newestFirst": "[EL] Newest first",
-        "oldestFirst": "[EL] Oldest first",
-        "aToZ": "[EL] A–Z",
-        "zToA": "[EL] Z–A"
+        "newestFirst": "Νεότερα",
+        "oldestFirst": "Παλαιότερα",
+        "aToZ": "Α–Ω",
+        "zToA": "Ω–Α"
       }
     },
     "greeting": {
-      "hello": "[EL] Hi, ",
-      "suffix": "[EL] !",
-      "switchHint": "[EL] (Click to switch user)"
+      "hello": "Γεια σας, ",
+      "suffix": "!",
+      "switchHint": "(Κάντε κλικ για αλλαγή χρήστη)"
     },
-    "error": "[EL] Failed to load list"
+    "error": "Σφάλμα φόρτωσης"
   },
   "identity": {
-    "title": "[EL] Who are you?",
-    "subtitle": "[EL] Select your name to continue"
+    "title": "Ποιος είστε;",
+    "subtitle": "Επιλέξτε το όνομά σας"
   },
   "share": {
-    "button": "[EL] Share",
-    "copied": "[EL] Copied!",
-    "message": "[EL] Join my shared list"
+    "button": "Κοινοποίηση",
+    "copied": "Αντιγράφηκε!",
+    "message": "Μπείτε στη λίστα μου"
   }
 }
