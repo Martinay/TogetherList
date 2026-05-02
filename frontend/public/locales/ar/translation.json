@@ -1,158 +1,158 @@
 {
   "landing": {
-    "title": "قائمة مشتركة",
-    "headline": "[AR] Create & Share Lists Instantly — No Sign-Up Required",
-    "subtitle": "[AR] Free, real-time collaborative lists for shopping, tasks, events, and more. Share a link and start collaborating in seconds.",
-    "createButton": "[AR] Create New List",
-    "createButtonSub": "[AR] It's free — no account needed",
-    "tagline": "[AR] TogetherList is a free, real-time collaborative list app. No sign-up, no download, no account needed.",
+    "title": "TogetherList",
+    "headline": "أنشئ وشارك القوائم فوراً — بدون تسجيل",
+    "subtitle": "قوائم تعاونية مجانية في الوقت الفعلي للتسوق والمهام والفعاليات والمزيد. شارك رابطاً وابدأ التعاون في ثوانٍ.",
+    "createButton": "إنشاء قائمة جديدة",
+    "createButtonSub": "مجاني — لا حاجة لحساب",
+    "tagline": "TogetherList هو تطبيق قوائم تعاونية مجاني في الوقت الفعلي.",
     "howItWorks": {
-      "title": "[AR] How It Works",
-      "step1Title": "[AR] Create a List",
-      "step1Desc": "[AR] Click \"Create New List\", name your list, and add participants. Takes under 10 seconds.",
-      "step2Title": "[AR] Share the Link",
-      "step2Desc": "[AR] Copy the unique URL and send it to your group via text, email, WhatsApp, or any messaging app.",
-      "step3Title": "[AR] Collaborate in Real Time",
-      "step3Desc": "[AR] Everyone opens the link, picks their name, and starts adding and checking off items. Changes sync instantly."
+      "title": "كيف يعمل",
+      "step1Title": "أنشئ قائمة",
+      "step1Desc": "انقر على \"إنشاء قائمة جديدة\"، سمّها وأضف المشاركين. يستغرق أقل من 10 ثوانٍ.",
+      "step2Title": "شارك الرابط",
+      "step2Desc": "انسخ الرابط وأرسله عبر الرسائل أو البريد الإلكتروني أو واتساب.",
+      "step3Title": "تعاون في الوقت الفعلي",
+      "step3Desc": "الجميع يفتح الرابط ويختار اسمه ويبدأ بإضافة العناصر. التغييرات تتزامن فوراً."
     },
     "features": {
-      "title": "[AR] Features",
-      "noAuth": "[AR] No Sign-Up Required",
-      "noAuthDesc": "[AR] No email, no password, no account. Just enter your display name and start collaborating. Perfect for shared lists where not everyone wants to create an account.",
-      "realtime": "[AR] Real-Time Sync",
-      "realtimeDesc": "[AR] All changes appear instantly across every participant's screen. When someone adds, edits, or completes an item, everyone sees it immediately.",
-      "share": "[AR] Share via Link",
-      "shareDesc": "[AR] Each list has a unique URL. Share it via text, email, WhatsApp, or any messaging app. Anyone with the link can join.",
-      "assign": "[AR] Assign Items to People",
-      "assignDesc": "[AR] Add participants by name and assign specific items to them. See at a glance who is responsible for what on your shared list.",
-      "mobile": "[AR] Mobile-Friendly",
-      "mobileDesc": "[AR] Works on any phone, tablet, or computer. No app download required — runs entirely in your web browser.",
-      "free": "[AR] 100% Free",
-      "freeDesc": "[AR] All features are completely free forever. No premium tiers, no ads, no hidden costs. Just simple, shared lists."
+      "title": "المميزات",
+      "noAuth": "بدون تسجيل",
+      "noAuthDesc": "لا بريد إلكتروني، لا كلمة مرور، لا حساب. فقط أدخل اسمك وابدأ.",
+      "realtime": "مزامنة فورية",
+      "realtimeDesc": "جميع التغييرات تظهر فوراً على شاشة كل مشارك.",
+      "share": "مشاركة بالرابط",
+      "shareDesc": "لكل قائمة رابط فريد. شاركه عبر أي تطبيق مراسلة.",
+      "assign": "تعيين العناصر",
+      "assignDesc": "أضف مشاركين وعيّن لهم عناصر محددة.",
+      "mobile": "متوافق مع الجوال",
+      "mobileDesc": "يعمل على أي هاتف أو جهاز لوحي أو حاسوب. بدون تحميل تطبيق.",
+      "free": "مجاني 100%",
+      "freeDesc": "جميع المميزات مجانية للأبد. بدون إعلانات أو تكاليف خفية."
     },
     "useCases": {
-      "title": "[AR] Perfect For",
-      "shopping": "[AR] Shopping Lists",
-      "shoppingDesc": "[AR] Share a grocery list with roommates or family.",
-      "party": "[AR] Party Planning",
-      "partyDesc": "[AR] Coordinate who's bringing what to the party.",
-      "trip": "[AR] Trip Packing",
-      "tripDesc": "[AR] Create a shared packing list for group trips.",
-      "potluck": "[AR] Potluck Sign-Up",
-      "potluckDesc": "[AR] Let people claim dishes for potluck events.",
-      "chores": "[AR] Family Chores",
-      "choresDesc": "[AR] Assign household tasks without creating accounts.",
-      "team": "[AR] Team Tasks",
-      "teamDesc": "[AR] Simple task assignment for small group projects."
+      "title": "مثالي لـ",
+      "shopping": "قوائم التسوق",
+      "shoppingDesc": "شارك قائمة تسوق مع العائلة أو زملاء السكن.",
+      "party": "تخطيط الحفلات",
+      "partyDesc": "نسّق من يحضر ماذا للحفلة.",
+      "trip": "قائمة السفر",
+      "tripDesc": "أنشئ قائمة حقائب مشتركة للرحلات الجماعية.",
+      "potluck": "وليمة مشتركة",
+      "potluckDesc": "دع كل شخص يختار الطبق الذي سيحضره.",
+      "chores": "مهام منزلية",
+      "choresDesc": "وزّع المهام المنزلية بدون إنشاء حسابات.",
+      "team": "مهام الفريق",
+      "teamDesc": "توزيع بسيط للمهام في المشاريع الجماعية."
     },
     "comparison": {
-      "title": "[AR] Why TogetherList?",
-      "intro": "[AR] Unlike Google Keep, AnyList, or Trello, TogetherList requires zero authentication. No email, no password, no app download.",
-      "googleKeep": "[AR] vs Google Keep — Requires a Google account. TogetherList needs no account at all.",
-      "anyList": "[AR] vs AnyList — Requires account creation and app download. TogetherList works instantly in the browser.",
-      "trello": "[AR] vs Trello — Full project management tool with a learning curve. TogetherList is simple and focused on lists.",
-      "appleReminders": "[AR] vs Apple Reminders — Apple ecosystem only. TogetherList works on any device."
+      "title": "لماذا TogetherList؟",
+      "intro": "على عكس Google Keep أو AnyList أو Trello، لا يتطلب أي مصادقة.",
+      "googleKeep": "vs Google Keep — يتطلب حساب Google. TogetherList لا تحتاج أي حساب.",
+      "anyList": "vs AnyList — يتطلب حساباً وتحميل تطبيق. TogetherList تعمل فوراً في المتصفح.",
+      "trello": "vs Trello — أداة إدارة مشاريع معقدة. TogetherList بسيطة ومركزة على القوائم.",
+      "appleReminders": "vs تذكيرات Apple — فقط نظام Apple. TogetherList تعمل على أي جهاز."
     },
     "faq": {
-      "title": "[AR] Frequently Asked Questions",
-      "q1": "[AR] What's the simplest app to create a shared list without requiring anyone to sign up?",
-      "a1": "[AR] TogetherList. Visit togetherlist.ayasse.cloud, create a list, and share the link. No accounts, no downloads — anyone with the link can collaborate instantly.",
-      "q2": "[AR] I need a tool where I share a link and everyone can add items in real time. What should I use?",
-      "a2": "[AR] TogetherList is built exactly for this. Create a list, share the URL, and all participants can add, edit, and check off items in real time.",
-      "q3": "[AR] Can I assign items to specific people on a shared list?",
-      "a3": "[AR] Yes. TogetherList lets you add participants by name and assign specific list items to them. Everyone can see who is responsible for what.",
-      "q4": "[AR] Does it work on mobile without downloading an app?",
-      "a4": "[AR] Yes. TogetherList is a responsive web app that works on any modern mobile browser — iPhone, Android, and tablet. No app download needed.",
-      "q5": "[AR] Is TogetherList really free?",
-      "a5": "[AR] Yes. TogetherList is 100% free with all features included. No premium tiers, no ads, no hidden costs.",
-      "q6": "[AR] How does TogetherList compare to Google Keep or AnyList?",
-      "a6": "[AR] Google Keep requires a Google account. AnyList requires an account and app download. TogetherList requires nothing — just share a link and collaborate.",
-      "q7": "[AR] Can I use it for a potluck or party planning?",
-      "a7": "[AR] Absolutely. Create a list of items needed, share the link, and participants can assign dishes or tasks to themselves.",
-      "q8": "[AR] Is it good for shared shopping lists for roommates?",
-      "a8": "[AR] Yes. Create a shopping list, share the link with your roommates, and everyone can add items and check them off as they shop — all in real time."
+      "title": "الأسئلة الشائعة",
+      "q1": "ما أبسط تطبيق لإنشاء TogetherList بدون تسجيل؟",
+      "a1": "TogetherList. زر الموقع، أنشئ قائمة وشارك الرابط. بدون حسابات أو تحميلات.",
+      "q2": "أحتاج أداة أشارك فيها رابطاً ويضيف الجميع عناصر. ماذا أستخدم؟",
+      "a2": "TogetherList مصممة لذلك. أنشئ قائمة وشارك الرابط وتعاونوا في الوقت الفعلي.",
+      "q3": "هل يمكنني تعيين عناصر لأشخاص محددين؟",
+      "a3": "نعم. أضف مشاركين وعيّن لهم عناصر. الجميع يرى من المسؤول عن ماذا.",
+      "q4": "هل يعمل على الجوال بدون تحميل تطبيق؟",
+      "a4": "نعم. تطبيق ويب متجاوب يعمل في أي متصفح حديث.",
+      "q5": "هل هو مجاني حقاً؟",
+      "a5": "نعم. مجاني 100% مع جميع المميزات.",
+      "q6": "كيف يقارن مع Google Keep أو AnyList؟",
+      "a6": "Google Keep يتطلب حساب Google. AnyList يتطلب حساباً وتحميلاً. TogetherList لا تتطلب شيئاً.",
+      "q7": "هل يمكنني استخدامه لتخطيط حفلات؟",
+      "a7": "بالتأكيد. أنشئ قائمة وشارك الرابط ويعيّن المشاركون المهام لأنفسهم.",
+      "q8": "هل هو جيد لقوائم تسوق مشتركة؟",
+      "a8": "نعم. أنشئ قائمة وشارك الرابط ويمكن للجميع الإضافة والتحقق في الوقت الفعلي."
     },
     "footer": {
-      "description": "[AR] TogetherList is a free, real-time collaborative list app. Create shared shopping lists, task lists, checklists, and more — no sign-up required. Just share a link and collaborate instantly.",
-      "cta": "[AR] Create a Free Shared List Now"
+      "description": "TogetherList هو تطبيق قوائم تعاونية مجاني. أنشئ قوائم تسوق ومهام والمزيد — بدون تسجيل.",
+      "cta": "أنشئ TogetherList مجانية الآن"
     }
   },
   "createList": {
-    "step0Title": "[AR] Name your list",
-    "step0Placeholder": "[AR] e.g., Weekend Trip",
-    "step0Next": "[AR] Continue",
-    "step1Title": "[AR] What's your name?",
-    "step1Placeholder": "[AR] Enter your name",
-    "step1Next": "[AR] Continue",
-    "step2Title": "[AR] Who else is joining?",
-    "step2Placeholder": "[AR] Add a participant",
-    "step2Add": "[AR] Add",
-    "step2Create": "[AR] Create List",
-    "creating": "[AR] Creating...",
-    "back": "[AR] Back",
-    "you": "[AR] You",
-    "duplicateError": "[AR] This name has already been added"
+    "step0Title": "سمّ قائمتك",
+    "step0Placeholder": "مثال: رحلة نهاية الأسبوع",
+    "step0Next": "متابعة",
+    "step1Title": "ما اسمك؟",
+    "step1Placeholder": "أدخل اسمك",
+    "step1Next": "متابعة",
+    "step2Title": "من ينضم أيضاً؟",
+    "step2Placeholder": "إضافة مشارك",
+    "step2Add": "إضافة",
+    "step2Create": "إنشاء القائمة",
+    "creating": "جارٍ الإنشاء…",
+    "back": "رجوع",
+    "you": "أنت",
+    "duplicateError": "هذا الاسم مضاف بالفعل"
   },
   "list": {
     "name": {
-      "edit": "[AR] Edit list name",
-      "save": "[AR] Save",
-      "cancel": "[AR] Cancel",
-      "required": "[AR] List name is required",
-      "saving": "[AR] Saving..."
+      "edit": "تعديل اسم القائمة",
+      "save": "حفظ",
+      "cancel": "إلغاء",
+      "required": "اسم القائمة مطلوب",
+      "saving": "جارٍ الحفظ…"
     },
-    "placeholder": "[AR] List page coming soon...",
-    "loading": "[AR] Loading list...",
-    "emptyList": "[AR] No items yet. Add your first one!",
+    "placeholder": "صفحة القائمة قريباً…",
+    "loading": "جارٍ تحميل القائمة…",
+    "emptyList": "لا عناصر بعد. أضف الأول!",
     "addItem": {
-      "placeholder": "[AR] What needs to be done?",
-      "button": "[AR] Add",
-      "adding": "[AR] Adding..."
+      "placeholder": "ما الذي يجب فعله؟",
+      "button": "إضافة",
+      "adding": "جارٍ الإضافة…"
     },
     "itemDetails": {
-      "createdBy": "[AR] Created by",
-      "createdAt": "[AR] Created on",
-      "assignedTo": "[AR] Assigned to",
-      "clearAssignment": "[AR] Clear assignment",
-      "descriptionPlaceholder": "[AR] Add description...",
-      "saving": "[AR] Saving...",
-      "saved": "[AR] Saved",
-      "saveError": "[AR] Failed to save"
+      "createdBy": "أنشأه",
+      "createdAt": "أُنشئ في",
+      "assignedTo": "معيّن لـ",
+      "clearAssignment": "إزالة التعيين",
+      "descriptionPlaceholder": "إضافة وصف…",
+      "saving": "جارٍ الحفظ…",
+      "saved": "تم الحفظ",
+      "saveError": "فشل الحفظ"
     },
     "editItem": {
-      "button": "[AR] Edit"
+      "button": "تعديل"
     },
     "completeItem": {
-      "complete": "[AR] Mark complete",
-      "uncomplete": "[AR] Mark incomplete"
+      "complete": "تحديد كمكتمل",
+      "uncomplete": "تحديد كغير مكتمل"
     },
     "completed": {
-      "section": "[AR] Completed",
-      "count": "[AR] ({{count}})"
+      "section": "مكتمل",
+      "count": "({{count}})"
     },
     "sort": {
-      "label": "[AR] Sort",
+      "label": "ترتيب",
       "options": {
-        "newestFirst": "[AR] Newest first",
-        "oldestFirst": "[AR] Oldest first",
-        "aToZ": "[AR] A–Z",
-        "zToA": "[AR] Z–A"
+        "newestFirst": "الأحدث أولاً",
+        "oldestFirst": "الأقدم أولاً",
+        "aToZ": "أ–ي",
+        "zToA": "ي–أ"
       }
     },
     "greeting": {
-      "hello": "[AR] Hi, ",
-      "suffix": "[AR] !",
-      "switchHint": "[AR] (Click to switch user)"
+      "hello": "مرحباً، ",
+      "suffix": "!",
+      "switchHint": "(انقر لتبديل المستخدم)"
     },
-    "error": "[AR] Failed to load list"
+    "error": "فشل تحميل القائمة"
   },
   "identity": {
-    "title": "[AR] Who are you?",
-    "subtitle": "[AR] Select your name to continue"
+    "title": "من أنت؟",
+    "subtitle": "اختر اسمك للمتابعة"
   },
   "share": {
-    "button": "[AR] Share",
-    "copied": "[AR] Copied!",
-    "message": "[AR] Join my shared list"
+    "button": "مشاركة",
+    "copied": "تم النسخ!",
+    "message": "انضم إلى قائمتي المشتركة"
   }
 }

@@ -1,0 +1,208 @@
+/* ── Language Switcher ── */
+
+/* Globe trigger button */
+.language-switcher-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 9999px;
+  border: 1.5px solid var(--color-border-medium);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-family: var(--font-family-base);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.language-switcher-trigger:hover {
+  border-color: var(--color-accent-primary);
+  box-shadow: 0 2px 10px var(--color-accent-glow);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.language-switcher-globe-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--color-accent-primary);
+  flex-shrink: 0;
+}
+
+.language-switcher-code {
+  line-height: 1;
+}
+
+/* Floating dropdown panel */
+.language-switcher-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 280px;
+  max-height: 380px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  border: 1px solid var(--color-border-light);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.04);
+  z-index: 100;
+  overflow: hidden;
+}
+
+/* Search bar */
+.language-switcher-search-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.language-switcher-search-icon {
+  width: 15px;
+  height: 15px;
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
+.language-switcher-search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--font-family-base);
+  font-size: 0.8125rem;
+  color: var(--color-text-primary);
+}
+
+.language-switcher-search-input::placeholder {
+  color: var(--color-text-secondary);
+  opacity: 0.5;
+}
+
+/* Scrollable list */
+.language-switcher-list {
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  flex: 1;
+}
+
+.language-switcher-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.language-switcher-list::-webkit-scrollbar-thumb {
+  background: var(--color-border-medium);
+  border-radius: 4px;
+}
+
+/* Individual language row */
+.language-switcher-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  position: relative;
+}
+
+.language-switcher-item:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+/* Active language - amber left bar + glow background */
+.language-switcher-item--active {
+  background: var(--color-accent-glow);
+}
+
+.language-switcher-item--active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 3px;
+  border-radius: 3px;
+  background: linear-gradient(
+    to bottom,
+    var(--color-accent-primary),
+    var(--color-accent-secondary)
+  );
+}
+
+.language-switcher-item--active:hover {
+  background: rgba(217, 119, 6, 0.18);
+}
+
+.language-switcher-item-flag {
+  font-size: 1.15rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.language-switcher-item-label {
+  flex: 1;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.language-switcher-item-code {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  opacity: 0.5;
+  letter-spacing: 0.04em;
+}
+
+.language-switcher-item-check {
+  width: 14px;
+  height: 14px;
+  color: var(--color-accent-primary);
+  flex-shrink: 0;
+}
+
+.language-switcher-no-results {
+  padding: 20px 12px;
+  text-align: center;
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+  opacity: 0.6;
+}
+
+/* ── Responsive adjustments ── */
+
+/* Mobile: wider dropdown, full-width aligned */
+@media (max-width: 480px) {
+  .language-switcher-dropdown {
+    width: calc(100vw - 32px);
+    right: -8px;
+    max-height: 340px;
+  }
+}
+
+/* Tablets and up */
+@media (min-width: 768px) {
+  .language-switcher-dropdown {
+    width: 300px;
+  }
+}

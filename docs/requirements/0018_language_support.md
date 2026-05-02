@@ -1,11 +1,11 @@
 ---
 id: REQ-0018
-status: Proposed
+status: Implemented
 type: Functional
 priority: P1
 source: user request
 created: 2026-03-21
-updated: 2026-03-21
+updated: 2026-05-02
 links:
   adr: []
   requirements: []
@@ -64,3 +64,7 @@ Supporting multiple languages increases the accessibility and potential user bas
 ## Notes
 
 None.
+
+### Implementation Details
+- The language selection interface was redesigned to include a searchable dropdown menu to make it easier for users to find their language from the list of 21 supported languages.
+- As of May 2026, fully native translations are available for all 21 supported languages. The application name "TogetherList" has been preserved across all translations.

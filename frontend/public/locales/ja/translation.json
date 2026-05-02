@@ -1,158 +1,158 @@
 {
   "landing": {
-    "title": "共有リスト",
-    "headline": "[JA] Create & Share Lists Instantly — No Sign-Up Required",
-    "subtitle": "[JA] Free, real-time collaborative lists for shopping, tasks, events, and more. Share a link and start collaborating in seconds.",
-    "createButton": "[JA] Create New List",
-    "createButtonSub": "[JA] It's free — no account needed",
-    "tagline": "[JA] TogetherList is a free, real-time collaborative list app. No sign-up, no download, no account needed.",
+    "title": "TogetherList",
+    "headline": "登録不要でリストを即座に作成＆共有",
+    "subtitle": "買い物、タスク、イベントなどに使える無料のリアルタイム共有リスト。",
+    "createButton": "新しいリストを作成",
+    "createButtonSub": "完全無料 — アカウント不要",
+    "tagline": "TogetherListは無料のリアルタイム共有リストアプリです。",
     "howItWorks": {
-      "title": "[JA] How It Works",
-      "step1Title": "[JA] Create a List",
-      "step1Desc": "[JA] Click \"Create New List\", name your list, and add participants. Takes under 10 seconds.",
-      "step2Title": "[JA] Share the Link",
-      "step2Desc": "[JA] Copy the unique URL and send it to your group via text, email, WhatsApp, or any messaging app.",
-      "step3Title": "[JA] Collaborate in Real Time",
-      "step3Desc": "[JA] Everyone opens the link, picks their name, and starts adding and checking off items. Changes sync instantly."
+      "title": "使い方",
+      "step1Title": "リストを作成",
+      "step1Desc": "リストに名前を付け、参加者を追加します。",
+      "step2Title": "リンクを共有",
+      "step2Desc": "URLをコピーしてグループに送信します。",
+      "step3Title": "リアルタイムで共同編集",
+      "step3Desc": "誰でもアイテムを追加してチェックできます。"
     },
     "features": {
-      "title": "[JA] Features",
-      "noAuth": "[JA] No Sign-Up Required",
-      "noAuthDesc": "[JA] No email, no password, no account. Just enter your display name and start collaborating. Perfect for shared lists where not everyone wants to create an account.",
-      "realtime": "[JA] Real-Time Sync",
-      "realtimeDesc": "[JA] All changes appear instantly across every participant's screen. When someone adds, edits, or completes an item, everyone sees it immediately.",
-      "share": "[JA] Share via Link",
-      "shareDesc": "[JA] Each list has a unique URL. Share it via text, email, WhatsApp, or any messaging app. Anyone with the link can join.",
-      "assign": "[JA] Assign Items to People",
-      "assignDesc": "[JA] Add participants by name and assign specific items to them. See at a glance who is responsible for what on your shared list.",
-      "mobile": "[JA] Mobile-Friendly",
-      "mobileDesc": "[JA] Works on any phone, tablet, or computer. No app download required — runs entirely in your web browser.",
-      "free": "[JA] 100% Free",
-      "freeDesc": "[JA] All features are completely free forever. No premium tiers, no ads, no hidden costs. Just simple, shared lists."
+      "title": "特徴",
+      "noAuth": "登録不要",
+      "noAuthDesc": "名前を入力するだけで始められます。",
+      "realtime": "リアルタイム同期",
+      "realtimeDesc": "すべての変更が即座に反映されます。",
+      "share": "リンクで共有",
+      "shareDesc": "誰でもリンクを知っていれば参加できます。",
+      "assign": "アイテムの割り当て",
+      "assignDesc": "参加者にアイテムを割り当てられます。",
+      "mobile": "モバイル対応",
+      "mobileDesc": "アプリなしでどのデバイスでも使えます。",
+      "free": "100%無料",
+      "freeDesc": "ずっと無料で使えます。"
     },
     "useCases": {
-      "title": "[JA] Perfect For",
-      "shopping": "[JA] Shopping Lists",
-      "shoppingDesc": "[JA] Share a grocery list with roommates or family.",
-      "party": "[JA] Party Planning",
-      "partyDesc": "[JA] Coordinate who's bringing what to the party.",
-      "trip": "[JA] Trip Packing",
-      "tripDesc": "[JA] Create a shared packing list for group trips.",
-      "potluck": "[JA] Potluck Sign-Up",
-      "potluckDesc": "[JA] Let people claim dishes for potluck events.",
-      "chores": "[JA] Family Chores",
-      "choresDesc": "[JA] Assign household tasks without creating accounts.",
-      "team": "[JA] Team Tasks",
-      "teamDesc": "[JA] Simple task assignment for small group projects."
+      "title": "おすすめの用途",
+      "shopping": "買い物リスト",
+      "shoppingDesc": "家族やルームメイトと共有。",
+      "party": "パーティの計画",
+      "partyDesc": "誰が何を持ってくるか調整。",
+      "trip": "旅行の持ち物",
+      "tripDesc": "グループ旅行の共有リスト。",
+      "potluck": "持ち寄りパーティ",
+      "potluckDesc": "誰がどの料理を作るか決める。",
+      "chores": "家事",
+      "choresDesc": "アカウントなしで家事を割り当て。",
+      "team": "チームタスク",
+      "teamDesc": "プロジェクトのタスク管理に。"
     },
     "comparison": {
-      "title": "[JA] Why TogetherList?",
-      "intro": "[JA] Unlike Google Keep, AnyList, or Trello, TogetherList requires zero authentication. No email, no password, no app download.",
-      "googleKeep": "[JA] vs Google Keep — Requires a Google account. TogetherList needs no account at all.",
-      "anyList": "[JA] vs AnyList — Requires account creation and app download. TogetherList works instantly in the browser.",
-      "trello": "[JA] vs Trello — Full project management tool with a learning curve. TogetherList is simple and focused on lists.",
-      "appleReminders": "[JA] vs Apple Reminders — Apple ecosystem only. TogetherList works on any device."
+      "title": "TogetherListを選ぶ理由",
+      "intro": "ログインもアプリも不要です。",
+      "googleKeep": "vs Google Keep — Googleアカウントは不要です。",
+      "anyList": "vs AnyList — アプリのダウンロードは不要です。",
+      "trello": "vs Trello — リストに特化したシンプルなツール。",
+      "appleReminders": "vs Apple Reminders — どのデバイスでも動きます。"
     },
     "faq": {
-      "title": "[JA] Frequently Asked Questions",
-      "q1": "[JA] What's the simplest app to create a shared list without requiring anyone to sign up?",
-      "a1": "[JA] TogetherList. Visit togetherlist.ayasse.cloud, create a list, and share the link. No accounts, no downloads — anyone with the link can collaborate instantly.",
-      "q2": "[JA] I need a tool where I share a link and everyone can add items in real time. What should I use?",
-      "a2": "[JA] TogetherList is built exactly for this. Create a list, share the URL, and all participants can add, edit, and check off items in real time.",
-      "q3": "[JA] Can I assign items to specific people on a shared list?",
-      "a3": "[JA] Yes. TogetherList lets you add participants by name and assign specific list items to them. Everyone can see who is responsible for what.",
-      "q4": "[JA] Does it work on mobile without downloading an app?",
-      "a4": "[JA] Yes. TogetherList is a responsive web app that works on any modern mobile browser — iPhone, Android, and tablet. No app download needed.",
-      "q5": "[JA] Is TogetherList really free?",
-      "a5": "[JA] Yes. TogetherList is 100% free with all features included. No premium tiers, no ads, no hidden costs.",
-      "q6": "[JA] How does TogetherList compare to Google Keep or AnyList?",
-      "a6": "[JA] Google Keep requires a Google account. AnyList requires an account and app download. TogetherList requires nothing — just share a link and collaborate.",
-      "q7": "[JA] Can I use it for a potluck or party planning?",
-      "a7": "[JA] Absolutely. Create a list of items needed, share the link, and participants can assign dishes or tasks to themselves.",
-      "q8": "[JA] Is it good for shared shopping lists for roommates?",
-      "a8": "[JA] Yes. Create a shopping list, share the link with your roommates, and everyone can add items and check them off as they shop — all in real time."
+      "title": "よくある質問",
+      "q1": "登録なしでリストを作れるアプリは？",
+      "a1": "TogetherListです。リンクを共有するだけ。",
+      "q2": "リアルタイムで同期できるツールは？",
+      "a2": "TogetherListが最適です。",
+      "q3": "アイテムの割り当てはできますか？",
+      "a3": "はい、可能です。",
+      "q4": "スマホで使えますか？",
+      "a4": "はい、ブラウザで使えます。",
+      "q5": "本当に無料ですか？",
+      "a5": "はい、100%無料です。",
+      "q6": "他のアプリとの違いは？",
+      "a6": "アカウントが一切不要な点です。",
+      "q7": "パーティの計画に使えますか？",
+      "a7": "はい、もちろんです。",
+      "q8": "買い物リストに使えますか？",
+      "a8": "はい、とても便利です。"
     },
     "footer": {
-      "description": "[JA] TogetherList is a free, real-time collaborative list app. Create shared shopping lists, task lists, checklists, and more — no sign-up required. Just share a link and collaborate instantly.",
-      "cta": "[JA] Create a Free Shared List Now"
+      "description": "TogetherListは無料の共有リストアプリです。",
+      "cta": "今すぐ無料リストを作成"
     }
   },
   "createList": {
-    "step0Title": "[JA] Name your list",
-    "step0Placeholder": "[JA] e.g., Weekend Trip",
-    "step0Next": "[JA] Continue",
-    "step1Title": "[JA] What's your name?",
-    "step1Placeholder": "[JA] Enter your name",
-    "step1Next": "[JA] Continue",
-    "step2Title": "[JA] Who else is joining?",
-    "step2Placeholder": "[JA] Add a participant",
-    "step2Add": "[JA] Add",
-    "step2Create": "[JA] Create List",
-    "creating": "[JA] Creating...",
-    "back": "[JA] Back",
-    "you": "[JA] You",
-    "duplicateError": "[JA] This name has already been added"
+    "step0Title": "リストの名前",
+    "step0Placeholder": "例：週末の旅行",
+    "step0Next": "次へ",
+    "step1Title": "あなたの名前は？",
+    "step1Placeholder": "名前を入力",
+    "step1Next": "次へ",
+    "step2Title": "他の参加者は？",
+    "step2Placeholder": "参加者を追加",
+    "step2Add": "追加",
+    "step2Create": "リストを作成",
+    "creating": "作成中…",
+    "back": "戻る",
+    "you": "あなた",
+    "duplicateError": "この名前はすでに追加されています"
   },
   "list": {
     "name": {
-      "edit": "[JA] Edit list name",
-      "save": "[JA] Save",
-      "cancel": "[JA] Cancel",
-      "required": "[JA] List name is required",
-      "saving": "[JA] Saving..."
+      "edit": "名前を編集",
+      "save": "保存",
+      "cancel": "キャンセル",
+      "required": "名前は必須です",
+      "saving": "保存中…"
     },
-    "placeholder": "[JA] List page coming soon...",
-    "loading": "[JA] Loading list...",
-    "emptyList": "[JA] No items yet. Add your first one!",
+    "placeholder": "近日公開…",
+    "loading": "読み込み中…",
+    "emptyList": "まだ何もありません。追加しましょう！",
     "addItem": {
-      "placeholder": "[JA] What needs to be done?",
-      "button": "[JA] Add",
-      "adding": "[JA] Adding..."
+      "placeholder": "何をしますか？",
+      "button": "追加",
+      "adding": "追加中…"
     },
     "itemDetails": {
-      "createdBy": "[JA] Created by",
-      "createdAt": "[JA] Created on",
-      "assignedTo": "[JA] Assigned to",
-      "clearAssignment": "[JA] Clear assignment",
-      "descriptionPlaceholder": "[JA] Add description...",
-      "saving": "[JA] Saving...",
-      "saved": "[JA] Saved",
-      "saveError": "[JA] Failed to save"
+      "createdBy": "作成者",
+      "createdAt": "作成日時",
+      "assignedTo": "担当者",
+      "clearAssignment": "割り当てを解除",
+      "descriptionPlaceholder": "説明を追加…",
+      "saving": "保存中…",
+      "saved": "保存しました",
+      "saveError": "保存に失敗"
     },
     "editItem": {
-      "button": "[JA] Edit"
+      "button": "編集"
     },
     "completeItem": {
-      "complete": "[JA] Mark complete",
-      "uncomplete": "[JA] Mark incomplete"
+      "complete": "完了にする",
+      "uncomplete": "未完了にする"
     },
     "completed": {
-      "section": "[JA] Completed",
-      "count": "[JA] ({{count}})"
+      "section": "完了",
+      "count": "({{count}})"
     },
     "sort": {
-      "label": "[JA] Sort",
+      "label": "並び替え",
       "options": {
-        "newestFirst": "[JA] Newest first",
-        "oldestFirst": "[JA] Oldest first",
-        "aToZ": "[JA] A–Z",
-        "zToA": "[JA] Z–A"
+        "newestFirst": "新しい順",
+        "oldestFirst": "古い順",
+        "aToZ": "A–Z",
+        "zToA": "Z–A"
       }
     },
     "greeting": {
-      "hello": "[JA] Hi, ",
-      "suffix": "[JA] !",
-      "switchHint": "[JA] (Click to switch user)"
+      "hello": "こんにちは、",
+      "suffix": "！",
+      "switchHint": "（クリックでユーザーを切り替え）"
     },
-    "error": "[JA] Failed to load list"
+    "error": "読み込みに失敗しました"
   },
   "identity": {
-    "title": "[JA] Who are you?",
-    "subtitle": "[JA] Select your name to continue"
+    "title": "あなたは誰ですか？",
+    "subtitle": "名前を選んで進んでください"
   },
   "share": {
-    "button": "[JA] Share",
-    "copied": "[JA] Copied!",
-    "message": "[JA] Join my shared list"
+    "button": "共有",
+    "copied": "コピーしました！",
+    "message": "私の共有リストに参加して"
   }
 }
