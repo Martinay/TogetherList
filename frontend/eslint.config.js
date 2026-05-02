@@ -19,6 +19,10 @@ export default tseslint.config(
         },
         rules: {
             ...reactHooks.configs.recommended.rules,
+            // Disable overly strict rules from react-hooks v7.1+
+            // These flag legitimate patterns (data fetching in effects, prop-syncing state)
+            'react-hooks/set-state-in-effect': 'off',
+            'react-hooks/refs': 'off',
             'react-refresh/only-export-components': [
                 'warn',
                 { allowConstantExport: true },

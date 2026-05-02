@@ -21,7 +21,7 @@ export default defineConfig({
         include: ['src/**/*.{test,spec}.{ts,tsx}'],
         exclude: ['src/test/e2e/**'],
         coverage: {
-            provider: 'v8',
+            provider: 'istanbul',
             reporter: ['text', 'json', 'html'],
             reportsDirectory: './coverage',
         },

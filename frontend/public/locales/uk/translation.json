@@ -1,158 +1,158 @@
 {
   "landing": {
-    "title": "[UK] TogetherList",
-    "headline": "[UK] Create & Share Lists Instantly — No Sign-Up Required",
-    "subtitle": "[UK] Free, real-time collaborative lists for shopping, tasks, events, and more. Share a link and start collaborating in seconds.",
-    "createButton": "[UK] Create New List",
-    "createButtonSub": "[UK] It's free — no account needed",
-    "tagline": "[UK] TogetherList is a free, real-time collaborative list app. No sign-up, no download, no account needed.",
+    "title": "TogetherList",
+    "headline": "Створюйте та діліться списками миттєво — без реєстрації",
+    "subtitle": "Безкоштовні спільні списки в реальному часі для покупок, завдань та подій.",
+    "createButton": "Створити новий список",
+    "createButtonSub": "Це безкоштовно — акаунт не потрібен",
+    "tagline": "TogetherList — це безкоштовний додаток для спільних списків.",
     "howItWorks": {
-      "title": "[UK] How It Works",
-      "step1Title": "[UK] Create a List",
-      "step1Desc": "[UK] Click \"Create New List\", name your list, and add participants. Takes under 10 seconds.",
-      "step2Title": "[UK] Share the Link",
-      "step2Desc": "[UK] Copy the unique URL and send it to your group via text, email, WhatsApp, or any messaging app.",
-      "step3Title": "[UK] Collaborate in Real Time",
-      "step3Desc": "[UK] Everyone opens the link, picks their name, and starts adding and checking off items. Changes sync instantly."
+      "title": "Як це працює",
+      "step1Title": "Створіть список",
+      "step1Desc": "Назвіть список та додайте учасників.",
+      "step2Title": "Поділіться посиланням",
+      "step2Desc": "Скопіюйте URL і відправте групі.",
+      "step3Title": "Спільна робота",
+      "step3Desc": "Всі можуть додавати та відмічати елементи."
     },
     "features": {
-      "title": "[UK] Features",
-      "noAuth": "[UK] No Sign-Up Required",
-      "noAuthDesc": "[UK] No email, no password, no account. Just enter your display name and start collaborating. Perfect for shared lists where not everyone wants to create an account.",
-      "realtime": "[UK] Real-Time Sync",
-      "realtimeDesc": "[UK] All changes appear instantly across every participant's screen. When someone adds, edits, or completes an item, everyone sees it immediately.",
-      "share": "[UK] Share via Link",
-      "shareDesc": "[UK] Each list has a unique URL. Share it via text, email, WhatsApp, or any messaging app. Anyone with the link can join.",
-      "assign": "[UK] Assign Items to People",
-      "assignDesc": "[UK] Add participants by name and assign specific items to them. See at a glance who is responsible for what on your shared list.",
-      "mobile": "[UK] Mobile-Friendly",
-      "mobileDesc": "[UK] Works on any phone, tablet, or computer. No app download required — runs entirely in your web browser.",
-      "free": "[UK] 100% Free",
-      "freeDesc": "[UK] All features are completely free forever. No premium tiers, no ads, no hidden costs. Just simple, shared lists."
+      "title": "Можливості",
+      "noAuth": "Без реєстрації",
+      "noAuthDesc": "Просто введіть ім'я та почніть.",
+      "realtime": "Синхронізація",
+      "realtimeDesc": "Зміни з'являються миттєво.",
+      "share": "Поділитися",
+      "shareDesc": "У кожного списку свій URL.",
+      "assign": "Призначення",
+      "assignDesc": "Призначайте завдання учасникам.",
+      "mobile": "Для мобільних",
+      "mobileDesc": "Працює на будь-якому пристрої.",
+      "free": "100% безкоштовно",
+      "freeDesc": "Жодних прихованих платежів."
     },
     "useCases": {
-      "title": "[UK] Perfect For",
-      "shopping": "[UK] Shopping Lists",
-      "shoppingDesc": "[UK] Share a grocery list with roommates or family.",
-      "party": "[UK] Party Planning",
-      "partyDesc": "[UK] Coordinate who's bringing what to the party.",
-      "trip": "[UK] Trip Packing",
-      "tripDesc": "[UK] Create a shared packing list for group trips.",
-      "potluck": "[UK] Potluck Sign-Up",
-      "potluckDesc": "[UK] Let people claim dishes for potluck events.",
-      "chores": "[UK] Family Chores",
-      "choresDesc": "[UK] Assign household tasks without creating accounts.",
-      "team": "[UK] Team Tasks",
-      "teamDesc": "[UK] Simple task assignment for small group projects."
+      "title": "Ідеально для",
+      "shopping": "Списки покупок",
+      "shoppingDesc": "Спільні покупки з друзями.",
+      "party": "Вечірки",
+      "partyDesc": "Хто що принесе.",
+      "trip": "Подорожі",
+      "tripDesc": "Спільний список речей.",
+      "potluck": "Обід в складчину",
+      "potluckDesc": "Кожен обирає свою страву.",
+      "chores": "Домашні справи",
+      "choresDesc": "Розподіл обов'язків.",
+      "team": "Командні завдання",
+      "teamDesc": "Простий розподіл завдань."
     },
     "comparison": {
-      "title": "[UK] Why TogetherList?",
-      "intro": "[UK] Unlike Google Keep, AnyList, or Trello, TogetherList requires zero authentication. No email, no password, no app download.",
-      "googleKeep": "[UK] vs Google Keep — Requires a Google account. TogetherList needs no account at all.",
-      "anyList": "[UK] vs AnyList — Requires account creation and app download. TogetherList works instantly in the browser.",
-      "trello": "[UK] vs Trello — Full project management tool with a learning curve. TogetherList is simple and focused on lists.",
-      "appleReminders": "[UK] vs Apple Reminders — Apple ecosystem only. TogetherList works on any device."
+      "title": "Чому TogetherList?",
+      "intro": "Жодних реєстрацій.",
+      "googleKeep": "vs Google Keep — Не потрібен акаунт.",
+      "anyList": "vs AnyList — Працює в браузері.",
+      "trello": "vs Trello — Простіше і швидше.",
+      "appleReminders": "vs Apple Reminders — Для всіх пристроїв."
     },
     "faq": {
-      "title": "[UK] Frequently Asked Questions",
-      "q1": "[UK] What's the simplest app to create a shared list without requiring anyone to sign up?",
-      "a1": "[UK] TogetherList. Visit togetherlist.ayasse.cloud, create a list, and share the link. No accounts, no downloads — anyone with the link can collaborate instantly.",
-      "q2": "[UK] I need a tool where I share a link and everyone can add items in real time. What should I use?",
-      "a2": "[UK] TogetherList is built exactly for this. Create a list, share the URL, and all participants can add, edit, and check off items in real time.",
-      "q3": "[UK] Can I assign items to specific people on a shared list?",
-      "a3": "[UK] Yes. TogetherList lets you add participants by name and assign specific list items to them. Everyone can see who is responsible for what.",
-      "q4": "[UK] Does it work on mobile without downloading an app?",
-      "a4": "[UK] Yes. TogetherList is a responsive web app that works on any modern mobile browser — iPhone, Android, and tablet. No app download needed.",
-      "q5": "[UK] Is TogetherList really free?",
-      "a5": "[UK] Yes. TogetherList is 100% free with all features included. No premium tiers, no ads, no hidden costs.",
-      "q6": "[UK] How does TogetherList compare to Google Keep or AnyList?",
-      "a6": "[UK] Google Keep requires a Google account. AnyList requires an account and app download. TogetherList requires nothing — just share a link and collaborate.",
-      "q7": "[UK] Can I use it for a potluck or party planning?",
-      "a7": "[UK] Absolutely. Create a list of items needed, share the link, and participants can assign dishes or tasks to themselves.",
-      "q8": "[UK] Is it good for shared shopping lists for roommates?",
-      "a8": "[UK] Yes. Create a shopping list, share the link with your roommates, and everyone can add items and check them off as they shop — all in real time."
+      "title": "Часті запитання",
+      "q1": "Який додаток кращий?",
+      "a1": "TogetherList. Просто посилання.",
+      "q2": "Що обрати для роботи в реальному часі?",
+      "a2": "TogetherList підійде ідеально.",
+      "q3": "Чи можна призначати завдання?",
+      "a3": "Так, звісно.",
+      "q4": "Чи працює на телефоні?",
+      "a4": "Так, у браузері.",
+      "q5": "Справді безкоштовно?",
+      "a5": "На 100%.",
+      "q6": "У чому різниця?",
+      "a6": "Жодних акаунтів.",
+      "q7": "Підійде для вечірки?",
+      "a7": "Так.",
+      "q8": "А для списку покупок?",
+      "a8": "Дуже зручно."
     },
     "footer": {
-      "description": "[UK] TogetherList is a free, real-time collaborative list app. Create shared shopping lists, task lists, checklists, and more — no sign-up required. Just share a link and collaborate instantly.",
-      "cta": "[UK] Create a Free Shared List Now"
+      "description": "TogetherList — безкоштовний додаток.",
+      "cta": "Створити список зараз"
     }
   },
   "createList": {
-    "step0Title": "[UK] Name your list",
-    "step0Placeholder": "[UK] e.g., Weekend Trip",
-    "step0Next": "[UK] Continue",
-    "step1Title": "[UK] What's your name?",
-    "step1Placeholder": "[UK] Enter your name",
-    "step1Next": "[UK] Continue",
-    "step2Title": "[UK] Who else is joining?",
-    "step2Placeholder": "[UK] Add a participant",
-    "step2Add": "[UK] Add",
-    "step2Create": "[UK] Create List",
-    "creating": "[UK] Creating...",
-    "back": "[UK] Back",
-    "you": "[UK] You",
-    "duplicateError": "[UK] This name has already been added"
+    "step0Title": "Назва списку",
+    "step0Placeholder": "Наприклад, Поїздка",
+    "step0Next": "Продовжити",
+    "step1Title": "Як вас звати?",
+    "step1Placeholder": "Введіть ім'я",
+    "step1Next": "Продовжити",
+    "step2Title": "Хто ще бере участь?",
+    "step2Placeholder": "Додати учасника",
+    "step2Add": "Додати",
+    "step2Create": "Створити",
+    "creating": "Створення…",
+    "back": "Назад",
+    "you": "Ви",
+    "duplicateError": "Це ім'я вже є"
   },
   "list": {
     "name": {
-      "edit": "[UK] Edit list name",
-      "save": "[UK] Save",
-      "cancel": "[UK] Cancel",
-      "required": "[UK] List name is required",
-      "saving": "[UK] Saving..."
+      "edit": "Змінити ім'я",
+      "save": "Зберегти",
+      "cancel": "Скасувати",
+      "required": "Ім'я обов'язкове",
+      "saving": "Збереження…"
     },
-    "placeholder": "[UK] List page coming soon...",
-    "loading": "[UK] Loading list...",
-    "emptyList": "[UK] No items yet. Add your first one!",
+    "placeholder": "Незабаром…",
+    "loading": "Завантаження…",
+    "emptyList": "Поки немає елементів.",
     "addItem": {
-      "placeholder": "[UK] What needs to be done?",
-      "button": "[UK] Add",
-      "adding": "[UK] Adding..."
+      "placeholder": "Що потрібно зробити?",
+      "button": "Додати",
+      "adding": "Додавання…"
     },
     "itemDetails": {
-      "createdBy": "[UK] Created by",
-      "createdAt": "[UK] Created on",
-      "assignedTo": "[UK] Assigned to",
-      "clearAssignment": "[UK] Clear assignment",
-      "descriptionPlaceholder": "[UK] Add description...",
-      "saving": "[UK] Saving...",
-      "saved": "[UK] Saved",
-      "saveError": "[UK] Failed to save"
+      "createdBy": "Створив",
+      "createdAt": "Створено",
+      "assignedTo": "Призначено",
+      "clearAssignment": "Очистити",
+      "descriptionPlaceholder": "Додати опис…",
+      "saving": "Збереження…",
+      "saved": "Збережено",
+      "saveError": "Помилка"
     },
     "editItem": {
-      "button": "[UK] Edit"
+      "button": "Змінити"
     },
     "completeItem": {
-      "complete": "[UK] Mark complete",
-      "uncomplete": "[UK] Mark incomplete"
+      "complete": "Виконано",
+      "uncomplete": "Не виконано"
     },
     "completed": {
-      "section": "[UK] Completed",
-      "count": "[UK] ({{count}})"
+      "section": "Завершено",
+      "count": "({{count}})"
     },
     "sort": {
-      "label": "[UK] Sort",
+      "label": "Сортування",
       "options": {
-        "newestFirst": "[UK] Newest first",
-        "oldestFirst": "[UK] Oldest first",
-        "aToZ": "[UK] A–Z",
-        "zToA": "[UK] Z–A"
+        "newestFirst": "Нові спочатку",
+        "oldestFirst": "Старі спочатку",
+        "aToZ": "А–Я",
+        "zToA": "Я–А"
       }
     },
     "greeting": {
-      "hello": "[UK] Hi, ",
-      "suffix": "[UK] !",
-      "switchHint": "[UK] (Click to switch user)"
+      "hello": "Привіт, ",
+      "suffix": "!",
+      "switchHint": "(Натисніть, щоб змінити)"
     },
-    "error": "[UK] Failed to load list"
+    "error": "Помилка завантаження"
   },
   "identity": {
-    "title": "[UK] Who are you?",
-    "subtitle": "[UK] Select your name to continue"
+    "title": "Хто ви?",
+    "subtitle": "Оберіть ім'я"
   },
   "share": {
-    "button": "[UK] Share",
-    "copied": "[UK] Copied!",
-    "message": "[UK] Join my shared list"
+    "button": "Поділитися",
+    "copied": "Скопійовано!",
+    "message": "Приєднуйтесь до списку"
   }
 }

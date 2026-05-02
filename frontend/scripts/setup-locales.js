@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-const sourcePath = path.join(process.cwd(), "public/locales/en/translation.json");
+const sourcePath = path.join(process.cwd(), "src/i18n/locales/en.json");
 const targetDir = path.join(process.cwd(), "public/locales");
 
 const languages = [
