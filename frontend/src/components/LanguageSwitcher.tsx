@@ -36,7 +36,6 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
     const searchInputRef = useRef<HTMLInputElement>(null);
 
     const currentLang = i18n.resolvedLanguage || i18n.language || "en";
-    const currentLangData = LANGUAGES.find((l) => l.code === currentLang) || LANGUAGES[0];
 
     const filtered = LANGUAGES.filter(
         (lang) =>
