@@ -17,7 +17,7 @@ updates:
     open-pull-requests-limit: 5
 
   # Frontend npm/bun dependencies
-  - package-ecosystem: "npm"
+  - package-ecosystem: "bun"
     directory: "/frontend"
     schedule:
       interval: "weekly"
