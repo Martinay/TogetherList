@@ -8,7 +8,7 @@
         "@tailwindcss/vite": "^4.1.18",
         "@vitejs/plugin-react": "^6.0.1",
         "framer-motion": "^12.24.12",
-        "i18next": "^26.0.8",
+        "i18next": "^26.1.0",
         "i18next-browser-languagedetector": "^8.2.1",
         "i18next-http-backend": "^4.0.0",
         "react": "^19.2.3",
@@ -733,7 +733,7 @@
 
     "https-proxy-agent": ["https-proxy-agent@9.0.0", "", { "dependencies": { "agent-base": "9.0.0", "debug": "^4.3.4" } }, "sha512-/MVmHp58WkOypgFhCLk4fzpPcFQvTJ/e6LBI7irpIO2HfxUbpmYoHF+KzipzJpxxzJu7aJNWQ0xojJ/dzV2G5g=="],
 
-    "i18next": ["i18next@26.0.8", "", { "peerDependencies": { "typescript": "^5 || ^6" }, "optionalPeers": ["typescript"] }, "sha512-BRzLom0mhDhV9v0QhgUUHWQJuwFmnr1194xEcNLYD6ym8y8s542n4jXUvRLnhNTbh9PmpU6kGZamyuGHQMsGjw=="],
+    "i18next": ["i18next@26.1.0", "", { "peerDependencies": { "typescript": "^5 || ^6" }, "optionalPeers": ["typescript"] }, "sha512-dIU6td04DvQuIqVst5S9g0GviTmhZ0DYD4b9ociVGJmuCa5vZ2de/t+Enf4olvj87mF8Y2lwjNQBwC9QZsvzKQ=="],
 
     "i18next-browser-languagedetector": ["i18next-browser-languagedetector@8.2.1", "", { "dependencies": { "@babel/runtime": "^7.23.2" } }, "sha512-bZg8+4bdmaOiApD7N7BPT9W8MLZG+nPTOFlLiJiT8uzKXFjhxw4v2ierCXOwB5sFDMtuA5G4kgYZ0AznZxQ/cw=="],
 
