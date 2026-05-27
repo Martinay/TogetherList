@@ -32,8 +32,8 @@ param registryPassword string
 @description('Environment tag (e.g., production, staging)')
 param environment string = 'production'
 
-@description('Custom domain for the Container App (leave empty to disable)')
-param customDomain string = ''
+@description('Custom domains for the Container App')
+param customDomains array = []
 
 @description('Enable certificate binding (false for initial deployment, true afterwards)')
 param enableCertificateBinding bool = true
@@ -54,9 +54,7 @@ var vnetName = '${baseName}-vnet'
 var storageAccountName = replace('${baseName}storage', '-', '')
 var storageMountName = 'data-storage'
 
-var corsAllowedOrigins = !empty(customDomain) ? [
-  'https://${customDomain}'
-] : []
+var corsAllowedOrigins = [for domain in customDomains: 'https://${domain}']
 
 // ============================================================================
 // Modules
@@ -105,7 +103,7 @@ module containerApp 'modules/container-app.bicep' = {
     containerImage: containerImage
     registryUsername: registryUsername
     registryPassword: registryPassword
-    customDomain: customDomain
+    customDomains: customDomains
     enableCertificateBinding: enableCertificateBinding
     corsAllowedOrigins: corsAllowedOrigins
     tags: tags

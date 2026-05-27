@@ -26,8 +26,8 @@ param registryUsername string
 @secure()
 param registryPassword string
 
-@description('Custom domain for the app')
-param customDomain string = ''
+@description('Custom domains for the app')
+param customDomains array = []
 
 @description('Enable certificate binding (false for initial deployment, true afterwards)')
 param enableCertificateBinding bool = true
@@ -41,16 +41,16 @@ param tags object = {}
 @description('Name of the storage mount in the environment')
 param storageMountName string
 
-// Two-phase deployment: hostname must be registered before certificate can be created
-resource managedCertificate 'Microsoft.App/managedEnvironments/managedCertificates@2024-03-01' = if (!empty(customDomain) && enableCertificateBinding) {
-  name: '${environmentName}/${name}-cert'
+// Two-phase deployment: hostnames must be registered before certificates can be created
+resource managedCertificates 'Microsoft.App/managedEnvironments/managedCertificates@2024-03-01' = [for domain in customDomains: if (enableCertificateBinding) {
+  name: '${environmentName}/cert-${replace(domain, '.', '-')}'
   location: location
   tags: tags
   properties: {
-    subjectName: customDomain
+    subjectName: domain
     domainControlValidation: 'CNAME'
   }
-}
+}]
 
 resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
   name: name
@@ -64,18 +64,14 @@ resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
         targetPort: 8080
         transport: 'auto'
         allowInsecure: false
-        customDomains: !empty(customDomain) ? (enableCertificateBinding ? [
-          {
-            name: customDomain
-            certificateId: managedCertificate.id
-            bindingType: 'SniEnabled'
-          }
-        ] : [
-          {
-            name: customDomain
-            bindingType: 'Disabled'
-          }
-        ]) : []
+        customDomains: [for (domain, i) in customDomains: enableCertificateBinding ? {
+          name: domain
+          certificateId: managedCertificates[i].id
+          bindingType: 'SniEnabled'
+        } : {
+          name: domain
+          bindingType: 'Disabled'
+        }]
         corsPolicy: !empty(corsAllowedOrigins) ? {
           allowedOrigins: corsAllowedOrigins
           allowedMethods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS']
