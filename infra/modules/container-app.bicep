@@ -48,7 +48,7 @@ resource managedCertificates 'Microsoft.App/managedEnvironments/managedCertifica
   tags: tags
   properties: {
     subjectName: domain
-    domainControlValidation: 'CNAME'
+    domainControlValidation: 'HTTP'
   }
 }]
 

@@ -98,7 +98,7 @@ az deployment sub create \
   --location westeurope \
   --template-file infra/main.bicep \
   --parameters \
-    containerImage=ghcr.io/YOUR_USERNAME/shared-list:latest \
+    containerImage=ghcr.io/YOUR_USERNAME/togetherlist:latest \
     registryUsername=YOUR_GITHUB_USERNAME \
     registryPassword=YOUR_GITHUB_PAT
 
@@ -133,14 +133,14 @@ The `infra/` directory contains Azure Bicep files that define all infrastructure
 
 Images are automatically pushed to:
 ```
-ghcr.io/YOUR_USERNAME/shared-list:SHA
-ghcr.io/YOUR_USERNAME/shared-list:latest
+ghcr.io/YOUR_USERNAME/togetherlist:SHA
+ghcr.io/YOUR_USERNAME/togetherlist:latest
 ```
 
 ### Making Packages Public (Optional)
 
 1. Go to your GitHub profile → Packages
-2. Click on the `shared-list` package
+2. Click on the `togetherlist` package
 3. Package settings → Change visibility → Public
 
 ## Local Docker Testing

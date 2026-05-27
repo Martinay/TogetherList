@@ -11,7 +11,7 @@ param customDomains = ['togetherlist.eu']
 param enableCertificateBinding = true
 
 // These are overridden at deployment time via --parameters
-param containerImage = 'ghcr.io/OWNER/shared-list:latest'
+param containerImage = 'ghcr.io/OWNER/togetherlist:latest'
 param registryUsername = 'GITHUB_USERNAME'
 param registryPassword = '' // Passed securely via CI/CD
 

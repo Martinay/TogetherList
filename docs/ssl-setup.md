@@ -13,11 +13,20 @@ The solution is a **two-phase deployment** for the initial setup only.
 
 ## Prerequisites
 
-Before setting up SSL, ensure your DNS is configured correctly:
+Before setting up SSL, ensure your DNS is configured correctly. Since `togetherlist.eu` is an apex/root domain, a standard CNAME record is not allowed. Point the root domain to the Container App Environment's static IP address:
 
-1. **CNAME Record**: Point your custom domain to the Container App's default FQDN
+1. **A Record (or ALIAS/ANAME Record)**: Point your custom domain to the Container App Environment's static IP
    ```
-   togetherlist.eu CNAME togetherlist.westeurope.azurecontainerapps.io
+   togetherlist.eu A <container-app-environment-static-ip>
+   ```
+
+   Get the Environment's static IP address:
+   ```bash
+   az containerapp env show \
+     --name togetherlist-env \
+     --resource-group togetherlist-rg \
+     --query "properties.staticIp" \
+     -o tsv
    ```
 
 2. **ASUID (domain verification)** TXT record:
@@ -36,7 +45,13 @@ Before setting up SSL, ensure your DNS is configured correctly:
 
 ## First-Time SSL Setup
 
-When deploying for the first time with a custom domain, you must run two deployments:
+When deploying for the first time with a custom domain, you must run two deployments.
+
+> [!IMPORTANT]
+> **Apex Domain Support (HTTP Validation)**:
+> Since `togetherlist.eu` is an apex domain, Azure managed certificates do **not** support CNAME-based validation (`domainControlValidation: 'CNAME'`). The Bicep template uses HTTP validation (`domainControlValidation: 'HTTP'`) instead.
+>
+> Azure Container Apps' infrastructure automatically handles the HTTP verification requests at `/.well-known/acme-challenge/*` for managed certificates. You do not need to implement any custom token endpoints or routing in your application code.
 
 ### Phase 1: Create Certificate (binding disabled)
 
@@ -47,7 +62,7 @@ az deployment group create \
   --template-file infra/main.bicep \
   --parameters infra/parameters/production.bicepparam \
   --parameters \
-    containerImage=ghcr.io/martinay/shared-list:latest \
+    containerImage=ghcr.io/martinay/togetherlist:latest \
     registryUsername=<github-username> \
     registryPassword=<github-pat> \
     enableCertificateBinding=false
@@ -66,7 +81,7 @@ az deployment group create \
   --template-file infra/main.bicep \
   --parameters infra/parameters/production.bicepparam \
   --parameters \
-    containerImage=ghcr.io/martinay/shared-list:latest \
+    containerImage=ghcr.io/martinay/togetherlist:latest \
     registryUsername=<github-username> \
     registryPassword=<github-pat> \
     enableCertificateBinding=true
@@ -90,7 +105,7 @@ No additional manual steps are required for future deployments.
 **Error**: "The managed certificate could not be created"
 
 **Solution**: Verify DNS configuration:
-1. Ensure CNAME record points to the Container App FQDN
+1. Ensure the A record (or ALIAS record) points to the Container App Environment's static IP
 2. Ensure ASUID TXT record exists with correct verification ID
 3. Wait for DNS propagation (up to 48 hours for some registrars)
 
