@@ -64,6 +64,8 @@
 - [x] **REQ-0006: Item Creation** -> Add item form + backend API with ItemAdded event
 - [x] **REQ-0005: Identity Persistence** -> Per-list LocalStorage with `IdentityPicker` component
 - [x] **REQ-0017: Uncompleted Item Sorting** -> `docs/requirements/0017_uncompleted_item_sorting.md` (Implemented in PR #15)
+- [x] **0024: Fix PR #24 & Repository Labels** -> `docs/tasks/0024_fix_pr_24.md`
+
 
 ## Current Recommendation
 Suggested execution order:
