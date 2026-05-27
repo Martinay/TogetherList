@@ -6,8 +6,8 @@
 
 TogetherList is a free web application for creating and sharing real-time collaborative lists. No sign-up, login, or app download is required. Create a list, share the link, and collaborate instantly.
 
-- Homepage: https://togetherlist.ayasse.cloud
-- Full documentation for LLMs: https://togetherlist.ayasse.cloud/llms-full.txt
+- Homepage: https://togetherlist.eu
+- Full documentation for LLMs: https://togetherlist.eu/llms-full.txt
 
 ## Features
 

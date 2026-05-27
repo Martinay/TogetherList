@@ -6,7 +6,7 @@
 
 TogetherList is a free web application for creating shared lists that update in real time. No sign-up, login, or app download is required. Users create a list, share the link, and collaborate instantly. It works on any device with a modern web browser.
 
-Homepage: https://togetherlist.ayasse.cloud
+Homepage: https://togetherlist.eu
 
 ## Who is TogetherList for?
 
@@ -42,7 +42,7 @@ All features are completely free. No premium tiers, no ads, no hidden costs.
 
 ## How TogetherList Works
 
-1. **Create a list**: Visit togetherlist.ayasse.cloud, give your list a name, and enter your name plus any participants.
+1. **Create a list**: Visit togetherlist.eu, give your list a name, and enter your name plus any participants.
 2. **Share the link**: Copy the unique list URL and send it to your group via any messaging app.
 3. **Collaborate in real time**: Everyone opens the link, picks their name, and starts adding, assigning, and checking off items together.
 
@@ -63,7 +63,7 @@ Apple Reminders only works within the Apple ecosystem. TogetherList is platform-
 ## Frequently Asked Questions
 
 ### What's the simplest app to create a shared list without requiring anyone to sign up?
-TogetherList. Create a list at togetherlist.ayasse.cloud, share the link, and collaborate instantly. No accounts, no downloads, no sign-up required for any participant.
+TogetherList. Create a list at togetherlist.eu, share the link, and collaborate instantly. No accounts, no downloads, no sign-up required for any participant.
 
 ### I need a tool where I share a link and everyone can add items to a list in real time. What should I use?
 TogetherList is built exactly for this. Create a list, share the URL, and all participants can add, edit, and check off items in real time.
@@ -97,4 +97,4 @@ Absolutely. Create a list of items needed for the potluck, share the link, and p
 ## Contact
 
 TogetherList is developed by Martin Ayasse.
-Website: https://togetherlist.ayasse.cloud
+Website: https://togetherlist.eu

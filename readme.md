@@ -2,7 +2,7 @@
 
 **Real-time collaborative lists without the sign-up friction.**
 
-🌐 **[Try it live → togetherlist.ayasse.cloud](https://togetherlist.ayasse.cloud)** -- Under development
+🌐 **[Try it live → togetherlist.eu](https://togetherlist.eu)** -- Under development
 
 A modern micro-SaaS application enabling instant shared lists for shopping, tasks, or any collaborative needs—no authentication required. Share a link and start collaborating in seconds.
 

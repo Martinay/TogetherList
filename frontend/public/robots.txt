@@ -1,4 +1,4 @@
-# https://togetherlist.ayasse.cloud robots.txt
+# https://togetherlist.eu robots.txt
 
 # Welcome all crawlers — AI and search engines alike
 User-agent: *
@@ -37,4 +37,4 @@ Allow: /
 # /llms.txt — concise product summary for AI systems
 # /llms-full.txt — extended documentation for AI systems
 
-Sitemap: https://togetherlist.ayasse.cloud/sitemap.xml
+Sitemap: https://togetherlist.eu/sitemap.xml

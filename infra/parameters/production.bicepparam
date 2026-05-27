@@ -6,7 +6,7 @@ using '../main.bicep'
 param baseName = 'togetherlist'
 param location = 'westeurope'
 param environment = 'production'
-param customDomain = 'togetherlist.ayasse.cloud'
+param customDomain = 'togetherlist.eu'
 // Certificate binding enabled for normal operation (see docs/ssl-setup.md for first-time setup)
 param enableCertificateBinding = true
 

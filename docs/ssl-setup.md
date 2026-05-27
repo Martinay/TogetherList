@@ -17,12 +17,12 @@ Before setting up SSL, ensure your DNS is configured correctly:
 
 1. **CNAME Record**: Point your custom domain to the Container App's default FQDN
    ```
-   togetherlist.ayasse.cloud CNAME togetherlist.westeurope.azurecontainerapps.io
+   togetherlist.eu CNAME togetherlist.westeurope.azurecontainerapps.io
    ```
 
 2. **ASUID (domain verification)** TXT record:
    ```
-   asuid.togetherlist.ayasse.cloud TXT <container-app-custom-domain-verification-id>
+   asuid.togetherlist.eu TXT <container-app-custom-domain-verification-id>
    ```
 
    Get the verification ID:
@@ -100,7 +100,7 @@ No additional manual steps are required for future deployments.
 az containerapp env certificate list \
   --resource-group togetherlist-rg \
   --name togetherlist-env \
-  --query "[?properties.subjectName=='togetherlist.ayasse.cloud']"
+  --query "[?properties.subjectName=='togetherlist.eu']"
 ```
 
 ## References
