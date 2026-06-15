@@ -41,7 +41,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -o /server ./cmd/server
 # ==============================================================================
 # Stage 3: Runtime
 # ==============================================================================
-FROM alpine:3.23
+FROM alpine:3.24
 
 # Create non-root user
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
