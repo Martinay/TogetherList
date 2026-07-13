@@ -31,7 +31,7 @@
     "tailwindcss": "^4.3.2",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.61.0",
-    "vitest": "^4.1.9",
+    "vitest": "^4.1.10",
     "webdriverio": "^9.29.1"
   },
   "dependencies": {
