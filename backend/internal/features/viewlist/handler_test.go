@@ -1,6 +1,7 @@
 package viewlist
 
 import (
+	"github.com/google/uuid"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
@@ -23,7 +24,7 @@ func TestHandler_EmptyList(t *testing.T) {
 	defer os.Unsetenv("DATA_DIR")
 
 	// Create a list with a ListCreated event
-	listID := "test-list-123"
+	listID := uuid.New().String()
 	store := events.NewFileEventStoreWithDir(tempDir)
 	event := events.Event{
 		ID:        "evt-1",
@@ -39,6 +40,7 @@ func TestHandler_EmptyList(t *testing.T) {
 	}
 
 	req := httptest.NewRequest(http.MethodGet, "/api/v1/list/"+listID, nil)
+	req.SetPathValue("id", listID)
 	rr := httptest.NewRecorder()
 	Handler(rr, req)
 
@@ -72,7 +74,7 @@ func TestHandler_ListWithItems(t *testing.T) {
 	os.Setenv("DATA_DIR", tempDir)
 	defer os.Unsetenv("DATA_DIR")
 
-	listID := "test-list-456"
+	listID := uuid.New().String()
 	store := events.NewFileEventStoreWithDir(tempDir)
 
 	// Create list
@@ -100,6 +102,7 @@ func TestHandler_ListWithItems(t *testing.T) {
 	store.Append(listID, addEvent)
 
 	req := httptest.NewRequest(http.MethodGet, "/api/v1/list/"+listID, nil)
+	req.SetPathValue("id", listID)
 	rr := httptest.NewRecorder()
 	Handler(rr, req)
 
@@ -135,7 +138,9 @@ func TestHandler_NonexistentList(t *testing.T) {
 	os.Setenv("DATA_DIR", tempDir)
 	defer os.Unsetenv("DATA_DIR")
 
-	req := httptest.NewRequest(http.MethodGet, "/api/v1/list/nonexistent", nil)
+	listID := uuid.New().String()
+	req := httptest.NewRequest(http.MethodGet, "/api/v1/list/" + listID + "", nil)
+	req.SetPathValue("id", listID)
 	rr := httptest.NewRecorder()
 	Handler(rr, req)
 
@@ -146,7 +151,9 @@ func TestHandler_NonexistentList(t *testing.T) {
 }
 
 func TestHandler_MethodNotAllowed(t *testing.T) {
-	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/test-list", nil)
+	listID := uuid.New().String()
+	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/" + listID + "", nil)
+	req.SetPathValue("id", listID)
 	rr := httptest.NewRecorder()
 	Handler(rr, req)
 

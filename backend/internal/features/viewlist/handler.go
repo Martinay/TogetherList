@@ -3,9 +3,10 @@ package viewlist
 import (
 	"encoding/json"
 	"net/http"
-	"strings"
 
 	"backend/internal/events"
+
+	"github.com/google/uuid"
 )
 
 // Handler handles GET requests to view a list's current state.
@@ -16,14 +17,12 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Extract list ID from URL path: /api/v1/list/{id}
-	path := r.URL.Path
-	parts := strings.Split(strings.Trim(path, "/"), "/")
-	if len(parts) < 4 {
-		http.Error(w, "Invalid URL path", http.StatusBadRequest)
+	// Extract list ID from URL path
+	listID := r.PathValue("id")
+	if parsed, err := uuid.Parse(listID); err != nil || parsed.Version() != 4 {
+		http.Error(w, "Invalid list ID", http.StatusBadRequest)
 		return
 	}
-	listID := parts[3] // api/v1/list/{id} -> parts[3] is the ID
 
 	// Read all events for this list
 	store := events.NewFileEventStore()

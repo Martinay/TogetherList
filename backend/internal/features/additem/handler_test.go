@@ -1,6 +1,7 @@
 package additem
 
 import (
+	"github.com/google/uuid"
 	"bytes"
 	"encoding/json"
 	"net/http"
@@ -23,7 +24,7 @@ func TestHandler_Success(t *testing.T) {
 	defer os.Unsetenv("DATA_DIR")
 
 	// Create a list directory to simulate existing list
-	listID := "test-list-123"
+	listID := uuid.New().String()
 	listDir := filepath.Join(tempDir, listID)
 	if err := os.MkdirAll(listDir, 0755); err != nil {
 		t.Fatalf("failed to create list dir: %v", err)
@@ -31,6 +32,7 @@ func TestHandler_Success(t *testing.T) {
 
 	body := bytes.NewBufferString(`{"title":"Buy groceries","createdBy":"Alice"}`)
 	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/"+listID+"/items", body)
+	req.SetPathValue("id", listID)
 	req.Header.Set("Content-Type", "application/json")
 
 	rr := httptest.NewRecorder()
@@ -65,7 +67,9 @@ func TestHandler_Success(t *testing.T) {
 
 func TestHandler_EmptyTitle(t *testing.T) {
 	body := bytes.NewBufferString(`{"title":"","createdBy":"Alice"}`)
-	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/test-list/items", body)
+	listID := uuid.New().String()
+	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/" + listID + "/items", body)
+	req.SetPathValue("id", listID)
 	req.Header.Set("Content-Type", "application/json")
 
 	rr := httptest.NewRecorder()
@@ -78,7 +82,9 @@ func TestHandler_EmptyTitle(t *testing.T) {
 
 func TestHandler_WhitespaceOnlyTitle(t *testing.T) {
 	body := bytes.NewBufferString(`{"title":"   ","createdBy":"Alice"}`)
-	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/test-list/items", body)
+	listID := uuid.New().String()
+	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/" + listID + "/items", body)
+	req.SetPathValue("id", listID)
 	req.Header.Set("Content-Type", "application/json")
 
 	rr := httptest.NewRecorder()
@@ -90,7 +96,9 @@ func TestHandler_WhitespaceOnlyTitle(t *testing.T) {
 }
 
 func TestHandler_MethodNotAllowed(t *testing.T) {
-	req := httptest.NewRequest(http.MethodGet, "/api/v1/list/test-list/items", nil)
+	listID := uuid.New().String()
+	req := httptest.NewRequest(http.MethodGet, "/api/v1/list/" + listID + "/items", nil)
+	req.SetPathValue("id", listID)
 
 	rr := httptest.NewRecorder()
 	Handler(rr, req)
@@ -102,7 +110,9 @@ func TestHandler_MethodNotAllowed(t *testing.T) {
 
 func TestHandler_InvalidJSON(t *testing.T) {
 	body := bytes.NewBufferString(`{invalid json}`)
-	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/test-list/items", body)
+	listID := uuid.New().String()
+	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/" + listID + "/items", body)
+	req.SetPathValue("id", listID)
 
 	rr := httptest.NewRecorder()
 	Handler(rr, req)
@@ -114,7 +124,9 @@ func TestHandler_InvalidJSON(t *testing.T) {
 
 func TestHandler_EmptyCreatedBy(t *testing.T) {
 	body := bytes.NewBufferString(`{"title":"Test item","createdBy":""}`)
-	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/test-list/items", body)
+	listID := uuid.New().String()
+	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/" + listID + "/items", body)
+	req.SetPathValue("id", listID)
 	req.Header.Set("Content-Type", "application/json")
 
 	rr := httptest.NewRecorder()
@@ -127,7 +139,9 @@ func TestHandler_EmptyCreatedBy(t *testing.T) {
 
 func TestHandler_MissingCreatedBy(t *testing.T) {
 	body := bytes.NewBufferString(`{"title":"Test item"}`)
-	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/test-list/items", body)
+	listID := uuid.New().String()
+	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/" + listID + "/items", body)
+	req.SetPathValue("id", listID)
 	req.Header.Set("Content-Type", "application/json")
 
 	rr := httptest.NewRecorder()

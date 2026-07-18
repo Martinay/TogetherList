@@ -24,14 +24,16 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	path := r.URL.Path
-	parts := strings.Split(strings.Trim(path, "/"), "/")
-	if len(parts) < 7 {
-		http.Error(w, "Invalid URL path", http.StatusBadRequest)
+	listID := r.PathValue("id")
+	if parsed, err := uuid.Parse(listID); err != nil || parsed.Version() != 4 {
+		http.Error(w, "Invalid list ID", http.StatusBadRequest)
 		return
 	}
-	listID := parts[3]
-	itemID := parts[5]
+	itemID := r.PathValue("itemId")
+	if parsed, err := uuid.Parse(itemID); err != nil || parsed.Version() != 4 {
+		http.Error(w, "Invalid item ID", http.StatusBadRequest)
+		return
+	}
 
 	var req AssignItemRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {

@@ -1,6 +1,7 @@
 package assignitem
 
 import (
+	"github.com/google/uuid"
 	"bytes"
 	"encoding/json"
 	"net/http"
@@ -33,12 +34,14 @@ func TestHandler_AssignSuccess(t *testing.T) {
 	os.Setenv("DATA_DIR", tempDir)
 	defer os.Unsetenv("DATA_DIR")
 
-	listID := "test-list-123"
-	itemID := "test-item-456"
+	listID := uuid.New().String()
+	itemID := uuid.New().String()
 	seedListWithItem(t, listID, itemID)
 
 	body := bytes.NewBufferString(`{"assignedTo":["Alice","Bob"]}`)
 	req := httptest.NewRequest(http.MethodPut, "/api/v1/list/"+listID+"/items/"+itemID+"/assigned-to", body)
+	req.SetPathValue("id", listID)
+	req.SetPathValue("itemId", itemID)
 	req.Header.Set("Content-Type", "application/json")
 
 	rr := httptest.NewRecorder()
@@ -74,12 +77,14 @@ func TestHandler_ClearAssignmentSuccess(t *testing.T) {
 	os.Setenv("DATA_DIR", tempDir)
 	defer os.Unsetenv("DATA_DIR")
 
-	listID := "test-list-123"
-	itemID := "test-item-456"
+	listID := uuid.New().String()
+	itemID := uuid.New().String()
 	seedListWithItem(t, listID, itemID)
 
 	body := bytes.NewBufferString(`{"assignedTo":[]}`)
 	req := httptest.NewRequest(http.MethodPut, "/api/v1/list/"+listID+"/items/"+itemID+"/assigned-to", body)
+	req.SetPathValue("id", listID)
+	req.SetPathValue("itemId", itemID)
 	rr := httptest.NewRecorder()
 	Handler(rr, req)
 
@@ -94,12 +99,14 @@ func TestHandler_RejectsUnknownParticipant(t *testing.T) {
 	os.Setenv("DATA_DIR", tempDir)
 	defer os.Unsetenv("DATA_DIR")
 
-	listID := "test-list-123"
-	itemID := "test-item-456"
+	listID := uuid.New().String()
+	itemID := uuid.New().String()
 	seedListWithItem(t, listID, itemID)
 
 	body := bytes.NewBufferString(`{"assignedTo":["Mallory"]}`)
 	req := httptest.NewRequest(http.MethodPut, "/api/v1/list/"+listID+"/items/"+itemID+"/assigned-to", body)
+	req.SetPathValue("id", listID)
+	req.SetPathValue("itemId", itemID)
 	rr := httptest.NewRecorder()
 	Handler(rr, req)
 

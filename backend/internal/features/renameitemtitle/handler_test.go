@@ -1,6 +1,7 @@
 package renameitemtitle
 
 import (
+	"github.com/google/uuid"
 	"bytes"
 	"encoding/json"
 	"net/http"
@@ -23,15 +24,17 @@ func TestHandler_Success(t *testing.T) {
 	defer os.Unsetenv("DATA_DIR")
 
 	// Create a list directory to simulate existing list
-	listID := "test-list-123"
+	listID := uuid.New().String()
 	listDir := filepath.Join(tempDir, listID)
 	if err := os.MkdirAll(listDir, 0755); err != nil {
 		t.Fatalf("failed to create list dir: %v", err)
 	}
 
-	itemID := "test-item-456"
+	itemID := uuid.New().String()
 	body := bytes.NewBufferString(`{"newTitle":"Updated Title"}`)
 	req := httptest.NewRequest(http.MethodPut, "/api/v1/list/"+listID+"/items/"+itemID+"/title", body)
+	req.SetPathValue("id", listID)
+	req.SetPathValue("itemId", itemID)
 	req.Header.Set("Content-Type", "application/json")
 
 	rr := httptest.NewRecorder()
@@ -69,7 +72,9 @@ func TestHandler_Success(t *testing.T) {
 
 func TestHandler_EmptyNewTitle(t *testing.T) {
 	body := bytes.NewBufferString(`{"newTitle":""}`)
-	req := httptest.NewRequest(http.MethodPut, "/api/v1/list/test-list/items/test-item/title", body)
+	listID := uuid.New().String()
+	req := httptest.NewRequest(http.MethodPut, "/api/v1/list/" + listID + "/items/test-item/title", body)
+	req.SetPathValue("id", listID)
 	req.Header.Set("Content-Type", "application/json")
 
 	rr := httptest.NewRecorder()
@@ -82,7 +87,9 @@ func TestHandler_EmptyNewTitle(t *testing.T) {
 
 func TestHandler_WhitespaceOnlyNewTitle(t *testing.T) {
 	body := bytes.NewBufferString(`{"newTitle":"   "}`)
-	req := httptest.NewRequest(http.MethodPut, "/api/v1/list/test-list/items/test-item/title", body)
+	listID := uuid.New().String()
+	req := httptest.NewRequest(http.MethodPut, "/api/v1/list/" + listID + "/items/test-item/title", body)
+	req.SetPathValue("id", listID)
 	req.Header.Set("Content-Type", "application/json")
 
 	rr := httptest.NewRecorder()
@@ -94,7 +101,9 @@ func TestHandler_WhitespaceOnlyNewTitle(t *testing.T) {
 }
 
 func TestHandler_MethodNotAllowed(t *testing.T) {
-	req := httptest.NewRequest(http.MethodGet, "/api/v1/list/test-list/items/test-item/title", nil)
+	listID := uuid.New().String()
+	req := httptest.NewRequest(http.MethodGet, "/api/v1/list/" + listID + "/items/test-item/title", nil)
+	req.SetPathValue("id", listID)
 
 	rr := httptest.NewRecorder()
 	Handler(rr, req)
@@ -106,7 +115,9 @@ func TestHandler_MethodNotAllowed(t *testing.T) {
 
 func TestHandler_InvalidJSON(t *testing.T) {
 	body := bytes.NewBufferString(`{invalid json}`)
-	req := httptest.NewRequest(http.MethodPut, "/api/v1/list/test-list/items/test-item/title", body)
+	listID := uuid.New().String()
+	req := httptest.NewRequest(http.MethodPut, "/api/v1/list/" + listID + "/items/test-item/title", body)
+	req.SetPathValue("id", listID)
 
 	rr := httptest.NewRecorder()
 	Handler(rr, req)

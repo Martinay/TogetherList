@@ -30,14 +30,12 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Extract list ID from URL path: /api/v1/list/{id}/items
-	path := r.URL.Path
-	parts := strings.Split(strings.Trim(path, "/"), "/")
-	if len(parts) < 4 {
-		http.Error(w, "Invalid URL path", http.StatusBadRequest)
+	// Extract list ID from URL path
+	listID := r.PathValue("id")
+	if parsed, err := uuid.Parse(listID); err != nil || parsed.Version() != 4 {
+		http.Error(w, "Invalid list ID", http.StatusBadRequest)
 		return
 	}
-	listID := parts[3] // api/v1/list/{id}/items -> parts[3] is the ID
 
 	var req AddItemRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {

@@ -1,6 +1,7 @@
 package completeitem
 
 import (
+	"github.com/google/uuid"
 	"bytes"
 	"encoding/json"
 	"net/http"
@@ -20,15 +21,17 @@ func TestHandler_CompleteSuccess(t *testing.T) {
 	os.Setenv("DATA_DIR", tempDir)
 	defer os.Unsetenv("DATA_DIR")
 
-	listID := "test-list-123"
+	listID := uuid.New().String()
 	listDir := filepath.Join(tempDir, listID)
 	if err := os.MkdirAll(listDir, 0755); err != nil {
 		t.Fatalf("failed to create list dir: %v", err)
 	}
 
-	itemID := "test-item-456"
+	itemID := uuid.New().String()
 	body := bytes.NewBufferString(`{"isCompleted":true,"completedBy":"Alice"}`)
 	req := httptest.NewRequest(http.MethodPut, "/api/v1/list/"+listID+"/items/"+itemID+"/completed", body)
+	req.SetPathValue("id", listID)
+	req.SetPathValue("itemId", itemID)
 	req.Header.Set("Content-Type", "application/json")
 
 	rr := httptest.NewRecorder()
@@ -73,15 +76,17 @@ func TestHandler_UncompleteSuccess(t *testing.T) {
 	os.Setenv("DATA_DIR", tempDir)
 	defer os.Unsetenv("DATA_DIR")
 
-	listID := "test-list-123"
+	listID := uuid.New().String()
 	listDir := filepath.Join(tempDir, listID)
 	if err := os.MkdirAll(listDir, 0755); err != nil {
 		t.Fatalf("failed to create list dir: %v", err)
 	}
 
-	itemID := "test-item-456"
+	itemID := uuid.New().String()
 	body := bytes.NewBufferString(`{"isCompleted":false,"completedBy":"Bob"}`)
 	req := httptest.NewRequest(http.MethodPut, "/api/v1/list/"+listID+"/items/"+itemID+"/completed", body)
+	req.SetPathValue("id", listID)
+	req.SetPathValue("itemId", itemID)
 	req.Header.Set("Content-Type", "application/json")
 
 	rr := httptest.NewRecorder()
@@ -94,7 +99,9 @@ func TestHandler_UncompleteSuccess(t *testing.T) {
 
 func TestHandler_EmptyCompletedBy(t *testing.T) {
 	body := bytes.NewBufferString(`{"isCompleted":true,"completedBy":""}`)
-	req := httptest.NewRequest(http.MethodPut, "/api/v1/list/test-list/items/test-item/completed", body)
+	listID := uuid.New().String()
+	req := httptest.NewRequest(http.MethodPut, "/api/v1/list/" + listID + "/items/test-item/completed", body)
+	req.SetPathValue("id", listID)
 	req.Header.Set("Content-Type", "application/json")
 
 	rr := httptest.NewRecorder()
@@ -107,7 +114,9 @@ func TestHandler_EmptyCompletedBy(t *testing.T) {
 
 func TestHandler_MissingCompletedBy(t *testing.T) {
 	body := bytes.NewBufferString(`{"isCompleted":true}`)
-	req := httptest.NewRequest(http.MethodPut, "/api/v1/list/test-list/items/test-item/completed", body)
+	listID := uuid.New().String()
+	req := httptest.NewRequest(http.MethodPut, "/api/v1/list/" + listID + "/items/test-item/completed", body)
+	req.SetPathValue("id", listID)
 	req.Header.Set("Content-Type", "application/json")
 
 	rr := httptest.NewRecorder()
@@ -119,7 +128,9 @@ func TestHandler_MissingCompletedBy(t *testing.T) {
 }
 
 func TestHandler_MethodNotAllowed(t *testing.T) {
-	req := httptest.NewRequest(http.MethodGet, "/api/v1/list/test-list/items/test-item/completed", nil)
+	listID := uuid.New().String()
+	req := httptest.NewRequest(http.MethodGet, "/api/v1/list/" + listID + "/items/test-item/completed", nil)
+	req.SetPathValue("id", listID)
 
 	rr := httptest.NewRecorder()
 	Handler(rr, req)
@@ -131,7 +142,9 @@ func TestHandler_MethodNotAllowed(t *testing.T) {
 
 func TestHandler_InvalidJSON(t *testing.T) {
 	body := bytes.NewBufferString(`{invalid json}`)
-	req := httptest.NewRequest(http.MethodPut, "/api/v1/list/test-list/items/test-item/completed", body)
+	listID := uuid.New().String()
+	req := httptest.NewRequest(http.MethodPut, "/api/v1/list/" + listID + "/items/test-item/completed", body)
+	req.SetPathValue("id", listID)
 
 	rr := httptest.NewRecorder()
 	Handler(rr, req)

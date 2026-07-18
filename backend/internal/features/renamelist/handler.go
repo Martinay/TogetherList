@@ -24,8 +24,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	listID := r.PathValue("id")
-	if listID == "" {
-		http.Error(w, "List ID is required", http.StatusBadRequest)
+	if parsed, err := uuid.Parse(listID); err != nil || parsed.Version() != 4 {
+		http.Error(w, "Invalid list ID", http.StatusBadRequest)
 		return
 	}
 

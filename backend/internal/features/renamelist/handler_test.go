@@ -1,6 +1,7 @@
 package renamelist_test
 
 import (
+	"github.com/google/uuid"
 	"bytes"
 	"encoding/json"
 	"net/http"
@@ -26,7 +27,7 @@ func TestRenameListHandler(t *testing.T) {
 	_ = os.Setenv("DATA_DIR", tempDir)
 	defer os.Setenv("DATA_DIR", originalDataDir) // restore
 
-	listID := "test-list-123"
+	listID := uuid.New().String()
 
 	// Create initial state
 	store := events.NewFileEventStore()
@@ -90,7 +91,7 @@ func TestRenameListHandler(t *testing.T) {
 		{
 			name:   "List Not Found",
 			method: http.MethodPut,
-			listID: "non-existent-list",
+			listID: uuid.New().String(),
 			payload: renamelist.RenameListRequest{
 				Name:      "New Name",
 				RenamedBy: "Alice",
@@ -127,6 +128,7 @@ func TestRenameListHandler(t *testing.T) {
 			}
 
 			req := httptest.NewRequest(tc.method, "/api/v1/list/"+tc.listID+"/name", bytes.NewReader(body))
+			req.SetPathValue("id", listID)
 
 			// inject path value which requires go1.22+ NewServeMux
 			// since httptest doesn't do path routing automatically, we can use a mini mux
@@ -165,7 +167,7 @@ func TestVerifyRenamedEventPersisted(t *testing.T) {
 	defer os.RemoveAll(tempDir)
 	_ = os.Setenv("DATA_DIR", tempDir)
 
-	listID := "verify-list"
+	listID := uuid.New().String()
 	store := events.NewFileEventStore()
 	store.Append(listID, events.Event{
 		ID:        "1",
@@ -181,7 +183,8 @@ func TestVerifyRenamedEventPersisted(t *testing.T) {
 		Name:      "End",
 		RenamedBy: "Bob",
 	})
-	req := httptest.NewRequest(http.MethodPut, "/api/v1/list/verify-list/name", bytes.NewReader(body))
+	req := httptest.NewRequest(http.MethodPut, "/api/v1/list/" + listID + "/name", bytes.NewReader(body))
+	req.SetPathValue("id", listID)
 	mux := http.NewServeMux()
 	mux.HandleFunc("PUT /api/v1/list/{id}/name", renamelist.Handler)
 

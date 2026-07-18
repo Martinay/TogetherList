@@ -24,15 +24,17 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Extract list ID and item ID from URL path: /api/v1/list/{id}/items/{itemId}/title
-	path := r.URL.Path
-	parts := strings.Split(strings.Trim(path, "/"), "/")
-	if len(parts) < 7 {
-		http.Error(w, "Invalid URL path", http.StatusBadRequest)
+	// Extract list ID and item ID from URL path
+	listID := r.PathValue("id")
+	if parsed, err := uuid.Parse(listID); err != nil || parsed.Version() != 4 {
+		http.Error(w, "Invalid list ID", http.StatusBadRequest)
 		return
 	}
-	listID := parts[3] // api/v1/list/{id}/items/{itemId}/title -> parts[3] is the list ID
-	itemID := parts[5] // parts[5] is the item ID
+	itemID := r.PathValue("itemId")
+	if parsed, err := uuid.Parse(itemID); err != nil || parsed.Version() != 4 {
+		http.Error(w, "Invalid item ID", http.StatusBadRequest)
+		return
+	}
 
 	var req RenameItemTitleRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
