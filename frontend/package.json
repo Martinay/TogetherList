@@ -47,6 +47,6 @@
     "react-icons": "^5.7.0",
     "react-router-dom": "^7.18.1",
     "uuid": "^14.0.1",
-    "vite": "^8.0.16"
+    "vite": "^8.2.0"
   }
 }
