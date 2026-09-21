@@ -116,3 +116,28 @@ func (s *FileEventStore) ReadSince(listID string, since time.Time) ([]Event, err
 
 	return filtered, nil
 }
+
+// ListIDs returns the IDs of all lists that have an events.jsonl file.
+func (s *FileEventStore) ListIDs() ([]string, error) {
+	entries, err := os.ReadDir(s.dataDir)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return []string{}, nil
+		}
+		return nil, err
+	}
+
+	var listIDs []string
+	for _, entry := range entries {
+		if !entry.IsDir() {
+			continue
+		}
+		eventsPath := filepath.Join(s.dataDir, entry.Name(), "events.jsonl")
+		if _, err := os.Stat(eventsPath); err == nil {
+			listIDs = append(listIDs, entry.Name())
+		}
+	}
+
+	return listIDs, nil
+}
+

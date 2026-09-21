@@ -167,3 +167,54 @@ func TestNewFileEventStore_UsesDefaultWhenNoEnvVar(t *testing.T) {
 		t.Errorf("expected dataDir %s, got %s", DefaultDataDir, store.dataDir)
 	}
 }
+
+func TestFileEventStore_ListIDs(t *testing.T) {
+	tmpDir := t.TempDir()
+	store := NewFileEventStoreWithDir(tmpDir)
+
+	// Initially empty
+	ids, err := store.ListIDs()
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if len(ids) != 0 {
+		t.Errorf("expected 0 ids, got %d", len(ids))
+	}
+
+	// Create two lists
+	listID1 := uuid.New().String()
+	listID2 := uuid.New().String()
+	event := Event{
+		ID:        uuid.New().String(),
+		Type:      EventTypeListCreated,
+		Payload:   ListCreatedPayload{Name: "List 1", Participants: []string{}},
+		Timestamp: time.Now(),
+	}
+	if err := store.Append(listID1, event); err != nil {
+		t.Fatalf("failed to append: %v", err)
+	}
+	if err := store.Append(listID2, event); err != nil {
+		t.Fatalf("failed to append: %v", err)
+	}
+
+	// Also create a non-list file and non-list empty directory to ensure they are ignored
+	_ = os.WriteFile(filepath.Join(tmpDir, "some-file.txt"), []byte("hello"), 0600)
+	_ = os.Mkdir(filepath.Join(tmpDir, "empty-dir"), 0750)
+
+	ids, err = store.ListIDs()
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if len(ids) != 2 {
+		t.Fatalf("expected 2 ids, got %d", len(ids))
+	}
+
+	idMap := make(map[string]bool)
+	for _, id := range ids {
+		idMap[id] = true
+	}
+	if !idMap[listID1] || !idMap[listID2] {
+		t.Errorf("expected ids to contain %s and %s, got %v", listID1, listID2, ids)
+	}
+}
+

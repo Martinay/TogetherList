@@ -18,6 +18,7 @@
 - [x] **Storage**: Azure Files (via Interface) -> `docs/adr/0006_storage_implementation.md`
 - [x] **API Versioning**: URL Path (`/api/v1`) -> `docs/adr/0007_api_versioning.md`
 - [x] **State Sync**: Short Polling (3s) -> `docs/adr/0008_state_sync_strategy.md`
+- [x] **MCP Server**: HTTP/SSE via mark3labs/mcp-go -> `docs/adr/0025_mcp_server.md`
 
 ## Implementation Tasks (Kanban)
 
@@ -65,6 +66,8 @@
 - [x] **REQ-0005: Identity Persistence** -> Per-list LocalStorage with `IdentityPicker` component
 - [x] **REQ-0017: Uncompleted Item Sorting** -> `docs/requirements/0017_uncompleted_item_sorting.md` (Implemented in PR #15)
 - [x] **0024: Fix PR #24 & Repository Labels** -> `docs/tasks/0024_fix_pr_24.md`
+- [x] **REQ-0019: Model Context Protocol (MCP) HTTP Endpoint** -> `docs/requirements/0019_mcp_server.md`
+- [x] **0025: Implement MCP Server** -> `docs/tasks/0025_implement_mcp_server.md`
 
 
 ## Current Recommendation

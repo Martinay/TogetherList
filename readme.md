@@ -14,8 +14,43 @@ A modern micro-SaaS application enabling instant shared lists for shopping, task
 - **⚡ Real-time Sync** — Changes appear instantly across all participants
 - **🎭 Simple Identity** — Just enter your display name, no sign-up needed
 - **📱 Mobile-First** — Responsive design that works beautifully on any device
+- **🤖 MCP Server for AI** — Built-in Model Context Protocol HTTP/SSE endpoint for AI assistants (Claude, Cursor, Antigravity)
 
 ---
+
+## 🤖 Model Context Protocol (MCP) Server
+
+TogetherList provides a built-in MCP server accessible over HTTP, allowing AI assistants to manage lists and items.
+
+### Endpoints
+- **SSE Transport**: `GET /api/v1/mcp/sse` (and alias `/mcp/sse`)
+- **Message Transport**: `POST /api/v1/mcp/messages` (and alias `/mcp/messages`)
+- **Direct JSON-RPC**: `POST /api/v1/mcp` (and alias `/mcp`)
+
+### Supported Tools
+- `create_list` — Create a new shared list with creator and participants
+- `get_list` — Retrieve full current state of a list
+- `list_lists` — Enumerate existing shared lists
+- `rename_list` — Rename a shared list
+- `add_item` — Add an item to a list
+- `complete_item` — Toggle completion status of an item
+- `assign_item` — Assign an item to participant(s)
+- `update_item_title` — Edit item title
+- `update_item_description` — Edit item description
+
+### Client Configuration (e.g. Cursor / Claude Desktop)
+```json
+{
+  "mcpServers": {
+    "togetherlist": {
+      "url": "http://localhost:8080/api/v1/mcp/sse"
+    }
+  }
+}
+```
+
+---
+
 
 ## 🏗️ Technical Highlights
 
