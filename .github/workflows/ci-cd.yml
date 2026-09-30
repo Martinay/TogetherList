@@ -6,7 +6,7 @@ on:
   pull_request:
 
 env:
-  GO_VERSION: "1.25"
+  GO_VERSION: "1.27.1"
   BUN_VERSION: "latest"
   REGISTRY: ghcr.io
   AZURE_LOCATION: westeurope

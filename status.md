@@ -49,7 +49,7 @@
 - [ ] **0016: Implement CORS & Integration** -> `docs/tasks/0016_implement_cors_and_integration.md`
 
 ### In Progress
-*(Empty - Agents pick from Backlog)*
+- [ ] **0026: Upgrade Go to 1.27.1** -> `docs/tasks/0026_upgrade-go-1.27.1.md` (Scope: Go pins and development docs; verification and user acceptance pending)
 
 ### Done
 - [x] Setup agents instructions
