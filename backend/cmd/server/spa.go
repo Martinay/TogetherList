@@ -1,52 +1,60 @@
 package main
 
 import (
+	"io/fs"
 	"net/http"
 	"os"
-	"path/filepath"
 	"strings"
 )
 
 // spaHandler serves static files and falls back to index.html for SPA routing.
-type spaHandler struct {
-	staticDir string
-	indexPath string
-}
+type spaHandler struct{ staticDir string }
 
-// newSPAHandler creates a new SPA handler with the given static directory.
 func newSPAHandler(staticDir string) *spaHandler {
-	return &spaHandler{
-		staticDir: staticDir,
-		indexPath: filepath.Join(staticDir, "index.html"),
-	}
+	return &spaHandler{staticDir: staticDir}
 }
 
-// ServeHTTP implements http.Handler for SPA routing.
 func (h *spaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	// Clean the path to prevent directory traversal
-	cleanPath := filepath.Clean(r.URL.Path)
-	path := filepath.Join(h.staticDir, cleanPath)
-
-	// Verify that the path is within the static directory
-	if !strings.HasPrefix(path, filepath.Clean(h.staticDir)) {
+	name := strings.TrimPrefix(r.URL.Path, "/")
+	// Allow a trailing slash without cleaning away traversal components.
+	name = strings.TrimSuffix(name, "/")
+	if name == "" {
+		name = "."
+	}
+	if !fs.ValidPath(name) {
 		http.Error(w, "Forbidden", http.StatusForbidden)
 		return
 	}
-
-	// Check if the file exists
-	info, err := os.Stat(path) // #nosec G304 G703
-	if os.IsNotExist(err) || info.IsDir() {
-		// File doesn't exist or is a directory, serve index.html for SPA routing
-		http.ServeFile(w, r, h.indexPath)
-		return
-	}
-
-	if err != nil {
-		// Some other error occurred
+	file, err := os.OpenInRoot(h.staticDir, name)
+	if err == nil {
+		defer file.Close()
+		info, statErr := file.Stat()
+		if statErr != nil {
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			return
+		}
+		if !info.IsDir() {
+			http.ServeContent(w, r, info.Name(), info.ModTime(), file)
+			return
+		}
+	} else if !os.IsNotExist(err) {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
-
-	// File exists, serve it
-	http.ServeFile(w, r, path)
+	index, err := os.OpenInRoot(h.staticDir, "index.html")
+	if err != nil {
+		if os.IsNotExist(err) {
+			http.NotFound(w, r)
+		} else {
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		}
+		return
+	}
+	defer index.Close()
+	info, err := index.Stat()
+	if err != nil || info.IsDir() {
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+	http.ServeContent(w, r, "index.html", info.ModTime(), index)
 }

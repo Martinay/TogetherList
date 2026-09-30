@@ -63,6 +63,7 @@ jobs:
         run: gosec -fmt=json -out=gosec-report.json ./...
 
       - name: Upload security report
+        if: always()
         uses: actions/upload-artifact@v7
         with:
           name: backend-security-report
