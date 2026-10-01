@@ -6,7 +6,7 @@ on:
   pull_request:
 
 env:
-  GO_VERSION: "1.25"
+  GO_VERSION: "1.27.1"
   BUN_VERSION: "latest"
   REGISTRY: ghcr.io
   AZURE_LOCATION: westeurope
@@ -63,6 +63,7 @@ jobs:
         run: gosec -fmt=json -out=gosec-report.json ./...
 
       - name: Upload security report
+        if: always()
         uses: actions/upload-artifact@v7
         with:
           name: backend-security-report

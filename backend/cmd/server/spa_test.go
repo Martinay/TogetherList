@@ -5,6 +5,7 @@ import (
 	"net/http/httptest"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -85,5 +86,76 @@ func TestSPAHandler_ServesRootAsIndex(t *testing.T) {
 
 	if rec.Body.String() != string(indexContent) {
 		t.Errorf("expected index.html content, got %s", rec.Body.String())
+	}
+}
+
+func TestSPAHandler_RootedFiles(t *testing.T) {
+	parent := t.TempDir()
+	root := filepath.Join(parent, "static")
+	if err := os.MkdirAll(filepath.Join(root, "assets"), 0755); err != nil {
+		t.Fatal(err)
+	}
+	for name, content := range map[string]string{"index.html": "SPA", "assets/app.js": "asset"} {
+		if err := os.WriteFile(filepath.Join(root, name), []byte(content), 0644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	outside := filepath.Join(parent, "secret.txt")
+	if err := os.WriteFile(outside, []byte("SECRET"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	for name, target := range map[string]string{"escape.txt": outside, "escape-dir": parent, "internal.js": "assets/app.js"} {
+		if err := os.Symlink(target, filepath.Join(root, name)); err != nil {
+			t.Fatal(err)
+		}
+	}
+	handler := newSPAHandler(root)
+	for _, tc := range []struct {
+		path   string
+		status int
+		body   string
+	}{
+		{"/assets/app.js", 200, "asset"}, {"/internal.js", 200, "asset"},
+		{"/list/abc", 200, "SPA"}, {"/assets", 200, "SPA"}, {"/", 200, "SPA"},
+		{"/list/abc/", 200, "SPA"}, {"/assets/", 200, "SPA"},
+		{"/../secret.txt", 403, ""}, {"/%2e%2e/secret.txt", 403, ""},
+		{"/assets/../../secret.txt", 403, ""},
+		{"/assets/../", 403, ""}, {"/assets/%2e%2e/", 403, ""},
+		{"/escape.txt", 500, ""}, {"/escape-dir/secret.txt", 500, ""},
+	} {
+		t.Run(tc.path, func(t *testing.T) {
+			rec := httptest.NewRecorder()
+			handler.ServeHTTP(rec, httptest.NewRequest(http.MethodGet, tc.path, nil))
+			if rec.Code != tc.status {
+				t.Fatalf("status = %d, want %d", rec.Code, tc.status)
+			}
+			if tc.body != "" && rec.Body.String() != tc.body {
+				t.Fatalf("body = %q, want %q", rec.Body.String(), tc.body)
+			}
+			if strings.Contains(rec.Body.String(), "SECRET") {
+				t.Fatal("outside file leaked")
+			}
+		})
+	}
+	if err := os.Remove(filepath.Join(root, "index.html")); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Symlink(outside, filepath.Join(root, "index.html")); err != nil {
+		t.Fatal(err)
+	}
+	rec := httptest.NewRecorder()
+	handler.ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/missing", nil))
+	if rec.Code != 500 || strings.Contains(rec.Body.String(), "SECRET") {
+		t.Fatalf("unsafe fallback: %d %q", rec.Code, rec.Body.String())
+	}
+}
+
+func TestSPAHandler_MissingRootAndIndex(t *testing.T) {
+	for _, root := range []string{t.TempDir(), filepath.Join(t.TempDir(), "missing")} {
+		rec := httptest.NewRecorder()
+		newSPAHandler(root).ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/missing", nil))
+		if rec.Code != http.StatusNotFound {
+			t.Fatalf("status = %d, want 404", rec.Code)
+		}
 	}
 }
