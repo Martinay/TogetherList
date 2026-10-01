@@ -15,12 +15,13 @@ import (
 	"backend/internal/features/completeitem"
 	"backend/internal/features/createlist"
 	"backend/internal/features/edititemdescription"
+	"backend/internal/features/mcpserver"
 	"backend/internal/features/renameitemtitle"
 	"backend/internal/features/renamelist"
 	"backend/internal/features/viewlist"
 )
 
-func main() {
+func setupRoutes() http.Handler {
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /health", healthHandler)
 	mux.HandleFunc("POST /api/v1/list/create", createlist.Handler)
@@ -31,6 +32,17 @@ func main() {
 	mux.HandleFunc("PUT /api/v1/list/{id}/items/{itemId}/description", edititemdescription.Handler)
 	mux.HandleFunc("PUT /api/v1/list/{id}/items/{itemId}/completed", completeitem.Handler)
 	mux.HandleFunc("PUT /api/v1/list/{id}/items/{itemId}/assigned-to", assignitem.Handler)
+
+	// Model Context Protocol (MCP) server endpoints
+	mcpServer := mcpserver.NewServer(nil)
+	mux.Handle("POST /api/v1/mcp", mcpServer)
+	mux.Handle("GET /api/v1/mcp/sse", mcpServer.SSEServer().SSEHandler())
+	mux.Handle("POST /api/v1/mcp/messages", mcpServer.SSEServer().MessageHandler())
+
+	// MCP route aliases for convenience
+	mux.Handle("POST /mcp", mcpServer)
+	mux.Handle("GET /mcp/sse", mcpServer.SSEServer().SSEHandler())
+	mux.Handle("POST /mcp/messages", mcpServer.SSEServer().MessageHandler())
 
 	// Serve frontend SPA from STATIC_DIR if configured.
 	// Bot-rendering middleware serves pre-rendered HTML to AI/search crawlers.
@@ -49,7 +61,11 @@ func main() {
 		AllowCredentials: true,
 	})
 
-	handler := c.Handler(mux)
+	return c.Handler(mux)
+}
+
+func main() {
+	handler := setupRoutes()
 
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -66,6 +82,7 @@ func main() {
 		log.Fatalf("Server failed to start: %v", err)
 	}
 }
+
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
