@@ -57,7 +57,7 @@ TogetherList provides a built-in MCP server accessible over HTTP, allowing AI as
 | Layer | Technology | Why |
 |-------|------------|-----|
 | **Frontend** | React + Vite + TypeScript | Fast builds, excellent DX, tree-shaking for <200KB bundles |
-| **Backend** | Go (stdlib) | Minimal dependencies, predictable performance, easy containerization |
+| **Backend** | Go 1.27.1 (stdlib) | Minimal dependencies, predictable performance, easy containerization |
 | **Architecture** | Event Sourcing | Full audit trail, time-travel debugging, conflict-free collaboration |
 | **Infrastructure** | Azure Container Apps + Bicep | Infrastructure as Code, auto-scaling, managed SSL |
 | **CI/CD** | GitHub Actions | Automated testing, security scanning, containerized deployments |
@@ -81,12 +81,23 @@ Decision-making is documented through Architecture Decision Records (ADRs) in `d
 
 ## 🚀 Quick Start
 
+Use Go **1.27.1** for backend development, matching `backend/go.mod`, CI, and the Docker build stage. Check your toolchain with `go version` before running backend commands.
+
 ```bash
 # Frontend
 cd frontend && bun install && bun run dev
 
 # Backend
 cd backend && go run ./cmd/server
+```
+
+Run backend checks from `backend/` with Go 1.27.1:
+
+```bash
+go test ./...
+go test -race ./...
+go vet ./...
+go build ./...
 ```
 
 ---
