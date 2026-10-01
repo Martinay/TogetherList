@@ -7,6 +7,8 @@ This document describes how to set up the CI/CD pipeline for TogetherList.
 The pipeline uses **GitHub Actions** to build, test, and deploy to **Azure Container Apps**.  
 Container images are stored in **GitHub Container Registry** (ghcr.io).
 
+Backend CI uses Go **1.27.1**, matching `backend/go.mod`, the Docker build image (`golang:1.27.1-alpine`), and the local development toolchain.
+
 ```mermaid
 graph LR
     A[Push to main] --> B[Backend CI]
