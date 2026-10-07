@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { createBrowser, BASE_URL } from './browser-helper'
+import { closeBrowser, createBrowser, BASE_URL } from './browser-helper'
 
 const SUPPORTED_LANGUAGES = [
     'en', 'ar', 'hi', 'es', 'fr', 'bn', 'pt', 'id', 'ru', 'de', 
@@ -28,7 +28,7 @@ describe('Language Support Core Features', () => {
             const val = await select.getValue()
             expect(val).toBe('en')
         } finally {
-            await browser.deleteSession()
+            await closeBrowser(browser)
         }
     })
 
@@ -53,7 +53,7 @@ describe('Language Support Core Features', () => {
             expect(await newSelect.getValue()).toBe('es')
 
         } finally {
-            await browser.deleteSession()
+            await closeBrowser(browser)
         }
     })
 
@@ -81,7 +81,7 @@ describe('Language Support Core Features', () => {
             expect(dirEn).toBe('ltr')
 
         } finally {
-            await browser.deleteSession()
+            await closeBrowser(browser)
         }
     })
 })
@@ -115,7 +115,7 @@ describe('Browser Language Detection (all supported languages)', () => {
                 // Our detector is configured to fallback to the supported language.
                 expect(currentVal).toBe(lang)
             } finally {
-                await browser.deleteSession()
+                await closeBrowser(browser)
             }
         })
     }

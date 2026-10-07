@@ -33,6 +33,9 @@ func setupRoutes() http.Handler {
 	mux.HandleFunc("PUT /api/v1/list/{id}/items/{itemId}/completed", completeitem.Handler)
 	mux.HandleFunc("PUT /api/v1/list/{id}/items/{itemId}/assigned-to", assignitem.Handler)
 
+	// API misses must not fall through to the frontend SPA.
+	mux.HandleFunc("/api/", http.NotFound)
+
 	// Model Context Protocol (MCP) server endpoints
 	mcpServer := mcpserver.NewServer(nil)
 	mux.Handle("POST /api/v1/mcp", mcpServer)
@@ -82,7 +85,6 @@ func main() {
 		log.Fatalf("Server failed to start: %v", err)
 	}
 }
-
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")

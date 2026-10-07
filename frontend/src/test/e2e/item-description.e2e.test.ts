@@ -1,116 +1,45 @@
-import { describe, it, expect, beforeAll, afterAll } from 'vitest'
-import { createBrowser, BASE_URL } from './browser-helper'
-import type { Browser } from 'webdriverio'
+import { it, expect } from 'vitest'
+import { closeBrowser, createBrowser, setText } from './browser-helper'
+import { add, join, seed, settled, state } from './fixtures'
 
-describe('Item Description', () => {
-    let browser: Browser
-
-    beforeAll(async () => {
-        browser = await createBrowser()
-    })
-
-    afterAll(async () => {
-        if (browser) {
-            await browser.deleteSession()
-        }
-    })
-
-    async function createListAndNavigate(): Promise<void> {
-        // Navigate to landing page
-        await browser.url(BASE_URL)
-        const createButton = await browser.$('button=Create New List')
-        await createButton.waitForDisplayed({ timeout: 5_000 })
-        await createButton.click()
-
-        // Step 1: Enter list name
-        const listNameInput = await browser.$('input[placeholder="e.g., Weekend Trip"]')
-        await listNameInput.waitForDisplayed({ timeout: 5_000 })
-        await listNameInput.setValue('Test E2E List')
-        const continueButton1 = await browser.$('button=Continue')
-        await continueButton1.click()
-
-        // Step 2: Enter creator name
-        const nameInput = await browser.$('input[placeholder="Enter your name"]')
-        await nameInput.waitForDisplayed({ timeout: 5_000 })
-        await nameInput.setValue('TestUser')
-        const continueButton2 = await browser.$('button=Continue')
-        await continueButton2.click()
-
-        // Step 3: Create list
-        const createListButton = await browser.$('button=Create List')
-        await createListButton.waitForDisplayed({ timeout: 5_000 })
-        await createListButton.click()
-
-        // Wait for the add item form to appear (indicates list is loaded)
-        const addInput = await browser.$('input[placeholder="What needs to be done?"]')
-        await addInput.waitForDisplayed({ timeout: 10_000 })
-    }
-
-    async function addItem(title: string): Promise<void> {
-        const addInput = await browser.$('input[placeholder="What needs to be done?"]')
-        await addInput.setValue(title)
-        const addButton = await browser.$('button=Add')
-        await addButton.click()
-
-        // Wait for the item to appear in the list
-        const item = await browser.$(`span=${title}`)
-        await item.waitForDisplayed({ timeout: 5_000 })
-    }
-
-    it('allows adding, editing, and previewing item description', async () => {
-        await createListAndNavigate()
-        await addItem('Clean the house')
-
-        // Find the expand button (it has the title text next to an expand caret)
-        const expandButton = await browser.$('span=▼').parentElement()
-        await expandButton.waitForDisplayed({ timeout: 2_000 })
-
-        // 1. Expand the item
-        await expandButton.click()
-
-        // Find the description textarea
-        const textarea = await browser.$('textarea[aria-label="Item description"]')
-        await textarea.waitForDisplayed({ timeout: 2_000 })
-
-        // 2. Type a description using native React setter to ensure onChange fires
-        await browser.execute((el: HTMLTextAreaElement) => {
-            // React 16+ overrides the value setter, we must use the native one
-            const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
-                window.HTMLTextAreaElement.prototype,
-                'value'
-            )?.set;
-
-            if (nativeInputValueSetter) {
-                nativeInputValueSetter.call(el, 'Vacuum the living room');
-            } else {
-                el.value = 'Vacuum the living room';
-            }
-
-            // Dispatch input and change
-            el.dispatchEvent(new Event('input', { bubbles: true }));
-            el.dispatchEvent(new Event('change', { bubbles: true }));
-
-            // Dispatch blur
-            el.blur();
-            el.dispatchEvent(new Event('blur', { bubbles: true }));
-            el.dispatchEvent(new FocusEvent('focusout', { bubbles: true }));
-        }, textarea as unknown as HTMLTextAreaElement)
-
-        // Wait for the API round-trip (save + refreshList)
-        await browser.pause(2000)
-
-        // 4. Collapse the item
-        const collapseButton = await browser.$('span=▲').parentElement()
-        await collapseButton.click()
-
-        // 5. Verify the 1-line preview is visible via data-testid
+it('allows adding, editing, and previewing item description', async () => {
+    const browser = await createBrowser()
+    try {
+        const id = await seed('Description E2E')
+        await join(browser, id)
+        await add(browser, 'Clean the house')
+        await settled(browser)
+        await browser.$('button[aria-expanded]:not([aria-haspopup])').click()
+        const selector = 'textarea[aria-label="Item description"]'
+        await setText(browser, selector, 'Vacuum the living room')
+        await browser.$('button[aria-expanded]:not([aria-haspopup])').click()
+        await settled(browser)
         const preview = await browser.$('[data-testid="item-description-preview"]')
-        await preview.waitForDisplayed({ timeout: 5_000 })
-
-        // Verify it contains the typed text
-        const text = await preview.getText()
-        expect(text).toContain('Vacuum the living room')
-        const previewClass = await preview.getAttribute('class')
-        expect(previewClass).toContain('truncate')
-    })
+        await preview.waitForDisplayed()
+        expect(await preview.getText()).toBe('Vacuum the living room')
+        expect(await preview.getAttribute('class')).toContain('truncate')
+        expect(Object.values((await state(id)).items)[0]?.description).toBe('Vacuum the living room')
+        await browser.refresh()
+        await browser.$('[data-testid="item-description-preview"]').waitForDisplayed()
+        expect(await browser.$('[data-testid="item-description-preview"]').getText()).toBe('Vacuum the living room')
+        await browser.$('button[aria-expanded]:not([aria-haspopup])').click()
+        await setText(browser, selector, 'Mop the kitchen')
+        await browser.$('button[aria-expanded]:not([aria-haspopup])').click()
+        await settled(browser)
+        expect(Object.values((await state(id)).items)[0]?.description).toBe('Mop the kitchen')
+        await browser.$('[data-testid="item-description-preview"]').waitForDisplayed()
+        expect(await browser.$('[data-testid="item-description-preview"]').getText()).toBe('Mop the kitchen')
+        await browser.$('button[aria-expanded]:not([aria-haspopup])').click()
+        await setText(browser, selector, '')
+        // Empty insertText does not erase the selection; Backspace is normal user input.
+        await browser.keys('Backspace')
+        await browser.$('button[aria-expanded]:not([aria-haspopup])').click()
+        await settled(browser)
+        // Empty descriptions are omitted by the API's JSON projection.
+        expect(Object.values((await state(id)).items)[0]?.description).toBeUndefined()
+        expect(await browser.$('[data-testid="item-description-preview"]').isExisting()).toBe(false)
+        await browser.refresh()
+        await browser.$('span=Clean the house').waitForDisplayed()
+        expect(await browser.$('[data-testid="item-description-preview"]').isExisting()).toBe(false)
+    } finally { await closeBrowser(browser) }
 })

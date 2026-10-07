@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest'
-import { createBrowser, BASE_URL } from './browser-helper'
+import { closeBrowser, createBrowser, BASE_URL, setText } from './browser-helper'
 import type { Browser } from 'webdriverio'
 
 describe('Rename List E2E', () => {
@@ -11,7 +11,7 @@ describe('Rename List E2E', () => {
 
     afterAll(async () => {
         if (browser) {
-            await browser.deleteSession()
+            await closeBrowser(browser)
         }
     })
 
@@ -63,7 +63,7 @@ describe('Rename List E2E', () => {
         // Edit title in input
         const input = await browser.$('[data-testid="edit-list-input"]')
         await input.waitForDisplayed({ timeout: 5000 })
-        await input.setValue(newName)
+        await setText(browser, '[data-testid="edit-list-input"]', newName)
 
         // Save using JS click to prevent overlay interception
         await browser.execute(() => {

@@ -606,3 +606,23 @@ func TestReconstructListState_ItemDescriptionEditedFromJSON(t *testing.T) {
 		t.Errorf("expected Description 'Item description here', got '%s'", item.Description)
 	}
 }
+
+func TestReconstructListState_PreservesSubsecondOrdering(t *testing.T) {
+	first := time.Date(2026, 10, 7, 12, 0, 0, 100000000, time.UTC)
+	second := first.Add(100 * time.Millisecond)
+	state, err := ReconstructListState([]Event{
+		{ID: "first", Type: EventTypeItemAdded, Timestamp: first, Payload: ItemAddedPayload{ItemID: "one", Title: "First"}},
+		{ID: "second", Type: EventTypeItemAdded, Timestamp: second, Payload: ItemAddedPayload{ItemID: "two", Title: "Second"}},
+		{ID: "complete-one", Type: EventTypeItemCompleted, Timestamp: first, Payload: ItemCompletedPayload{ItemID: "one", IsCompleted: true}},
+		{ID: "complete-two", Type: EventTypeItemCompleted, Timestamp: second, Payload: ItemCompletedPayload{ItemID: "two", IsCompleted: true}},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if state.Items["one"].CreatedAt == state.Items["two"].CreatedAt {
+		t.Fatal("distinct creation times collapsed to one second")
+	}
+	if state.Items["one"].CompletedAt == state.Items["two"].CompletedAt {
+		t.Fatal("distinct completion times collapsed to one second")
+	}
+}

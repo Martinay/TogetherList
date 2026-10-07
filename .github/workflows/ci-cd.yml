@@ -7,7 +7,7 @@ on:
 
 env:
   GO_VERSION: "1.27.1"
-  BUN_VERSION: "latest"
+  BUN_VERSION: "1.4.2"
   REGISTRY: ghcr.io
   AZURE_LOCATION: westeurope
 
@@ -31,6 +31,7 @@ jobs:
         with:
           go-version: ${{ env.GO_VERSION }}
           cache: true
+          cache-dependency-path: backend/go.sum
 
       - name: Download dependencies
         run: go mod download
@@ -103,8 +104,6 @@ jobs:
       - name: Run tests with coverage
         run: bun run test:run -- --coverage
 
-#      - name: Run E2E tests (headless)
-#        run: bun run test:e2e:run
 
       - name: Upload coverage artifact
         uses: actions/upload-artifact@v7
@@ -114,6 +113,65 @@ jobs:
 
       - name: Security audit
         run: bun pm scan
+
+  e2e:
+    name: Production E2E
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v7
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          cache-dependency-path: backend/go.sum
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+      - name: Install browser prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libnss3 libatk-bridge2.0-0 libgbm1 libasound2t64 fonts-liberation unzip
+          bash scripts/install-e2e-browser.sh "$RUNNER_TEMP/e2e-browser"
+      - name: Install locked frontend dependencies
+        working-directory: frontend
+        run: bun install --frozen-lockfile
+      - name: Test coverage guardrails
+        run: python3 scripts/test_e2e_policy.py
+      - name: Check coverage policy
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          if [ -n "$BASE_SHA" ]; then
+            python3 scripts/check-e2e-policy.py --base "$BASE_SHA"
+          else
+            python3 scripts/check-e2e-policy.py
+          fi
+      - name: Run full production E2E suite
+        working-directory: frontend
+        run: bun run test:e2e:run
+      - name: Verify zero skipped tests and preserve first run
+        run: |
+          python3 scripts/check-e2e-policy.py --report frontend/e2e-artifacts/results.xml
+          mv frontend/e2e-artifacts frontend/e2e-artifacts-first
+      - name: Repeat full suite for flake detection
+        working-directory: frontend
+        run: bun run test:e2e:run
+      - name: Verify repeated run
+        run: python3 scripts/check-e2e-policy.py --report frontend/e2e-artifacts/results.xml
+      - name: Upload browser, server, storage and JUnit evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: production-e2e
+          path: |
+            frontend/e2e-artifacts/
+            frontend/e2e-artifacts-first/
+          if-no-files-found: error
+          retention-days: 14
 
   # ============================================================================
   # Infrastructure Validation - Bicep syntax and linting
@@ -143,7 +201,7 @@ jobs:
     name: Docker Build & Push
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: [backend-ci, frontend-ci]
+    needs: [backend-ci, frontend-ci, e2e]
     permissions:
       contents: read
       packages: write

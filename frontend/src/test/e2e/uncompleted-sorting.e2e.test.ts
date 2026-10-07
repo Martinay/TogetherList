@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest'
 import type { Browser } from 'webdriverio'
-import { createBrowser, BASE_URL } from './browser-helper'
+import { closeBrowser, createBrowser, BASE_URL } from './browser-helper'
 
 describe('Uncompleted item sorting', () => {
     let browser: Browser
@@ -11,7 +11,7 @@ describe('Uncompleted item sorting', () => {
 
     afterAll(async () => {
         if (browser) {
-            await browser.deleteSession()
+            await closeBrowser(browser)
         }
     })
 
@@ -111,6 +111,9 @@ describe('Uncompleted item sorting', () => {
 
         // Default mode is newest first
         expect(await activeItemOrder(['zebra', 'apple', 'banana'])).toEqual(['banana', 'apple', 'zebra'])
+
+        await setSortMode('Oldest first')
+        expect(await activeItemOrder(['zebra', 'apple', 'banana'])).toEqual(['zebra', 'apple', 'banana'])
 
         // Alphabetical sort in uncompleted section
         await setSortMode('A–Z')

@@ -76,7 +76,7 @@ func applyEvent(state *ListState, event Event) error {
 			ID:        payload.ItemID,
 			Title:     payload.Title,
 			CreatedBy: payload.CreatedBy,
-			CreatedAt: event.Timestamp.Format(time.RFC3339),
+			CreatedAt: event.Timestamp.Format(time.RFC3339Nano),
 			Completed: false,
 		}
 	case EventTypeItemTitleEdited:
@@ -96,7 +96,7 @@ func applyEvent(state *ListState, event Event) error {
 			item.Completed = payload.IsCompleted
 			if payload.IsCompleted {
 				item.CompletedBy = payload.CompletedBy
-				item.CompletedAt = event.Timestamp.Format(time.RFC3339)
+				item.CompletedAt = event.Timestamp.Format(time.RFC3339Nano)
 			} else {
 				item.CompletedBy = ""
 				item.CompletedAt = ""
