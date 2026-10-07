@@ -176,5 +176,19 @@
     "recovery": "Verwirf diese Änderung und bearbeite die Liste erneut, um sie zu korrigieren.",
     "discard": "Änderung und abhängige Eintragsänderungen verwerfen",
     "discardConfirm": "Diese Änderung verwerfen? Änderungen an einem damit erstellten Eintrag werden ebenfalls verworfen. Spätere unabhängige Änderungen bleiben erhalten."
+  },
+  "privacy": {
+    "title": "Datenschutz",
+    "accept": "Analyse erlauben",
+    "decline": "Analyse ablehnen / widerrufen",
+    "home": "Startseite",
+    "microsoft": "Microsoft-Datenschutzerklärung",
+    "disclosure": "Mit Ihrer Erlaubnis erfassen wir mit Microsoft Clarity Nutzungsdaten, um TogetherList zu verbessern.",
+    "statement": "Optional erfasst Microsoft Clarity Verhaltensmetriken, Heatmaps und Sitzungsaufzeichnungen mit Cookies von Erst- und Drittanbietern und Tracking-Technologien zur Produktverbesserung und Benutzerfreundlichkeit. Werbespeicherung wird abgelehnt; Microsoft Advertising ist nicht integriert. Aufzeichnungen sind auf Startseiten ohne gespeicherte Listen beschränkt. Listenerstellung, private Listen und Datenschutzseiten sind ausgeschlossen. Unten können Sie zustimmen, ablehnen oder widerrufen. Bei Ablehnung wird Clarity nicht geladen.",
+    "localData": "Listennamen, Einträge und Teilnehmernamen speichert der Server in JSONL-Dateien. Ihr Browser speichert Identität je Liste, gespeicherte Listen und Offline-Änderungen. Listenlinks gewähren Zugriff: Halten Sie sie privat. Die Analyseauswahl wird lokal in diesem Browser gespeichert.",
+    "pending": "Analyse: noch keine Auswahl.",
+    "accepted": "Analyse: auf geeigneten Startseiten erlaubt.",
+    "declined": "Analyse: abgelehnt.",
+    "storageError": "Die Auswahl konnte nicht gespeichert werden. Nach fehlgeschlagener Zustimmung bleibt die Analyse aus. Prüfen Sie die Browserspeicherung."
   }
 }

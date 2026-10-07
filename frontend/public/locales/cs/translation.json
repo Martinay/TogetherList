@@ -176,5 +176,19 @@
     "recovery": "Zahoďte tuto změnu a znovu upravte seznam pro opravu.",
     "discard": "Zahodit změnu a závislé úpravy",
     "discardConfirm": "Zahodit tuto změnu? Úpravy položky vytvořené touto operací budou také zahozeny. Pozdější nezávislé změny zůstanou zachovány."
+  },
+  "privacy": {
+    "title": "Soukromí",
+    "accept": "Povolit analytiku",
+    "decline": "Odmítnout / odvolat analytiku",
+    "home": "Domů",
+    "microsoft": "Prohlášení Microsoftu o ochraně soukromí",
+    "disclosure": "S vaším svolením Microsoft Clarity sbírá údaje o používání pro zlepšení TogetherList.",
+    "statement": "Volitelný Microsoft Clarity sbírá metriky chování, tepelné mapy a záznamy relací pomocí vlastních cookies, cookies třetích stran a sledovacích technologií pro zlepšení produktu a použitelnosti. Reklamní úložiště je odmítnuto; Microsoft Advertising není integrován. Nahrává se jen úvodní stránka bez uložených seznamů; vytváření, soukromé seznamy a soukromí jsou vyloučeny. Zde můžete přijmout, odmítnout nebo odvolat souhlas. Odmítnutí zabrání načtení Clarity.",
+    "localData": "Server ukládá seznamy, položky a jména do JSONL. Prohlížeč ukládá identitu, seznamy a offline změny. Odkazy poskytují přístup: chraňte je. Volba je místní pro tento prohlížeč.",
+    "pending": "Analytika: bez volby.",
+    "accepted": "Analytika: povolena na vhodných úvodních stránkách.",
+    "declined": "Analytika: odmítnuta.",
+    "storageError": "Volbu nelze uložit. Neúspěšný souhlas nechá analytiku vypnutou. Zkontrolujte úložiště."
   }
 }

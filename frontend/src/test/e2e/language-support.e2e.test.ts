@@ -114,6 +114,17 @@ describe('Browser Language Detection (all supported languages)', () => {
                 // Browsers might return dialect (e.g. 'en-US' for 'en') so i18next usually resolves the base.
                 // Our detector is configured to fallback to the supported language.
                 expect(currentVal).toBe(lang)
+                const translation = await (await fetch(`${BASE_URL}/locales/${lang}/translation.json`)).json() as { privacy: { title: string; disclosure: string; accept: string; decline: string; statement: string } }
+                const footer = await browser.$('footer')
+                expect(await footer.getText()).toContain(translation.privacy.disclosure)
+                const choices = await footer.$$('button')
+                expect(await choices.length).toBe(2)
+                expect(await choices[0]!.getText()).toBe(translation.privacy.accept)
+                expect(await choices[1]!.getText()).toBe(translation.privacy.decline)
+                await footer.$('a[href="/privacy"]').click()
+                await browser.$('h1').waitForDisplayed()
+                expect(await browser.$('h1').getText()).toBe(translation.privacy.title)
+                expect(await browser.$('main').getText()).toContain(translation.privacy.statement)
             } finally {
                 await closeBrowser(browser)
             }

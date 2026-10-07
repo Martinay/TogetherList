@@ -176,5 +176,19 @@
     "recovery": "Vesse el ezt a módosítást, majd szerkessze újra a listát a javításhoz.",
     "discard": "Módosítás és függő szerkesztések elvetése",
     "discardConfirm": "Elveti ezt a módosítást? Az ezzel létrehozott elem szerkesztései is elvesznek. A későbbi független módosítások megmaradnak."
+  },
+  "privacy": {
+    "title": "Adatvédelem",
+    "accept": "Elemzés engedélyezése",
+    "decline": "Elemzés elutasítása / visszavonása",
+    "home": "Kezdőlap",
+    "microsoft": "Microsoft adatvédelmi nyilatkozata",
+    "disclosure": "Engedélyével a Microsoft Clarity használati adatokat gyűjt a TogetherList fejlesztéséhez.",
+    "statement": "Az opcionális Microsoft Clarity viselkedési mutatókat, hőtérképeket és munkamenet-felvételeket gyűjt saját és harmadik féltől származó sütikkel és követési technológiákkal a termék és használhatóság javításához. A hirdetési tárolás tiltott; Microsoft Advertising nincs integrálva. Csak mentett listák nélküli kezdőlapok rögzülnek; létrehozás, privát listák és adatvédelem kizárt. Itt elfogadhatja, elutasíthatja vagy visszavonhatja. Az elutasítás megakadályozza a Clarity betöltését.",
+    "localData": "A szerver listákat, elemeket és neveket tárol JSONL-ben. A böngésző identitást, listákat és offline módosításokat tárol. A linkek hozzáférést adnak: tartsa őket titokban. A választás helyi ebben a böngészőben.",
+    "pending": "Elemzés: még nincs választás.",
+    "accepted": "Elemzés: engedélyezett megfelelő kezdőlapokon.",
+    "declined": "Elemzés: elutasítva.",
+    "storageError": "A választás nem menthető. Sikertelen elfogadás után az elemzés kikapcsolva marad. Ellenőrizze a tárhelyet."
   }
 }

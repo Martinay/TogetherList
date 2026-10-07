@@ -176,5 +176,19 @@
     "recovery": "Bu değişikliği silin, ardından düzeltmek için listeyi yeniden düzenleyin.",
     "discard": "Değişikliği ve bağlı düzenlemeleri sil",
     "discardConfirm": "Bu değişiklik silinsin mi? Bu işlemle oluşturulan öğenin düzenlemeleri de silinir. Sonraki bağımsız değişiklikler korunur."
+  },
+  "privacy": {
+    "title": "Gizlilik",
+    "accept": "Analize izin ver",
+    "decline": "Analizi reddet / geri çek",
+    "home": "Ana sayfa",
+    "microsoft": "Microsoft Gizlilik Bildirimi",
+    "disclosure": "İzninizle Microsoft Clarity, TogetherList’i geliştirmek için kullanım verileri toplar.",
+    "statement": "İsteğe bağlı Microsoft Clarity, ürünü ve kullanılabilirliği geliştirmek için birinci ve üçüncü taraf çerezleri ve izleme teknolojileriyle davranış ölçümleri, ısı haritaları ve oturum kayıtları toplar. Reklam depolaması reddedilir; Microsoft Advertising entegre değildir. Yalnızca kayıtlı listesi olmayan ana sayfalar kaydedilir; oluşturma, özel listeler ve gizlilik hariçtir. Burada kabul edebilir, reddedebilir veya geri çekebilirsiniz. Ret, Clarity yüklemesini engeller.",
+    "localData": "Sunucu listeleri, öğeleri ve adları JSONL’de saklar. Tarayıcı kimliği, listeleri ve çevrimdışı değişiklikleri saklar. Bağlantılar erişim verir: gizli tutun. Seçim bu tarayıcıda yerel saklanır.",
+    "pending": "Analiz: seçim yapılmadı.",
+    "accepted": "Analiz: uygun ana sayfalarda izinli.",
+    "declined": "Analiz: reddedildi.",
+    "storageError": "Seçim kaydedilemedi. Başarısız kabul analizi kapalı tutar. Depolamayı kontrol edin."
   }
 }

@@ -176,5 +176,19 @@
     "recovery": "Odrzuć tę zmianę i edytuj listę ponownie, aby ją poprawić.",
     "discard": "Odrzuć zmianę i zależne edycje",
     "discardConfirm": "Odrzucić zmianę? Edycje elementu utworzonego przez tę operację też zostaną odrzucone. Późniejsze niezależne zmiany zostaną zachowane."
+  },
+  "privacy": {
+    "title": "Prywatność",
+    "accept": "Zezwól na analitykę",
+    "decline": "Odrzuć / cofnij analitykę",
+    "home": "Strona główna",
+    "microsoft": "Oświadczenie o prywatności Microsoft",
+    "disclosure": "Za Twoją zgodą Microsoft Clarity zbiera dane użytkowania, aby ulepszać TogetherList.",
+    "statement": "Opcjonalny Microsoft Clarity zbiera metryki zachowań, mapy cieplne i nagrania sesji za pomocą własnych i zewnętrznych plików cookie oraz technologii śledzenia w celu poprawy produktu i użyteczności. Przechowywanie reklamowe jest odrzucane; Microsoft Advertising nie jest zintegrowany. Nagrywana jest tylko strona główna bez zapisanych list; tworzenie, prywatne listy i prywatność są wykluczone. Tutaj możesz zaakceptować, odrzucić lub cofnąć zgodę. Odrzucenie blokuje ładowanie Clarity.",
+    "localData": "Serwer zapisuje listy, elementy i nazwy w JSONL. Przeglądarka zapisuje tożsamość, listy i zmiany offline. Linki dają dostęp: zachowaj je prywatnie. Wybór jest lokalny dla tej przeglądarki.",
+    "pending": "Analityka: brak wyboru.",
+    "accepted": "Analityka: dozwolona na odpowiednich stronach głównych.",
+    "declined": "Analityka: odrzucona.",
+    "storageError": "Nie można zapisać wyboru. Nieudana akceptacja pozostawia analitykę wyłączoną. Sprawdź pamięć przeglądarki."
   }
 }

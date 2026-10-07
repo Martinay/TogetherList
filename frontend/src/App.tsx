@@ -6,6 +6,9 @@ import LandingPage from './features/create-list/LandingPage'
 import ListPage from './features/view-list/ListPage'
 import CreateListPage from './features/create-list/CreateListPage'
 
+import PrivacyControls from './features/privacy/privacy-controls'
+import PrivacyPage from './features/privacy/privacy-page'
+
 function App() {
     const { i18n } = useTranslation()
 
@@ -19,10 +22,12 @@ function App() {
         <>
         <OfflineStatus />
         <Routes>
+            <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/" element={<LandingPage />} />
             <Route path="/list/new" element={<CreateListPage />} />
             <Route path="/list/:id" element={<ListPage />} />
         </Routes>
+        <PrivacyControls />
         </>
     )
 }
