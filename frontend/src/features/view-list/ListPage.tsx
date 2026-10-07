@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { cachedList, offlineEvent, replay } from '../offline/store'
+import { PullToRefresh } from './pull-to-refresh'
 import AddItemForm from './AddItemForm'
 import IdentityPicker from './IdentityPicker'
 import Greeting from './Greeting'
@@ -18,6 +19,8 @@ function ListPage() {
     const { t, i18n } = useTranslation()
     const currentId = useRef(id)
     currentId.current = id
+    const syncInFlight = useRef<{ id: string, promise: Promise<void> } | null>(null)
+    const inFlight = useRef<{ id: string, promise: Promise<void> } | null>(null)
     const [listState, setListState] = useState<ListState | null>(() => id ? cachedList(id) : null)
     const [loading, setLoading] = useState(() => !id || !cachedList(id))
     const [error, setError] = useState<string | null>(null)
@@ -27,21 +30,40 @@ function ListPage() {
     // Per-list identity management
     const { selectedName, selectName, clearName } = useUserIdentity(id || '')
 
-    const refreshList = useCallback(async () => {
-        if (!id) return
-
-        try {
-            const data = await fetchListState(id)
-            if (currentId.current !== id) return
-            setListState(data)
-            setError(null)
-        } catch (err) {
-            console.error('Failed to fetch list:', err)
-            if (currentId.current === id) setError('Failed to load list')
-        } finally {
-            if (currentId.current === id) setLoading(false)
-        }
+    const refreshList = useCallback((): Promise<void> => {
+        if (!id) return Promise.resolve()
+        if (inFlight.current?.id === id) return inFlight.current.promise
+        const promise = (async () => {
+            try {
+                const data = await fetchListState(id)
+                if (currentId.current !== id) return
+                setListState(data)
+                setError(null)
+            } catch (err) {
+                if (currentId.current === id) setError('Failed to load list')
+                throw err
+            } finally {
+                if (currentId.current === id) setLoading(false)
+            }
+        })().finally(() => { if (inFlight.current?.promise === promise) inFlight.current = null })
+        inFlight.current = { id, promise }
+        return promise
     }, [id])
+
+    const syncList = useCallback((): Promise<void> => {
+        if (!id) return Promise.resolve()
+        if (syncInFlight.current?.id === id) return syncInFlight.current.promise
+        const promise = replay().catch(err => {
+            window.dispatchEvent(new Event('togetherlist:storage-error'))
+            throw err
+        }).then(() => {
+            if (currentId.current === id) return refreshList()
+        }).finally(() => { if (syncInFlight.current?.promise === promise) syncInFlight.current = null })
+        syncInFlight.current = { id, promise }
+        return promise
+    }, [id, refreshList])
+
+    const refreshAfterEdit = () => { void refreshList().catch(() => {}) }
 
     useEffect(() => {
         const saved = id ? cachedList(id) : null
@@ -49,13 +71,13 @@ function ListPage() {
         setLoading(!saved)
         setError(null)
         setSessionToggledIds(new Set())
-        refreshList()
+        void refreshList().catch(() => {})
         const update = () => { if (id) { const data = cachedList(id); if (data) { setListState(data); setError(null); setLoading(false) } } }
-        const poll = setInterval(() => { if (!document.hidden) { void replay().then(refreshList).catch(() => window.dispatchEvent(new Event('togetherlist:storage-error'))) } }, 3000)
+        const poll = setInterval(() => { if (!document.hidden) { void syncList().catch(() => {}) } }, 3000)
         window.addEventListener(offlineEvent, update)
         window.addEventListener('storage', update)
         return () => { clearInterval(poll); window.removeEventListener(offlineEvent, update); window.removeEventListener('storage', update) }
-    }, [id, refreshList])
+    }, [id, refreshList, syncList])
 
     useEffect(() => {
         if (!id) {
@@ -92,7 +114,7 @@ function ListPage() {
         )
     }
 
-    if (error) {
+    if (error && !listState) {
         return (
             <div className="flex-1 flex flex-col items-center justify-center p-8 max-w-[600px] mx-auto w-full">
                 <div className="text-center p-8 text-error bg-error-light rounded-xl">
@@ -137,11 +159,13 @@ function ListPage() {
     })
 
     return (
+        <PullToRefresh key={id} onRefresh={syncList}>
         <div className="flex-1 flex flex-col max-w-[600px] mx-auto w-full p-8 relative">
             <div className="absolute top-4 right-4 z-50">
                 <LanguageSwitcher />
             </div>
             
+            {error && <div role="alert" className="text-error">{t('list.error')}</div>}
             <Greeting name={selectedName!} onClick={clearName} />
 
             <ListHeader
@@ -149,11 +173,11 @@ function ListPage() {
                 currentName={listState?.name || 'Shared List'}
                 participants={listState?.participants || []}
                 currentUser={selectedName!}
-                onNameUpdated={refreshList}
+                onNameUpdated={refreshAfterEdit}
             />
 
             {selectedName && (
-                <AddItemForm listId={id!} createdBy={selectedName} onItemAdded={refreshList} />
+                <AddItemForm listId={id!} createdBy={selectedName} onItemAdded={refreshAfterEdit} />
             )}
 
             {activeItems.length > 0 && (
@@ -190,7 +214,7 @@ function ListPage() {
                                 listId={id!}
                                 locale={i18n.language}
                                 currentUser={selectedName!}
-                                onItemUpdated={refreshList}
+                                onItemUpdated={refreshAfterEdit}
                                 onItemToggled={handleItemToggled}
                                 participants={listState?.participants || []}
                             />
@@ -213,7 +237,7 @@ function ListPage() {
                                         listId={id!}
                                         locale={i18n.language}
                                         currentUser={selectedName!}
-                                        onItemUpdated={refreshList}
+                                        onItemUpdated={refreshAfterEdit}
                                         onItemToggled={handleItemToggled}
                                         participants={listState?.participants || []}
                                     />
@@ -224,6 +248,7 @@ function ListPage() {
                 </>
             )}
         </div>
+        </PullToRefresh>
     )
 }
 

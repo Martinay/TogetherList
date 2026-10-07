@@ -103,6 +103,8 @@
     },
     "placeholder": "Página da lista em breve…",
     "loading": "Carregando lista…",
+    "pullHint": "Puxe para baixo para atualizar",
+    "pullRelease": "Solte para atualizar",
     "emptyList": "Nenhum item ainda. Adicione o primeiro!",
     "addItem": {
       "placeholder": "O que precisa ser feito?",

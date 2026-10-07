@@ -103,6 +103,8 @@
     },
     "placeholder": "Binnenkort beschikbaar…",
     "loading": "Lijst laden…",
+    "pullHint": "Trek omlaag om te vernieuwen",
+    "pullRelease": "Laat los om te vernieuwen",
     "emptyList": "Nog geen items. Voeg je eerste toe!",
     "addItem": {
       "placeholder": "Wat moet er gebeuren?",

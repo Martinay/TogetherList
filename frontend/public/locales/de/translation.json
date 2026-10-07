@@ -103,6 +103,8 @@
     },
     "placeholder": "Listenseite kommt bald…",
     "loading": "Liste wird geladen…",
+    "pullHint": "Zum Aktualisieren nach unten ziehen",
+    "pullRelease": "Zum Aktualisieren loslassen",
     "emptyList": "Noch keine Einträge. Füge deinen ersten hinzu!",
     "addItem": {
       "placeholder": "Was muss erledigt werden?",

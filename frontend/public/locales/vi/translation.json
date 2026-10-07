@@ -103,6 +103,8 @@
     },
     "placeholder": "Sắp ra mắt…",
     "loading": "Đang tải…",
+    "pullHint": "Kéo xuống để làm mới",
+    "pullRelease": "Thả ra để làm mới",
     "emptyList": "Chưa có mục nào. Thêm cái đầu tiên đi!",
     "addItem": {
       "placeholder": "Cần làm gì?",
