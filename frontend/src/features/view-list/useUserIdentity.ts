@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 
 /**
  * Generates the LocalStorage key for a specific list's user identity.
@@ -39,6 +39,10 @@ export function useUserIdentity(listId: string): UseUserIdentityReturn {
             return null
         }
     })
+
+    useEffect(() => {
+        try { setSelectedName(localStorage.getItem(storageKey)) } catch { setSelectedName(null) }
+    }, [storageKey])
 
     const selectName = useCallback((name: string) => {
         try {

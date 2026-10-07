@@ -119,12 +119,17 @@
       "saved": "Guardado",
       "saveError": "Error al guardar"
     },
-    "editItem": { "button": "Editar" },
+    "editItem": {
+      "button": "Editar"
+    },
     "completeItem": {
       "complete": "Marcar como completado",
       "uncomplete": "Marcar como pendiente"
     },
-    "completed": { "section": "Completados", "count": "({{count}})" },
+    "completed": {
+      "section": "Completados",
+      "count": "({{count}})"
+    },
     "sort": {
       "label": "Ordenar",
       "options": {
@@ -141,6 +146,33 @@
     },
     "error": "Error al cargar la lista"
   },
-  "identity": { "title": "¿Quién eres?", "subtitle": "Selecciona tu nombre para continuar" },
-  "share": { "button": "Compartir", "copied": "¡Copiado!", "message": "Únete a mi lista compartida" }
+  "identity": {
+    "title": "¿Quién eres?",
+    "subtitle": "Selecciona tu nombre para continuar"
+  },
+  "share": {
+    "button": "Compartir",
+    "copied": "¡Copiado!",
+    "message": "Únete a mi lista compartida"
+  },
+  "offline": {
+    "offline": "Sin conexión — cambios guardados en este dispositivo.",
+    "syncing": "Sincronizando…",
+    "pending": "Cambios pendientes: {{count}}.",
+    "failed": "No se pudo sincronizar. Los cambios se conservan; revise la lista y reintente.",
+    "retry": "Aplicar cambios guardados sobre los valores compartidos",
+    "storageError": "Almacenamiento local no disponible. No se pueden guardar los cambios.",
+    "createUnavailable": "Conéctese para crear una lista.",
+    "createFailed": "No se pudo crear la lista. Revise su conexión antes de reintentar.",
+    "savedLists": "Listas guardadas en este dispositivo",
+    "review": "Revisar cambios pendientes",
+    "savedValue": "Valor guardado",
+    "serverValue": "Valor compartido",
+    "unsupported": "Editar listas requiere Web Locks (Chrome, Edge, Firefox o Safari actualizados) y HTTPS. Puedes seguir leyendo.",
+    "rejected": "Rechazado (HTTP {{status}})",
+    "fieldConflict": "El valor compartido cambió.",
+    "recovery": "Descarta este cambio y edita la lista de nuevo para corregirlo.",
+    "discard": "Descartar el cambio y las ediciones dependientes",
+    "discardConfirm": "¿Descartar este cambio? También se descartarán las ediciones del elemento creado por esta operación. Se conservarán los cambios independientes posteriores."
+  }
 }

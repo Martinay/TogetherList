@@ -154,5 +154,25 @@
     "button": "Sdílet",
     "copied": "Zkopírováno!",
     "message": "Přidejte se k mému seznamu"
+  },
+  "offline": {
+    "offline": "Offline — změny uložené na tomto zařízení.",
+    "syncing": "Synchronizace…",
+    "pending": "Čekající změny: {{count}}.",
+    "failed": "Synchronizace selhala. Změny zachovány; zkontrolujte seznam a zkuste to znovu.",
+    "retry": "Nahradit sdílené hodnoty uloženými změnami",
+    "storageError": "Místní úložiště není dostupné. Změny nelze uložit.",
+    "createUnavailable": "Pro vytvoření seznamu se připojte k internetu.",
+    "createFailed": "Seznam nelze vytvořit. Před dalším pokusem zkontrolujte připojení.",
+    "savedLists": "Seznamy uložené na tomto zařízení",
+    "review": "Zkontrolovat změny",
+    "savedValue": "Uložená hodnota",
+    "serverValue": "Sdílená hodnota",
+    "unsupported": "Úpravy seznamů vyžadují Web Locks (aktuální Chrome, Edge, Firefox nebo Safari) a HTTPS. Čtení zůstává dostupné.",
+    "rejected": "Odmítnuto (HTTP {{status}})",
+    "fieldConflict": "Sdílená hodnota se změnila.",
+    "recovery": "Zahoďte tuto změnu a znovu upravte seznam pro opravu.",
+    "discard": "Zahodit změnu a závislé úpravy",
+    "discardConfirm": "Zahodit tuto změnu? Úpravy položky vytvořené touto operací budou také zahozeny. Pozdější nezávislé změny zůstanou zachovány."
   }
 }

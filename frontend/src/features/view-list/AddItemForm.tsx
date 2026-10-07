@@ -11,6 +11,7 @@ interface AddItemFormProps {
 function AddItemForm({ listId, createdBy, onItemAdded }: AddItemFormProps) {
     const { t } = useTranslation()
     const [title, setTitle] = useState('')
+    const [error, setError] = useState(false)
     const [isAdding, setIsAdding] = useState(false)
 
     const handleSubmit = async (e: FormEvent) => {
@@ -20,18 +21,22 @@ function AddItemForm({ listId, createdBy, onItemAdded }: AddItemFormProps) {
         if (!trimmedTitle || isAdding) return
 
         setIsAdding(true)
+        setError(false)
         try {
             await addItem(listId, trimmedTitle, createdBy)
             setTitle('')
             onItemAdded()
         } catch (error) {
             console.error('Failed to add item:', error)
+            setError(true)
         } finally {
             setIsAdding(false)
         }
     }
 
     return (
+        <>
+        {error && <p role="alert" className="text-error mb-2">{t('offline.storageError')}</p>}
         <form className="flex gap-2 mb-6" onSubmit={handleSubmit}>
             <input
                 type="text"
@@ -49,6 +54,7 @@ function AddItemForm({ listId, createdBy, onItemAdded }: AddItemFormProps) {
                 {isAdding ? t('list.addItem.adding') : t('list.addItem.button')}
             </button>
         </form>
+        </>
     )
 }
 

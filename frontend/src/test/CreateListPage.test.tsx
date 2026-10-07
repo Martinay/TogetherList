@@ -149,7 +149,7 @@ describe('CreateListPage', () => {
             expect.stringContaining('/api/v1/list/create'),
             expect.objectContaining({
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: expect.objectContaining({ 'Content-Type': 'application/json', 'Idempotency-Key': expect.any(String) }),
                 body: JSON.stringify({ name: 'My List', creator: 'Alice', participants: [] }),
             })
         )

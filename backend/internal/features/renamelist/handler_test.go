@@ -1,9 +1,9 @@
 package renamelist_test
 
 import (
-	"github.com/google/uuid"
 	"bytes"
 	"encoding/json"
+	"github.com/google/uuid"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -183,7 +183,7 @@ func TestVerifyRenamedEventPersisted(t *testing.T) {
 		Name:      "End",
 		RenamedBy: "Bob",
 	})
-	req := httptest.NewRequest(http.MethodPut, "/api/v1/list/" + listID + "/name", bytes.NewReader(body))
+	req := httptest.NewRequest(http.MethodPut, "/api/v1/list/"+listID+"/name", bytes.NewReader(body))
 	req.SetPathValue("id", listID)
 	mux := http.NewServeMux()
 	mux.HandleFunc("PUT /api/v1/list/{id}/name", renamelist.Handler)
@@ -201,5 +201,37 @@ func TestVerifyRenamedEventPersisted(t *testing.T) {
 	}
 	if evts[1].Type != events.EventTypeListRenamed {
 		t.Fatalf("expected Type %v, got %v", events.EventTypeListRenamed, evts[1].Type)
+	}
+}
+
+func TestRenameIdempotencyConflict(t *testing.T) {
+	t.Setenv("DATA_DIR", t.TempDir())
+	listID, key := uuid.NewString(), uuid.NewString()
+	store := events.NewFileEventStore()
+	if err := store.Append(listID, events.Event{ID: uuid.NewString(), Type: events.EventTypeListCreated,
+		Timestamp: time.Now().UTC(), Payload: events.ListCreatedPayload{Name: "Start", Participants: []string{"Alice"}}}); err != nil {
+		t.Fatal(err)
+	}
+	for i, name := range []string{"First", "First", "Different"} {
+		body, _ := json.Marshal(renamelist.RenameListRequest{Name: name, RenamedBy: "Alice"})
+		req := httptest.NewRequest(http.MethodPut, "/", bytes.NewReader(body))
+		req.SetPathValue("id", listID)
+		req.Header.Set("Idempotency-Key", key)
+		w := httptest.NewRecorder()
+		renamelist.Handler(w, req)
+		expected := http.StatusOK
+		if i == 2 {
+			expected = http.StatusConflict
+		}
+		if w.Code != expected {
+			t.Fatalf("request %d: got %d, want %d: %s", i, w.Code, expected, w.Body.String())
+		}
+	}
+	all, err := store.ReadAll(listID)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(all) != 2 {
+		t.Fatalf("expected creation and one rename, got %d events", len(all))
 	}
 }

@@ -6,10 +6,11 @@ import "time"
 // Event represents a single event in the event store.
 // Events are immutable and append-only.
 type Event struct {
-	ID        string    `json:"id"`
-	Type      string    `json:"type"`
-	Payload   any       `json:"payload"`
-	Timestamp time.Time `json:"timestamp"`
+	ExpectedRevision string    `json:"-"`
+	ID               string    `json:"id"`
+	Type             string    `json:"type"`
+	Payload          any       `json:"payload"`
+	Timestamp        time.Time `json:"timestamp"`
 }
 
 // Store defines the interface for event storage operations.

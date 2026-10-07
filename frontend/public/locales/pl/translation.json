@@ -154,5 +154,25 @@
     "button": "Udostępnij",
     "copied": "Skopiowano!",
     "message": "Dołącz do mojej listy"
+  },
+  "offline": {
+    "offline": "Offline — zmiany zapisane na tym urządzeniu.",
+    "syncing": "Synchronizacja…",
+    "pending": "Oczekujące zmiany: {{count}}.",
+    "failed": "Synchronizacja nie powiodła się. Zmiany zachowane; sprawdź listę i spróbuj ponownie.",
+    "retry": "Zastąp wspólne wartości zapisanymi zmianami",
+    "storageError": "Pamięć lokalna niedostępna. Nie można zapisać zmian.",
+    "createUnavailable": "Połącz się z internetem, aby utworzyć listę.",
+    "createFailed": "Nie udało się utworzyć listy. Sprawdź połączenie przed ponowną próbą.",
+    "savedLists": "Listy zapisane na tym urządzeniu",
+    "review": "Sprawdź zmiany",
+    "savedValue": "Zapisana wartość",
+    "serverValue": "Wspólna wartość",
+    "unsupported": "Edycja list wymaga Web Locks (aktualny Chrome, Edge, Firefox lub Safari) i HTTPS. Odczyt pozostaje dostępny.",
+    "rejected": "Odrzucono (HTTP {{status}})",
+    "fieldConflict": "Wspólna wartość się zmieniła.",
+    "recovery": "Odrzuć tę zmianę i edytuj listę ponownie, aby ją poprawić.",
+    "discard": "Odrzuć zmianę i zależne edycje",
+    "discardConfirm": "Odrzucić zmianę? Edycje elementu utworzonego przez tę operację też zostaną odrzucone. Późniejsze niezależne zmiany zostaną zachowane."
   }
 }

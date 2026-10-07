@@ -18,6 +18,9 @@ type RenameListRequest struct {
 
 // Handler handles PUT requests to rename a list.
 func Handler(w http.ResponseWriter, r *http.Request) {
+	if !events.ValidateRequestID(w, r) {
+		return
+	}
 	if r.Method != http.MethodPut {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
@@ -79,9 +82,10 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	// Create and persist ListRenamed event
 	event := events.Event{
-		ID:        uuid.New().String(),
-		Type:      events.EventTypeListRenamed,
-		Timestamp: time.Now().UTC(),
+		ExpectedRevision: r.Header.Get("If-Match"),
+		ID:               events.RequestID(r),
+		Type:             events.EventTypeListRenamed,
+		Timestamp:        time.Now().UTC(),
 		Payload: events.ListRenamedPayload{
 			Name:      req.Name,
 			RenamedBy: req.RenamedBy,
@@ -89,7 +93,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := store.Append(listID, event); err != nil {
-		http.Error(w, "Failed to append event: "+err.Error(), http.StatusInternalServerError)
+		events.WriteAppendError(w, err, "Failed to append event: "+err.Error())
 		return
 	}
 

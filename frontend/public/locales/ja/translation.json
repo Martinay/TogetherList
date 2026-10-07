@@ -154,5 +154,25 @@
     "button": "共有",
     "copied": "コピーしました！",
     "message": "私の共有リストに参加して"
+  },
+  "offline": {
+    "offline": "オフライン — 変更はこの端末に保存されます。",
+    "syncing": "同期中…",
+    "pending": "未同期の変更: {{count}}。",
+    "failed": "同期できませんでした。変更は保持されています。リストを確認して再試行してください。",
+    "retry": "共有値を保存した変更で置き換える",
+    "storageError": "ローカル保存が利用できません。変更を保存できません。",
+    "createUnavailable": "リストを作成するにはインターネットに接続してください。",
+    "createFailed": "リストを作成できませんでした。接続を確認して再試行してください。",
+    "savedLists": "この端末に保存されたリスト",
+    "review": "未同期の変更を確認",
+    "savedValue": "保存した値",
+    "serverValue": "共有値",
+    "unsupported": "リストの編集には Web Locks 対応ブラウザー（最新の Chrome、Edge、Firefox、Safari）と HTTPS が必要です。閲覧は引き続き可能です。",
+    "rejected": "拒否されました（HTTP {{status}}）",
+    "fieldConflict": "共有の値が変更されました。",
+    "recovery": "この変更を破棄し、リストを再編集して修正してください。",
+    "discard": "変更と依存する編集を破棄",
+    "discardConfirm": "この変更を破棄しますか？この操作で作成した項目への編集も破棄されます。後の独立した変更は保持されます。"
   }
 }

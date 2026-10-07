@@ -154,5 +154,25 @@
     "button": "Paylaş",
     "copied": "Kopyalandı!",
     "message": "Ortak listeme katıl"
+  },
+  "offline": {
+    "offline": "Çevrimdışı — değişiklikler bu cihazda kaydedilir.",
+    "syncing": "Eşitleniyor…",
+    "pending": "Bekleyen değişiklikler: {{count}}.",
+    "failed": "Eşitleme başarısız. Değişiklikler korunuyor; listeyi kontrol edip tekrar deneyin.",
+    "retry": "Paylaşılan değerleri kayıtlı değişikliklerle değiştir",
+    "storageError": "Yerel depolama kullanılamıyor. Değişiklikler kaydedilemez.",
+    "createUnavailable": "Liste oluşturmak için internete bağlanın.",
+    "createFailed": "Liste oluşturulamadı. Tekrar denemeden önce bağlantınızı kontrol edin.",
+    "savedLists": "Bu cihazda kayıtlı listeler",
+    "review": "Değişiklikleri incele",
+    "savedValue": "Kayıtlı değer",
+    "serverValue": "Paylaşılan değer",
+    "unsupported": "Liste düzenlemek Web Locks (güncel Chrome, Edge, Firefox veya Safari) ve HTTPS gerektirir. Okuma kullanılabilir.",
+    "rejected": "Reddedildi (HTTP {{status}})",
+    "fieldConflict": "Paylaşılan değer değişti.",
+    "recovery": "Bu değişikliği silin, ardından düzeltmek için listeyi yeniden düzenleyin.",
+    "discard": "Değişikliği ve bağlı düzenlemeleri sil",
+    "discardConfirm": "Bu değişiklik silinsin mi? Bu işlemle oluşturulan öğenin düzenlemeleri de silinir. Sonraki bağımsız değişiklikler korunur."
   }
 }

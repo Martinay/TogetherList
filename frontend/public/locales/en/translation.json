@@ -154,5 +154,25 @@
     "button": "Share",
     "copied": "Copied!",
     "message": "Join my shared list"
+  },
+  "offline": {
+    "offline": "Offline — edits are saved on this device.",
+    "syncing": "Syncing saved edits…",
+    "pending": "Pending edits: {{count}}.",
+    "failed": "An edit could not sync. Pending changes are retained; check the list and retry.",
+    "retry": "Apply saved edits over shared values",
+    "storageError": "Local storage is unavailable. Edits cannot be saved safely.",
+    "createUnavailable": "Connect to the internet to create a new list.",
+    "createFailed": "Could not create the list. Check your connection before trying again.",
+    "savedLists": "Saved lists on this device",
+    "review": "Review pending changes",
+    "savedValue": "Saved value",
+    "serverValue": "Shared value",
+    "unsupported": "List edits require a browser with Web Locks (current Chrome, Edge, Firefox or Safari) and HTTPS. Reading remains available.",
+    "rejected": "Rejected (HTTP {{status}})",
+    "fieldConflict": "The shared value changed.",
+    "recovery": "Discard this edit, then edit the list again to save a corrected change.",
+    "discard": "Discard edit and dependent item edits",
+    "discardConfirm": "Discard this edit? Edits to an item created by this operation will also be discarded. Later independent edits will be retained."
   }
 }

@@ -1,6 +1,7 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { cachedList, offlineEvent, replay } from '../offline/store'
 import AddItemForm from './AddItemForm'
 import IdentityPicker from './IdentityPicker'
 import Greeting from './Greeting'
@@ -15,8 +16,10 @@ import type { ListState, Item } from './types'
 function ListPage() {
     const { id } = useParams<{ id: string }>()
     const { t, i18n } = useTranslation()
-    const [listState, setListState] = useState<ListState | null>(null)
-    const [loading, setLoading] = useState(true)
+    const currentId = useRef(id)
+    currentId.current = id
+    const [listState, setListState] = useState<ListState | null>(() => id ? cachedList(id) : null)
+    const [loading, setLoading] = useState(() => !id || !cachedList(id))
     const [error, setError] = useState<string | null>(null)
     const [sessionToggledIds, setSessionToggledIds] = useState<Set<string>>(new Set())
     const [sortMode, setSortMode] = useState<SortMode>(DEFAULT_SORT_MODE)
@@ -29,19 +32,30 @@ function ListPage() {
 
         try {
             const data = await fetchListState(id)
+            if (currentId.current !== id) return
             setListState(data)
             setError(null)
         } catch (err) {
             console.error('Failed to fetch list:', err)
-            setError('Failed to load list')
+            if (currentId.current === id) setError('Failed to load list')
         } finally {
-            setLoading(false)
+            if (currentId.current === id) setLoading(false)
         }
     }, [id])
 
     useEffect(() => {
+        const saved = id ? cachedList(id) : null
+        setListState(saved)
+        setLoading(!saved)
+        setError(null)
+        setSessionToggledIds(new Set())
         refreshList()
-    }, [refreshList])
+        const update = () => { if (id) { const data = cachedList(id); if (data) { setListState(data); setError(null); setLoading(false) } } }
+        const poll = setInterval(() => { if (!document.hidden) { void replay().then(refreshList).catch(() => window.dispatchEvent(new Event('togetherlist:storage-error'))) } }, 3000)
+        window.addEventListener(offlineEvent, update)
+        window.addEventListener('storage', update)
+        return () => { clearInterval(poll); window.removeEventListener(offlineEvent, update); window.removeEventListener('storage', update) }
+    }, [id, refreshList])
 
     useEffect(() => {
         if (!id) {

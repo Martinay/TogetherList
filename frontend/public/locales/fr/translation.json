@@ -94,19 +94,85 @@
     "duplicateError": "Ce nom a déjà été ajouté"
   },
   "list": {
-    "name": { "edit": "Modifier le nom", "save": "Enregistrer", "cancel": "Annuler", "required": "Le nom de la liste est requis", "saving": "Enregistrement…" },
+    "name": {
+      "edit": "Modifier le nom",
+      "save": "Enregistrer",
+      "cancel": "Annuler",
+      "required": "Le nom de la liste est requis",
+      "saving": "Enregistrement…"
+    },
     "placeholder": "Page de liste bientôt disponible…",
     "loading": "Chargement de la liste…",
     "emptyList": "Aucun élément. Ajoutez le premier !",
-    "addItem": { "placeholder": "Que faut-il faire ?", "button": "Ajouter", "adding": "Ajout…" },
-    "itemDetails": { "createdBy": "Créé par", "createdAt": "Créé le", "assignedTo": "Assigné à", "clearAssignment": "Retirer l'assignation", "descriptionPlaceholder": "Ajouter une description…", "saving": "Enregistrement…", "saved": "Enregistré", "saveError": "Échec de l'enregistrement" },
-    "editItem": { "button": "Modifier" },
-    "completeItem": { "complete": "Marquer comme terminé", "uncomplete": "Marquer comme non terminé" },
-    "completed": { "section": "Terminés", "count": "({{count}})" },
-    "sort": { "label": "Trier", "options": { "newestFirst": "Plus récents", "oldestFirst": "Plus anciens", "aToZ": "A–Z", "zToA": "Z–A" } },
-    "greeting": { "hello": "Bonjour, ", "suffix": " !", "switchHint": "(Cliquez pour changer d'utilisateur)" },
+    "addItem": {
+      "placeholder": "Que faut-il faire ?",
+      "button": "Ajouter",
+      "adding": "Ajout…"
+    },
+    "itemDetails": {
+      "createdBy": "Créé par",
+      "createdAt": "Créé le",
+      "assignedTo": "Assigné à",
+      "clearAssignment": "Retirer l'assignation",
+      "descriptionPlaceholder": "Ajouter une description…",
+      "saving": "Enregistrement…",
+      "saved": "Enregistré",
+      "saveError": "Échec de l'enregistrement"
+    },
+    "editItem": {
+      "button": "Modifier"
+    },
+    "completeItem": {
+      "complete": "Marquer comme terminé",
+      "uncomplete": "Marquer comme non terminé"
+    },
+    "completed": {
+      "section": "Terminés",
+      "count": "({{count}})"
+    },
+    "sort": {
+      "label": "Trier",
+      "options": {
+        "newestFirst": "Plus récents",
+        "oldestFirst": "Plus anciens",
+        "aToZ": "A–Z",
+        "zToA": "Z–A"
+      }
+    },
+    "greeting": {
+      "hello": "Bonjour, ",
+      "suffix": " !",
+      "switchHint": "(Cliquez pour changer d'utilisateur)"
+    },
     "error": "Échec du chargement de la liste"
   },
-  "identity": { "title": "Qui êtes-vous ?", "subtitle": "Sélectionnez votre nom pour continuer" },
-  "share": { "button": "Partager", "copied": "Copié !", "message": "Rejoignez ma liste partagée" }
+  "identity": {
+    "title": "Qui êtes-vous ?",
+    "subtitle": "Sélectionnez votre nom pour continuer"
+  },
+  "share": {
+    "button": "Partager",
+    "copied": "Copié !",
+    "message": "Rejoignez ma liste partagée"
+  },
+  "offline": {
+    "offline": "Hors ligne — modifications enregistrées sur cet appareil.",
+    "syncing": "Synchronisation…",
+    "pending": "Modifications en attente : {{count}}.",
+    "failed": "Échec de synchronisation. Modifications conservées ; vérifiez la liste et réessayez.",
+    "retry": "Remplacer les valeurs partagées par les modifications enregistrées",
+    "storageError": "Stockage local indisponible. Impossible d’enregistrer les modifications.",
+    "createUnavailable": "Connectez-vous pour créer une liste.",
+    "createFailed": "Création impossible. Vérifiez votre connexion avant de réessayer.",
+    "savedLists": "Listes enregistrées sur cet appareil",
+    "review": "Vérifier les modifications",
+    "savedValue": "Valeur enregistrée",
+    "serverValue": "Valeur partagée",
+    "unsupported": "Les modifications nécessitent un navigateur avec Web Locks (Chrome, Edge, Firefox ou Safari à jour) et HTTPS. La lecture reste disponible.",
+    "rejected": "Refusé (HTTP {{status}})",
+    "fieldConflict": "La valeur partagée a changé.",
+    "recovery": "Abandonnez cette modification, puis modifiez à nouveau la liste pour la corriger.",
+    "discard": "Abandonner la modification et les changements dépendants",
+    "discardConfirm": "Abandonner cette modification ? Les changements de l’élément créé par cette opération seront aussi abandonnés. Les changements indépendants ultérieurs seront conservés."
+  }
 }

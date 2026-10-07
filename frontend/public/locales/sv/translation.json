@@ -154,5 +154,25 @@
     "button": "Dela",
     "copied": "Kopierad!",
     "message": "Gå med i min lista"
+  },
+  "offline": {
+    "offline": "Offline — ändringar sparas på den här enheten.",
+    "syncing": "Synkroniserar…",
+    "pending": "Väntande ändringar: {{count}}.",
+    "failed": "Synkronisering misslyckades. Ändringar sparas; kontrollera listan och försök igen.",
+    "retry": "Ersätt delade värden med sparade ändringar",
+    "storageError": "Lokal lagring är inte tillgänglig. Ändringar kan inte sparas.",
+    "createUnavailable": "Anslut till internet för att skapa en lista.",
+    "createFailed": "Listan kunde inte skapas. Kontrollera anslutningen innan du försöker igen.",
+    "savedLists": "Sparade listor på den här enheten",
+    "review": "Granska ändringar",
+    "savedValue": "Sparat värde",
+    "serverValue": "Delat värde",
+    "unsupported": "Liständringar kräver Web Locks (aktuell Chrome, Edge, Firefox eller Safari) och HTTPS. Det går fortfarande att läsa.",
+    "rejected": "Avvisad (HTTP {{status}})",
+    "fieldConflict": "Det delade värdet har ändrats.",
+    "recovery": "Ta bort denna ändring och redigera listan igen för att rätta den.",
+    "discard": "Ta bort ändringen och beroende redigeringar",
+    "discardConfirm": "Ta bort ändringen? Redigeringar av posten som skapades av denna åtgärd tas också bort. Senare oberoende ändringar behålls."
   }
 }

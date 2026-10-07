@@ -24,6 +24,9 @@ type CreateListResponse struct {
 
 // Handler handles POST requests to create a new list.
 func Handler(w http.ResponseWriter, r *http.Request) {
+	if !events.ValidateRequestID(w, r) {
+		return
+	}
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
@@ -70,11 +73,14 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	// Generate new list ID
 	listID := uuid.New().String()
+	if r.Header.Get("Idempotency-Key") != "" {
+		listID = events.RequestID(r)
+	}
 
 	// Create and persist ListCreated event
 	store := events.NewFileEventStore()
 	event := events.Event{
-		ID:        uuid.New().String(),
+		ID:        listID,
 		Type:      events.EventTypeListCreated,
 		Timestamp: time.Now().UTC(),
 		Payload: events.ListCreatedPayload{
@@ -84,7 +90,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := store.Append(listID, event); err != nil {
-		http.Error(w, "Failed to create list", http.StatusInternalServerError)
+		events.WriteAppendError(w, err, "Failed to create list")
 		return
 	}
 

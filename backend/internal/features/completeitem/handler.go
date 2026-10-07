@@ -20,6 +20,9 @@ type CompleteItemRequest struct {
 // Handler handles PUT requests to toggle an item's completion status.
 // Expected URL pattern: PUT /api/v1/list/{id}/items/{itemId}/completed
 func Handler(w http.ResponseWriter, r *http.Request) {
+	if !events.ValidateRequestID(w, r) {
+		return
+	}
 	if r.Method != http.MethodPut {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
@@ -52,9 +55,10 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	// Create and persist ItemCompleted event
 	store := events.NewFileEventStore()
 	event := events.Event{
-		ID:        uuid.New().String(),
-		Type:      events.EventTypeItemCompleted,
-		Timestamp: time.Now().UTC(),
+		ExpectedRevision: r.Header.Get("If-Match"),
+		ID:               events.RequestID(r),
+		Type:             events.EventTypeItemCompleted,
+		Timestamp:        time.Now().UTC(),
 		Payload: events.ItemCompletedPayload{
 			ItemID:      itemID,
 			IsCompleted: req.IsCompleted,
@@ -63,7 +67,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := store.Append(listID, event); err != nil {
-		http.Error(w, "Failed to update item", http.StatusInternalServerError)
+		events.WriteAppendError(w, err, "Failed to update item")
 		return
 	}
 

@@ -1,3 +1,4 @@
+import StoredLists from '../offline/StoredLists'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
@@ -42,6 +43,7 @@ function LandingPage() {
 
     return (
         <main className="flex-1 flex flex-col items-center relative overflow-hidden">
+            <StoredLists />
             {/* Radial glow background */}
             <div className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-[radial-gradient(ellipse_at_center,var(--color-accent-glow)_0%,transparent_50%)] opacity-60 animate-pulse" />
 

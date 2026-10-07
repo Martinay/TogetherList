@@ -18,6 +18,9 @@ type EditItemDescriptionRequest struct {
 // Handler handles PUT requests to edit an item's description.
 // Expected URL pattern: PUT /api/v1/list/{id}/items/{itemId}/description
 func Handler(w http.ResponseWriter, r *http.Request) {
+	if !events.ValidateRequestID(w, r) {
+		return
+	}
 	if r.Method != http.MethodPut {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
@@ -44,9 +47,10 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	// Create and persist ItemDescriptionEdited event
 	store := events.NewFileEventStore()
 	event := events.Event{
-		ID:        uuid.New().String(),
-		Type:      events.EventTypeItemDescriptionEdited,
-		Timestamp: time.Now().UTC(),
+		ExpectedRevision: r.Header.Get("If-Match"),
+		ID:               events.RequestID(r),
+		Type:             events.EventTypeItemDescriptionEdited,
+		Timestamp:        time.Now().UTC(),
 		Payload: events.ItemDescriptionEditedPayload{
 			ItemID:      itemID,
 			Description: req.Description,
@@ -54,7 +58,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := store.Append(listID, event); err != nil {
-		http.Error(w, "Failed to update item description", http.StatusInternalServerError)
+		events.WriteAppendError(w, err, "Failed to update item description")
 		return
 	}
 
