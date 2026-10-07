@@ -189,6 +189,7 @@
     "pending": "Analyse: nog geen keuze.",
     "accepted": "Analyse: toegestaan op geschikte startpagina’s.",
     "declined": "Analyse: geweigerd.",
-    "storageError": "De keuze kon niet worden opgeslagen. Bij mislukte toestemming blijft analyse uit. Controleer de opslag."
+    "storageError": "De keuze kon niet worden opgeslagen. Bij mislukte toestemming blijft analyse uit. Controleer de opslag.",
+    "close": "Sluiten en analyses weigeren"
   }
 }

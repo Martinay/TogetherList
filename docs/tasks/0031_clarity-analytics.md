@@ -15,6 +15,10 @@ Integrate project `yu06fgkw31` with opt-in consent, durable accept/decline, acce
 - [Boundary decision (Proposed)](../adr/0027_public-page-analytics.md)
 - [Exact E2E coverage and verification](../e2e-coverage.md)
 
+## Consent feedback review
+
+Fixed-bottom first-choice consent dialog, persistent close-as-decline, footer re-enable/revoke controls, translated close labels and responsive RTL styling are under review. Related browser and unit scenarios and validation evidence are tracked in the coverage inventory. No acceptance or completion state has changed.
+
 ## Remaining review / next task
 
 Review privacy/a11y and native-device behavior; verify the project's consent/dashboard configuration and masked production recordings before publication. Actual Microsoft ingestion and dashboard settings are outside automated local verification. Explicit user acceptance is still pending. Do not mark this task complete without that acceptance.

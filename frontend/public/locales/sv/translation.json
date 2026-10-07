@@ -189,6 +189,7 @@
     "pending": "Analys: inget val ännu.",
     "accepted": "Analys: tillåten på lämpliga startsidor.",
     "declined": "Analys: avböjd.",
-    "storageError": "Valet kunde inte sparas. Misslyckat samtycke lämnar analys avstängd. Kontrollera lagringen."
+    "storageError": "Valet kunde inte sparas. Misslyckat samtycke lämnar analys avstängd. Kontrollera lagringen.",
+    "close": "Stäng och avvisa analys"
   }
 }

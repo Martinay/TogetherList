@@ -189,6 +189,7 @@
     "pending": "Analytika: bez volby.",
     "accepted": "Analytika: povolena na vhodných úvodních stránkách.",
     "declined": "Analytika: odmítnuta.",
-    "storageError": "Volbu nelze uložit. Neúspěšný souhlas nechá analytiku vypnutou. Zkontrolujte úložiště."
+    "storageError": "Volbu nelze uložit. Neúspěšný souhlas nechá analytiku vypnutou. Zkontrolujte úložiště.",
+    "close": "Zavřít a odmítnout analytiku"
   }
 }

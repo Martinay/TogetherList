@@ -189,6 +189,7 @@
     "pending": "Analyse: noch keine Auswahl.",
     "accepted": "Analyse: auf geeigneten Startseiten erlaubt.",
     "declined": "Analyse: abgelehnt.",
-    "storageError": "Die Auswahl konnte nicht gespeichert werden. Nach fehlgeschlagener Zustimmung bleibt die Analyse aus. Prüfen Sie die Browserspeicherung."
+    "storageError": "Die Auswahl konnte nicht gespeichert werden. Nach fehlgeschlagener Zustimmung bleibt die Analyse aus. Prüfen Sie die Browserspeicherung.",
+    "close": "Schließen und Analyse ablehnen"
   }
 }

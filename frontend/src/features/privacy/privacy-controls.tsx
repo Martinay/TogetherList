@@ -1,11 +1,20 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import './privacy-controls.css'
 import { clarityLoaded, clearClarityCookies, consentKey, loadClarity, readConsent, revokeClarity, saveConsent, safeCurrentLanding } from './clarity'
 
 export default function PrivacyControls() {
     const { t } = useTranslation()
     const [consent, setConsent] = useState(readConsent)
     const [error, setError] = useState(false)
+    const footerChoice = useRef<HTMLButtonElement>(null)
+    const restoreFocus = useRef(false)
+    useEffect(() => {
+        if (consent && restoreFocus.current) {
+            footerChoice.current?.focus()
+            restoreFocus.current = false
+        }
+    }, [consent])
     useEffect(() => {
         loadClarity()
         const sync = () => {
@@ -21,6 +30,7 @@ export default function PrivacyControls() {
     const choose = (value: 'accepted' | 'declined') => {
         const saved = saveConsent(value)
         setError(!saved)
+        restoreFocus.current = saved
         setConsent(saved ? value : null)
         if (value === 'declined') {
             clearClarityCookies()
@@ -33,13 +43,25 @@ export default function PrivacyControls() {
             } else revokeClarity()
         } else if (saved) loadClarity()
     }
-    return <footer className="relative z-10 mx-auto w-full max-w-[900px] p-6 text-sm text-text-secondary" aria-label={t('privacy.title')}>
-        <p>{t('privacy.disclosure')} <a className="underline text-text-primary decoration-accent-primary" href="/privacy" referrerPolicy="no-referrer">{t('privacy.title')}</a></p>
-        <p className="my-2" aria-live="polite">{t(consent === 'accepted' ? 'privacy.accepted' : consent === 'declined' ? 'privacy.declined' : 'privacy.pending')}</p>
-        <div className="flex flex-wrap gap-3">
-            <button className="rounded-lg border border-border-light bg-bg-card px-4 py-2 text-text-primary cursor-pointer" onClick={() => choose('accepted')}>{t('privacy.accept')}</button>
-            <button className="rounded-lg border border-border-light bg-bg-card px-4 py-2 text-text-primary cursor-pointer" onClick={() => choose('declined')}>{t('privacy.decline')}</button>
-        </div>
-        {error && <p role="alert" className="mt-2">{t('privacy.storageError')}</p>}
-    </footer>
+    const actions = <div className="privacy-actions">
+        <button ref={consent ? footerChoice : undefined} className="privacy-allow" onClick={() => choose('accepted')}>{t('privacy.accept')}</button>
+        <button onClick={() => choose('declined')}>{t('privacy.decline')}</button>
+    </div>
+    const policy = <a href="/privacy" referrerPolicy="no-referrer">{t('privacy.title')}</a>
+    return <>
+        <footer className="privacy-footer" aria-label={t('privacy.title')}>
+            <p>{policy}</p>
+            <p aria-live="polite">{t(consent === 'accepted' ? 'privacy.accepted' : consent === 'declined' ? 'privacy.declined' : 'privacy.pending')}</p>
+            {consent && actions}
+        </footer>
+        {!consent && <section className="privacy-banner" role="dialog" aria-labelledby="consent-title" aria-describedby="consent-description">
+            <button className="privacy-close" aria-label={t('privacy.close')} onClick={() => choose('declined')}><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m6 6 12 12M18 6 6 18" /></svg></button>
+            <div className="privacy-copy">
+                <h2 id="consent-title">{t('privacy.title')}</h2>
+                <p id="consent-description">{t('privacy.disclosure')} {policy}</p>
+            </div>
+            {actions}
+            {error && <p role="alert" className="privacy-error">{t('privacy.storageError')}</p>}
+        </section>}
+    </>
 }

@@ -189,6 +189,7 @@
     "pending": "Phân tích: chưa chọn.",
     "accepted": "Phân tích: được phép trên trang chủ phù hợp.",
     "declined": "Phân tích: đã từ chối.",
-    "storageError": "Không lưu được lựa chọn. Chấp nhận thất bại giữ phân tích tắt. Hãy kiểm tra bộ nhớ."
+    "storageError": "Không lưu được lựa chọn. Chấp nhận thất bại giữ phân tích tắt. Hãy kiểm tra bộ nhớ.",
+    "close": "Đóng và từ chối phân tích"
   }
 }

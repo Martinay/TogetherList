@@ -1,0 +1,13 @@
+.privacy-footer { position: relative; margin-inline: auto; width: 100%; max-width: 900px; padding: 24px; color: var(--color-text-secondary); font-size: 14px; }
+.privacy-footer p { margin-block-end: 8px; }
+.privacy-footer a, .privacy-banner a { text-decoration: underline; text-underline-offset: 3px; color: var(--color-text-primary); }
+.privacy-banner { position: fixed; z-index: 100; left: max(12px, env(safe-area-inset-left)); right: max(12px, env(safe-area-inset-right)); bottom: max(12px, env(safe-area-inset-bottom)); margin-inline: auto; max-width: 1000px; max-height: calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); overflow-y: auto; padding: 24px; padding-inline-end: 64px; display: flex; flex-wrap: wrap; align-items: center; gap: 20px; border: 1px solid #e7d9c6; border-radius: 20px; background: linear-gradient(120deg, #fffaf0, #fff); box-shadow: 0 12px 48px #29201826; font-size: 14px; }
+.privacy-copy { flex: 1 1 360px; min-width: 0; overflow-wrap: anywhere; }
+.privacy-copy h2 { font-size: 18px; font-weight: 700; margin-block-end: 6px; }
+.privacy-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.privacy-actions button, .privacy-close { min-height: 44px; border: 1px solid #d6cbbb; border-radius: 10px; padding: 10px 16px; background: #fff; color: var(--color-text-primary); cursor: pointer; overflow-wrap: anywhere; }
+.privacy-actions .privacy-allow { background: #92400e; color: white; border-color: #92400e; }
+.privacy-close { position: absolute; inset-inline-end: 10px; top: 10px; width: 44px; padding: 11px; border-color: transparent; background: transparent; }
+.privacy-banner button:focus-visible, .privacy-footer button:focus-visible, .privacy-banner a:focus-visible, .privacy-footer a:focus-visible { outline: 3px solid #92400e; outline-offset: 3px; }
+.privacy-error { flex-basis: 100%; color: #991b1b; }
+@media (max-width: 600px) { .privacy-banner { padding: 20px; padding-block-start: 52px; gap: 16px; } .privacy-banner .privacy-actions { width: 100%; flex-direction: column; } .privacy-banner .privacy-actions button { width: 100%; } }

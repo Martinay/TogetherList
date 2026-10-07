@@ -189,6 +189,7 @@
     "pending": "Analitik: belum dipilih.",
     "accepted": "Analitik: diizinkan pada beranda yang memenuhi syarat.",
     "declined": "Analitik: ditolak.",
-    "storageError": "Pilihan tidak dapat disimpan. Penerimaan yang gagal membuat analitik tetap mati. Periksa penyimpanan."
+    "storageError": "Pilihan tidak dapat disimpan. Penerimaan yang gagal membuat analitik tetap mati. Periksa penyimpanan.",
+    "close": "Tutup dan tolak analitik"
   }
 }

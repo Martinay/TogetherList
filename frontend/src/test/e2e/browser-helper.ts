@@ -10,7 +10,7 @@ export async function capture(browser: Browser, name: string) {
     await writeFile(`e2e-artifacts/${name}.html`, await browser.getPageSource())
     await writeFile(`e2e-artifacts/${name}-console.json`, JSON.stringify(await browser.getLogs('browser'), null, 2))
 }
-export async function createBrowser(options?: Partial<Capabilities.WebdriverIOConfig>) {
+export async function createBrowser(options?: Partial<Capabilities.WebdriverIOConfig>, consentFixture: 'declined' | null = 'declined') {
     const capabilities = options?.capabilities as WebdriverIO.Capabilities | undefined
     const chrome = capabilities?.['goog:chromeOptions'] || {}
     const browser = await remote({
@@ -28,6 +28,7 @@ export async function createBrowser(options?: Partial<Capabilities.WebdriverIOCo
     await cdp(browser, 'Network.enable')
     // External typography is not part of the local application integration boundary.
     await cdp(browser, 'Network.setBlockedURLs', { urls: ['*://fonts.googleapis.com/*', '*://fonts.gstatic.com/*'] })
+    if (consentFixture) await cdp(browser, 'Page.addScriptToEvaluateOnNewDocument', { source: `if (location.origin === '${BASE_URL}' && !localStorage.getItem('togetherlist:clarity-consent:v1')) localStorage.setItem('togetherlist:clarity-consent:v1', 'declined')` })
     sessions.add(browser)
     return browser
 }

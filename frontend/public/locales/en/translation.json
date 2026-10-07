@@ -189,6 +189,7 @@
     "pending": "Analytics: no choice yet.",
     "accepted": "Analytics: allowed on eligible landing pages.",
     "declined": "Analytics: declined.",
-    "storageError": "Your choice could not be saved. Analytics stays off after a failed acceptance. Please check browser storage settings."
+    "storageError": "Your choice could not be saved. Analytics stays off after a failed acceptance. Please check browser storage settings.",
+    "close": "Close and decline analytics"
   }
 }

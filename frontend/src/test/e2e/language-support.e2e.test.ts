@@ -19,7 +19,7 @@ describe('Language Support Core Features', () => {
                     }
                 },
             }
-        })
+        }, null)
         try {
             await browser.url(BASE_URL)
             // Wait for hydration/suspense
@@ -33,7 +33,7 @@ describe('Language Support Core Features', () => {
     })
 
     it('persists manual language selection in localStorage', async () => {
-        const browser = await createBrowser()
+        const browser = await createBrowser(undefined, null)
         try {
             await browser.url(BASE_URL)
             const select = await browser.$('select[aria-label="Select Language"]')
@@ -58,7 +58,7 @@ describe('Language Support Core Features', () => {
     })
 
     it('sets RTL layout stability for Arabic', async () => {
-        const browser = await createBrowser()
+        const browser = await createBrowser(undefined, null)
         try {
             await browser.url(BASE_URL)
             const select = await browser.$('select[aria-label="Select Language"]')
@@ -100,7 +100,7 @@ describe('Browser Language Detection (all supported languages)', () => {
                         }
                     },
                 }
-            })
+            }, null)
             try {
                 // Clear any stored state just in case
                 await browser.url(BASE_URL)
@@ -115,9 +115,9 @@ describe('Browser Language Detection (all supported languages)', () => {
                 // Our detector is configured to fallback to the supported language.
                 expect(currentVal).toBe(lang)
                 const translation = await (await fetch(`${BASE_URL}/locales/${lang}/translation.json`)).json() as { privacy: { title: string; disclosure: string; accept: string; decline: string; statement: string } }
-                const footer = await browser.$('footer')
+                const footer = await browser.$('[role="dialog"]')
                 expect(await footer.getText()).toContain(translation.privacy.disclosure)
-                const choices = await footer.$$('button')
+                const choices = await footer.$$('.privacy-actions button')
                 expect(await choices.length).toBe(2)
                 expect(await choices[0]!.getText()).toBe(translation.privacy.accept)
                 expect(await choices[1]!.getText()).toBe(translation.privacy.decline)
