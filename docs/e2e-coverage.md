@@ -15,7 +15,7 @@ Spec paths below are relative to `frontend/src/test/e2e/`. Every named scenario 
 | Share, clipboard and separate participants collaborating | None | `user-journeys.e2e.test.ts`: “copies the real shared URL and synchronizes independent participant sessions both ways”; actual clipboard read, no storage shared across sessions, add/complete polling and creator/completer audit fields |
 | Add items and empty/whitespace input | Happy add as fixture only | `user-journeys.e2e.test.ts`: “edits titles, cancels and rejects blanks…”; validates blank Add and real server state |
 | Item title save/trim/Unicode, Escape cancellation and blank cancellation | None | `user-journeys.e2e.test.ts`: “edits titles, cancels and rejects blanks, assigns multiple people and clears assignments” |
-| Item expand/collapse, description add/edit/preview/reload | Existing | `item-description.e2e.test.ts`: “allows adding, editing, and previewing item description”; `offline.production.test.ts` verifies replayed description; persistence spec verifies restart |
+| Item expand/collapse, description add/edit/preview/clear/reload | Existing | `item-description.e2e.test.ts`: “allows adding, editing, and previewing item description”; `offline.production.test.ts` verifies replayed description; persistence spec verifies restart |
 | Multi-participant assignment, clear, collapsed preview, persistence, completed-item restrictions | Mocked unit tests | `user-journeys.e2e.test.ts`: “edits titles…” verifies multi-assign and clear against HTTP state, reload preview, disabled assignment/description and absent title editing after completion |
 | Complete/uncomplete, strikethrough and audit fields | Existing | `item-completion.e2e.test.ts`: “marks an item as completed via checkbox”, “uncompletes a completed item”; independent-session completer in user journeys; MCP complete/uncomplete |
 | List rename incl Unicode | Existing | `rename-list.e2e.test.ts`: initial title, standard rename, emoji/special characters; `user-journeys.e2e.test.ts`: “cancels list rename and prevents empty names…”; offline and restart specs |
@@ -36,8 +36,8 @@ Spec paths below are relative to `frontend/src/test/e2e/`. Every named scenario 
 | Server route | Coverage |
 | --- | --- |
 | `GET /health` | Harness startup readiness; production server must respond |
-| `POST /api/v1/list/create` | Browser wizard; malformed JSON, required fields, duplicates, method, idempotent retry/conflict |
-| `GET /api/v1/list/{id}` | Browser load/poll/reload; invalid UUID and missing list; restart reconstruction |
+| `POST /api/v1/list/create` | Browser wizard; malformed JSON, required fields, duplicates, GET UUID validation, idempotent retry/conflict |
+| `GET /api/v1/list/{id}` | Browser load/poll/reload; invalid UUID and absent-list empty projection (established API contract); browser missing-list error; restart reconstruction |
 | `PUT /api/v1/list/{id}/name` | Browser rename/cancel/blank validation; stale revision rejection; offline conflict/retry/discard |
 | `POST /api/v1/list/{id}/items` | Browser add/blank validation; idempotent replay; invalid idempotency key |
 | `PUT /api/v1/list/{id}/items/{itemId}/title` | Browser edit/cancel/blank; real API blank rejection and offline replay |
@@ -47,6 +47,7 @@ Spec paths below are relative to `frontend/src/test/e2e/`. Every named scenario 
 | `POST /api/v1/mcp`, `POST /mcp` | initialize, tools/list and every tool: `list_lists`, `get_list`, `create_list`, `rename_list`, `add_item`, `complete_item`, `assign_item`, `update_item_title`, `update_item_description`; resource read; invalid/missing lists, unknown method and malformed JSON |
 | `GET /api/v1/mcp/sse`, `GET /mcp/sse` | Real streaming session and tools/list JSON-RPC message roundtrip through the advertised endpoint |
 | `POST /api/v1/mcp/messages`, `POST /mcp/messages` | Real message delivery and missing-session rejection |
+| `/api/` (unknown API fallback) | Unknown API path returns 404 without serving SPA HTML; test-first routing regression |
 | `/` (SPA/static/crawler handler) | Real deep-link HTML, assets/translations/worker/LLM documents, crawler response; backend unit tests supply traversal/bot-selection edge cases |
 
 ## Running and diagnosing
@@ -67,4 +68,4 @@ Browser runs block external Google Fonts requests to keep the local integration 
 
 ## Verification record
 
-Implementation and local verification are in progress. See PR verification for exact final commands, counts, repetitions and any unresolved failures; do not infer passing results from the inventory alone.
+First full local run executed 66 tests: 60 passed, 6 failed, zero skipped. Failure diagnosis reproduced timestamp precision and API-to-SPA fallback bugs before minimal fixes. The absent-list HTTP 200 empty projection is an established backend contract and is asserted explicitly rather than changed. Implementation and final verification are in progress. See PR verification for exact final commands, counts, repetitions and any unresolved failures; do not infer passing results from the inventory alone.

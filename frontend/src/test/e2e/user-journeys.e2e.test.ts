@@ -122,6 +122,7 @@ it('edits titles, cancels and rejects blanks, assigns multiple people and clears
     await browser.$('span=Oat milk 🥛').waitForDisplayed()
     await browser.$('button[aria-expanded]:not([aria-haspopup])').click()
     await browser.$('textarea').waitForDisplayed()
+    await browser.waitUntil(async () => (await browser.$('body').getText()).includes('Created by'))
     expect(await browser.$('body').getText()).toContain('Created by')
     const boxes = await browser.$$('input[type="checkbox"]')
     await boxes[0]!.click()
@@ -131,7 +132,10 @@ it('edits titles, cancels and rejects blanks, assigns multiple people and clears
     expect(Object.values((await state(id)).items)[0]).toMatchObject({ title: 'Oat milk 🥛', assigned_to: ['Alex', 'Sam'] })
     await browser.$('button=Clear assignment').click()
     await settled(browser)
-    expect(Object.values((await state(id)).items)[0]!.assigned_to).toEqual([])
+    // The API omits empty assigned_to arrays from its JSON projection.
+    expect(Object.values((await state(id)).items)[0]!.assigned_to).toBeUndefined()
+    expect(await boxes[0]!.isSelected()).toBe(false)
+    expect(await boxes[1]!.isSelected()).toBe(false)
     await boxes[1]!.click()
     await settled(browser)
     await browser.refresh()
@@ -143,6 +147,7 @@ it('edits titles, cancels and rejects blanks, assigns multiple people and clears
     expect(await browser.$('textarea').isEnabled()).toBe(false)
     expect(await browser.$('input[type="checkbox"]').isEnabled()).toBe(false)
     expect(await browser.$('button[aria-label="Edit"]').isExisting()).toBe(false)
+    await browser.waitUntil(async () => (await browser.$('body').getText()).includes('Completed by'))
     expect(await browser.$('body').getText()).toContain('Completed by')
 })
 

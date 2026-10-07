@@ -8,6 +8,7 @@ afterEach(async () => { if (browser) await closeBrowser(browser) })
 async function network(offline: boolean) {
     await cdp(browser, 'Network.enable')
     await cdp(browser, 'Network.emulateNetworkConditions', { offline, latency: 0, downloadThroughput: offline ? 0 : -1, uploadThroughput: offline ? 0 : -1 })
+    await cdp(browser, 'Network.overrideNetworkState', { offline, latency: 0, downloadThroughput: offline ? 0 : -1, uploadThroughput: offline ? 0 : -1 })
 }
 async function rename(name: string) {
     await browser.$('[data-testid="edit-list-name"]').click()
@@ -101,7 +102,11 @@ it('opens saved lists and refuses new-list creation while the production shell i
     await browser.$('input[placeholder="Enter your name"]').setValue('Alex')
     await browser.$('button=Continue').click()
     await browser.$('#create-list-button').waitForClickable()
+    // Chrome resets navigator's network override on a new service-worker navigation.
+    await network(true)
+    expect(await browser.execute(() => navigator.onLine)).toBe(false)
     await browser.$('#create-list-button').click()
     await browser.$('[role="alert"]').waitForDisplayed()
+    expect(await browser.execute(() => navigator.onLine)).toBe(false)
     expect(await browser.$('[role="alert"]').getText()).toBe('Connect to the internet to create a new list.')
 })

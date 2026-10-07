@@ -1,5 +1,5 @@
 import { spawn, execFileSync, type ChildProcess } from 'node:child_process'
-import { mkdir, mkdtemp, rm } from 'node:fs/promises'
+import { mkdir, mkdtemp } from 'node:fs/promises'
 import { createWriteStream } from 'node:fs'
 import { resolve } from 'node:path'
 import { once } from 'node:events'
@@ -18,7 +18,6 @@ async function requireFree(url: string) {
     throw new Error(`E2E requires its own service; port already occupied: ${url}`)
 }
 export async function setup() {
-    await rm('e2e-artifacts', { recursive: true, force: true })
     await mkdir('e2e-artifacts', { recursive: true })
     await requireFree('http://localhost:5173/health')
     await requireFree('http://localhost:19517/status')

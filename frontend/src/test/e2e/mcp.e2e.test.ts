@@ -56,23 +56,28 @@ it('returns MCP tool errors for invalid and missing lists, and protocol errors f
 it.each(['/api/v1/mcp/sse', '/mcp/sse'])('roundtrips JSON-RPC through an SSE session at %s and rejects missing message sessions', async path => {
     const abort = new AbortController()
     try {
-        const response = await fetch(`${BASE_URL}${path}`, { signal: abort.signal })
+        const response = await fetch(`${BASE_URL}${path}`, { signal: AbortSignal.any([abort.signal, AbortSignal.timeout(15000)]) })
         expect(response.status).toBe(200)
         expect(response.headers.get('content-type')).toContain('text/event-stream')
         const reader = response.body!.getReader()
-        const chunk = await reader.read()
-        const advertised = new TextDecoder().decode(chunk.value)
+        async function readEvent() {
+            const decoder = new TextDecoder()
+            let event = ''
+            while (!/\r?\n\r?\n/.test(event)) {
+                const next = await reader.read()
+                expect(next.done).toBe(false)
+                event += decoder.decode(next.value, { stream: true })
+            }
+            return event
+        }
+        const advertised = await readEvent()
         expect(advertised).toContain('sessionId=')
         const endpoint = advertised.match(/data: ([^\n]+)/)![1]!.trim()
         const posted = await fetch(new URL(endpoint, BASE_URL), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ jsonrpc: '2.0', id: 42, method: 'tools/list', params: {} }) })
         expect(posted.status).toBe(202)
-        let message = ''
-        while (!message.includes('"id":42')) {
-            const next = await reader.read()
-            expect(next.done).toBe(false)
-            message += new TextDecoder().decode(next.value)
-        }
+        const message = await readEvent()
         const payload = JSON.parse(message.match(/data: (.*)/)![1]!)
+        expect(payload.id).toBe(42)
         expect(payload.result.tools).toHaveLength(9)
     } finally { abort.abort() }
     const response = await fetch(`${BASE_URL}${path.replace('/sse', '/messages')}`, { method: 'POST', body: '{}' })

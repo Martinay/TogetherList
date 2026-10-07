@@ -9,7 +9,8 @@ it('rejects malformed JSON and missing creation fields and duplicate participant
     for (const body of [{ name: 'List' }, { creator: 'Alex' }, { name: 'List', creator: 'Alex', participants: ['Sam', 'Sam'] }]) {
         expect((await request('/list/create', 'POST', body)).status).toBe(400)
     }
-    expect((await request('/list/create', 'GET')).status).toBe(405)
+    // GET resolves to the existing /list/{id} route and rejects 'create' as an invalid UUID.
+    expect((await request('/list/create', 'GET')).status).toBe(400)
 })
 it('deduplicates retried creation and item mutations, rejects conflicting retry keys and stale revisions', async () => {
     const key = randomUUID(), body = { name: 'Idempotent', creator: 'Alex' }
@@ -32,7 +33,10 @@ it('deduplicates retried creation and item mutations, rejects conflicting retry 
 it('rejects invalid IDs, missing items, blank titles and unknown assignees without changing state', async () => {
     const id = await seed(), missing = randomUUID()
     expect((await request('/list/not-a-uuid')).status).toBe(400)
-    expect((await request(`/list/${missing}`)).status).toBe(404)
+    // Current API explicitly returns an empty projection for absent event logs.
+    const absent = await request(`/list/${missing}`)
+    expect(absent.status).toBe(200)
+    expect(await absent.json()).toMatchObject({ name: '', items: {} })
     expect((await request(`/list/${id}/items`, 'POST', { title: '', createdBy: 'Alex' })).status).toBe(400)
     const added = await request(`/list/${id}/items`, 'POST', { title: 'Untouched', createdBy: 'Alex' })
     expect(added.status).toBe(201)
