@@ -189,6 +189,7 @@
     "pending": "Analiz: seçim yapılmadı.",
     "accepted": "Analiz: uygun ana sayfalarda izinli.",
     "declined": "Analiz: reddedildi.",
-    "storageError": "Seçim kaydedilemedi. Başarısız kabul analizi kapalı tutar. Depolamayı kontrol edin."
+    "storageError": "Seçim kaydedilemedi. Başarısız kabul analizi kapalı tutar. Depolamayı kontrol edin.",
+    "close": "Kapat ve analizi reddet"
   }
 }

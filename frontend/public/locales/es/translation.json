@@ -189,6 +189,7 @@
     "pending": "Análisis: sin elección.",
     "accepted": "Análisis: permitido en inicios aptos.",
     "declined": "Análisis: rechazado.",
-    "storageError": "No se pudo guardar la elección. Si falla la aceptación, el análisis sigue desactivado. Revisa el almacenamiento."
+    "storageError": "No se pudo guardar la elección. Si falla la aceptación, el análisis sigue desactivado. Revisa el almacenamiento.",
+    "close": "Cerrar y rechazar analíticas"
   }
 }

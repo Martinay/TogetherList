@@ -189,6 +189,7 @@
     "pending": "Análise: sem escolha.",
     "accepted": "Análise: permitida em páginas iniciais elegíveis.",
     "declined": "Análise: recusada.",
-    "storageError": "Não foi possível salvar a escolha. Uma aceitação não salva mantém a análise desativada. Verifique o armazenamento."
+    "storageError": "Não foi possível salvar a escolha. Uma aceitação não salva mantém a análise desativada. Verifique o armazenamento.",
+    "close": "Fechar e recusar análises"
   }
 }

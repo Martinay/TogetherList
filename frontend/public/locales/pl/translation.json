@@ -189,6 +189,7 @@
     "pending": "Analityka: brak wyboru.",
     "accepted": "Analityka: dozwolona na odpowiednich stronach głównych.",
     "declined": "Analityka: odrzucona.",
-    "storageError": "Nie można zapisać wyboru. Nieudana akceptacja pozostawia analitykę wyłączoną. Sprawdź pamięć przeglądarki."
+    "storageError": "Nie można zapisać wyboru. Nieudana akceptacja pozostawia analitykę wyłączoną. Sprawdź pamięć przeglądarki.",
+    "close": "Zamknij i odrzuć analitykę"
   }
 }

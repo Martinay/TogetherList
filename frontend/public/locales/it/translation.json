@@ -189,6 +189,7 @@
     "pending": "Analisi: nessuna scelta.",
     "accepted": "Analisi: consentita nelle home idonee.",
     "declined": "Analisi: rifiutata.",
-    "storageError": "Impossibile salvare la scelta. Un consenso non salvato lascia l’analisi disattivata. Controlla lo spazio del browser."
+    "storageError": "Impossibile salvare la scelta. Un consenso non salvato lascia l’analisi disattivata. Controlla lo spazio del browser.",
+    "close": "Chiudi e rifiuta le analisi"
   }
 }

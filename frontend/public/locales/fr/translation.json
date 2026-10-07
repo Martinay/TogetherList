@@ -189,6 +189,7 @@
     "pending": "Analyses : aucun choix.",
     "accepted": "Analyses : autorisées sur les accueils admissibles.",
     "declined": "Analyses : refusées.",
-    "storageError": "Impossible d’enregistrer le choix. Un accord non enregistré laisse les analyses désactivées. Vérifiez le stockage."
+    "storageError": "Impossible d’enregistrer le choix. Un accord non enregistré laisse les analyses désactivées. Vérifiez le stockage.",
+    "close": "Fermer et refuser les analyses"
   }
 }

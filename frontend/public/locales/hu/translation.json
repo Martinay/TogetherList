@@ -189,6 +189,7 @@
     "pending": "Elemzés: még nincs választás.",
     "accepted": "Elemzés: engedélyezett megfelelő kezdőlapokon.",
     "declined": "Elemzés: elutasítva.",
-    "storageError": "A választás nem menthető. Sikertelen elfogadás után az elemzés kikapcsolva marad. Ellenőrizze a tárhelyet."
+    "storageError": "A választás nem menthető. Sikertelen elfogadás után az elemzés kikapcsolva marad. Ellenőrizze a tárhelyet.",
+    "close": "Bezárás és elemzés elutasítása"
   }
 }

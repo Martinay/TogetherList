@@ -29,6 +29,9 @@ A decline must prevent even cookieless analytics; storage failures must not sile
 ## Acceptance Criteria
 
 - No choice or decline: no SDK loading.
+- No stored choice displays a fixed bottom viewport dialog with privacy link, allow, decline and an accessible close control; close invokes the same persistent decline/revocation path.
+- Successful choices dismiss the dialog; footer controls retain re-enable/revoke access. Failed persistence keeps the dialog and announced error visible.
+- Mobile, safe-area and RTL layouts keep controls reachable without horizontal overflow; keyboard users can activate close and continue in footer preferences.
 - Accept/decline persist across reloads, with both choices always accessible and status announced.
 - Revocation terminates a recording document and clears first-party Clarity cookies; other tabs observe stored changes.
 - Failed acceptance storage leaves analytics off; failed revocation storage leaves the recording document for the excluded privacy route.
