@@ -46,7 +46,7 @@ Spec paths below are relative to `frontend/src/test/e2e/`. Every named scenario 
 | `PUT /api/v1/list/{id}/items/{itemId}/assigned-to` | Browser multi-assign/clear/disabled; HTTP unknown participant and missing item rejection |
 | `POST /api/v1/mcp`, `POST /mcp` | initialize, tools/list and every tool: `list_lists`, `get_list`, `create_list`, `rename_list`, `add_item`, `complete_item`, `assign_item`, `update_item_title`, `update_item_description`; resource read; invalid/missing lists, unknown method and malformed JSON |
 | `GET /api/v1/mcp/sse`, `GET /mcp/sse` | Real streaming session and tools/list JSON-RPC message roundtrip through the advertised endpoint |
-| `POST /api/v1/mcp/messages`, `POST /mcp/messages` | Real message delivery and missing-session rejection |
+| `POST /api/v1/mcp/messages`, `POST /mcp/messages` | Successful delivery through the advertised canonical endpoint, and missing-session rejection on both aliases |
 | `/api/` (unknown API fallback) | Unknown API path returns 404 without serving SPA HTML; test-first routing regression |
 | `/` (SPA/static/crawler handler) | Real deep-link HTML, assets/translations/worker/LLM documents, crawler response; backend unit tests supply traversal/bot-selection edge cases |
 
@@ -68,4 +68,10 @@ Browser runs block external Google Fonts requests to keep the local integration 
 
 ## Verification record
 
-First full local run executed 66 tests: 60 passed, 6 failed, zero skipped. Failure diagnosis reproduced timestamp precision and API-to-SPA fallback bugs before minimal fixes. The absent-list HTTP 200 empty projection is an established backend contract and is asserted explicitly rather than changed. Implementation and final verification are in progress. See PR verification for exact final commands, counts, repetitions and any unresolved failures; do not infer passing results from the inventory alone.
+The corrected full local suite executed **66 tests in 13 files**, all passing with zero skips (135.66 seconds); the saved JUnit report passed `python3 scripts/check-e2e-policy.py --report frontend/e2e-artifacts/results.xml`. The suite has 24 more scenarios than the previous 42 tests including the separate offline suite (40 in the old default suite).
+
+`bun run test:run -- --coverage` passed all 117 unit tests. Backend build/race tests/vet/staticcheck/gosec passed after the production fixes (11 packages; zero gosec issues). Frontend lint/type-check and all four report-policy tests passed. The existing `bun pm scan` prints an internal error despite returning zero, and independent `bun audit` reports 102 dependency advisories; security cleanliness is not claimed.
+
+The first exploratory full run failed 6 of 66 tests. Diagnosis reproduced timestamp precision loss and API-to-SPA fallback bugs before minimal production fixes; existing absent-list HTTP 200 and omitted empty optional fields were verified against the established backend contract rather than changed. Driver input, network emulation, animation timing and SSE chunk boundaries were corrected without dropping assertions.
+
+[PR #117](https://github.com/Martinay/TogetherList/pull/117) records the final repeat-run and GitHub Actions results, exact commands and remaining platform/security limits. Test completeness still requires reviewer judgment; the inventory is not a proof of universal coverage.

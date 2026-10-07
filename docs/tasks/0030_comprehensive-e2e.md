@@ -2,7 +2,7 @@
 
 ## Status
 
-In progress; verification and PR review pending. Do not mark accepted/complete without user confirmation.
+Pending user review. Implementation, inventory and CI enforcement are in [PR #117](https://github.com/Martinay/TogetherList/pull/117); exact final verification is recorded there. Do not mark accepted/complete without user confirmation.
 
 ## Scope
 
