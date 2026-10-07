@@ -176,5 +176,19 @@
     "recovery": "Ta bort denna ändring och redigera listan igen för att rätta den.",
     "discard": "Ta bort ändringen och beroende redigeringar",
     "discardConfirm": "Ta bort ändringen? Redigeringar av posten som skapades av denna åtgärd tas också bort. Senare oberoende ändringar behålls."
+  },
+  "privacy": {
+    "title": "Integritet",
+    "accept": "Tillåt analys",
+    "decline": "Avböj / återkalla analys",
+    "home": "Hem",
+    "microsoft": "Microsofts sekretesspolicy",
+    "disclosure": "Med ditt samtycke samlar Microsoft Clarity användningsdata för att förbättra TogetherList.",
+    "statement": "Valfri Microsoft Clarity samlar beteendemått, värmekartor och sessionsinspelningar med egna och tredje parts cookies och spårningsteknik för produktförbättring och användbarhet. Annonslagring nekas; Microsoft Advertising är inte integrerat. Endast startsidor utan sparade listor spelas in; skapande, privata listor och integritet undantas. Du kan godkänna, avböja eller återkalla här. Ett avböjande hindrar Clarity från att laddas.",
+    "localData": "Servern lagrar listor, poster och namn i JSONL. Webbläsaren lagrar identitet, listor och offlineändringar. Länkar ger åtkomst: håll dem privata. Valet lagras lokalt i denna webbläsare.",
+    "pending": "Analys: inget val ännu.",
+    "accepted": "Analys: tillåten på lämpliga startsidor.",
+    "declined": "Analys: avböjd.",
+    "storageError": "Valet kunde inte sparas. Misslyckat samtycke lämnar analys avstängd. Kontrollera lagringen."
   }
 }

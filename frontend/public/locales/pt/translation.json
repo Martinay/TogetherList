@@ -176,5 +176,19 @@
     "recovery": "Descarte esta alteração e edite a lista novamente para corrigir.",
     "discard": "Descartar alteração e edições dependentes",
     "discardConfirm": "Descartar esta alteração? As edições do item criado por esta operação também serão descartadas. Alterações independentes posteriores serão mantidas."
+  },
+  "privacy": {
+    "title": "Privacidade",
+    "accept": "Permitir análise",
+    "decline": "Recusar / revogar análise",
+    "home": "Início",
+    "microsoft": "Declaração de Privacidade da Microsoft",
+    "disclosure": "Com sua permissão, Microsoft Clarity coleta dados de uso para melhorar TogetherList.",
+    "statement": "Microsoft Clarity opcional coleta métricas comportamentais, mapas de calor e gravações de sessões com cookies próprios e de terceiros e tecnologias de rastreamento para melhorar o produto e a usabilidade. O armazenamento publicitário é negado; Microsoft Advertising não está integrado. Só páginas iniciais sem listas salvas são gravadas; criação, listas privadas e privacidade são excluídas. Você pode aceitar, recusar ou revogar aqui. A recusa impede o carregamento de Clarity.",
+    "localData": "O servidor armazena listas, itens e nomes em JSONL. O navegador armazena identidade, listas e edições offline. Links dão acesso: mantenha-os privados. A escolha é local neste navegador.",
+    "pending": "Análise: sem escolha.",
+    "accepted": "Análise: permitida em páginas iniciais elegíveis.",
+    "declined": "Análise: recusada.",
+    "storageError": "Não foi possível salvar a escolha. Uma aceitação não salva mantém a análise desativada. Verifique o armazenamento."
   }
 }

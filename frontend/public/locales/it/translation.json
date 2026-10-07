@@ -176,5 +176,19 @@
     "recovery": "Scarta questa modifica e modifica di nuovo la lista per correggerla.",
     "discard": "Scarta modifica e modifiche dipendenti",
     "discardConfirm": "Scartare questa modifica? Saranno scartate anche le modifiche all’elemento creato da questa operazione. Le modifiche indipendenti successive saranno conservate."
+  },
+  "privacy": {
+    "title": "Privacy",
+    "accept": "Consenti analisi",
+    "decline": "Rifiuta / revoca analisi",
+    "home": "Home",
+    "microsoft": "Informativa sulla privacy Microsoft",
+    "disclosure": "Con il tuo consenso Microsoft Clarity raccoglie dati di utilizzo per migliorare TogetherList.",
+    "statement": "Microsoft Clarity facoltativo raccoglie metriche comportamentali, mappe di calore e registrazioni di sessioni tramite cookie propri e di terze parti e tecnologie di tracciamento per migliorare prodotto e usabilità. Lo spazio pubblicitario è negato; Microsoft Advertising non è integrato. Solo la home senza liste salvate è registrata; creazione, liste private e privacy sono escluse. Puoi accettare, rifiutare o revocare qui. Il rifiuto impedisce il caricamento di Clarity.",
+    "localData": "Il server salva liste, voci e nomi in JSONL. Il browser salva identità, liste e modifiche offline. I link danno accesso: mantienili privati. La scelta è locale a questo browser.",
+    "pending": "Analisi: nessuna scelta.",
+    "accepted": "Analisi: consentita nelle home idonee.",
+    "declined": "Analisi: rifiutata.",
+    "storageError": "Impossibile salvare la scelta. Un consenso non salvato lascia l’analisi disattivata. Controlla lo spazio del browser."
   }
 }

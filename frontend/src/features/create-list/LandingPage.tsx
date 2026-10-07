@@ -33,7 +33,8 @@ function LandingPage() {
     const navigate = useNavigate()
 
     const handleCreateList = () => {
-        navigate('/list/new')
+        if (import.meta.env.PROD) window.location.assign('/list/new')
+        else navigate('/list/new')
     }
 
     const featureKeys = ['noAuth', 'realtime', 'share', 'assign', 'mobile', 'free'] as const

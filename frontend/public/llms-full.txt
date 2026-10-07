@@ -92,7 +92,7 @@ Absolutely. Create a list of items needed for the potluck, share the link, and p
 - **Backend**: Go (stdlib) with event sourcing architecture
 - **Data**: Every change is stored as an immutable event, enabling full history
 - **Hosting**: Azure Container Apps with managed SSL
-- **Privacy**: No tracking, no analytics, no cookies. List data is stored server-side only.
+- **Privacy**: Microsoft Clarity analytics is optional and requires explicit opt-in. Recording is restricted to eligible public landing pages; private lists and list creation are excluded. Advertising storage is denied. List data is stored on the server and cached in the browser for offline use, alongside per-list identity and analytics preferences. Privacy statement and consent controls: https://togetherlist.eu/privacy (Microsoft statement: https://privacy.microsoft.com/privacystatement).
 
 ## Contact
 

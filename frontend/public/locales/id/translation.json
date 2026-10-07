@@ -176,5 +176,19 @@
     "recovery": "Buang perubahan ini, lalu edit daftar lagi untuk memperbaikinya.",
     "discard": "Buang perubahan dan edit yang bergantung",
     "discardConfirm": "Buang perubahan ini? Edit pada item yang dibuat oleh operasi ini juga akan dibuang. Perubahan mandiri berikutnya tetap disimpan."
+  },
+  "privacy": {
+    "title": "Privasi",
+    "accept": "Izinkan analitik",
+    "decline": "Tolak / cabut analitik",
+    "home": "Beranda",
+    "microsoft": "Pernyataan Privasi Microsoft",
+    "disclosure": "Dengan izin Anda, Microsoft Clarity mengumpulkan data penggunaan untuk meningkatkan TogetherList.",
+    "statement": "Microsoft Clarity opsional mengumpulkan metrik perilaku, peta panas dan rekaman sesi menggunakan cookie pihak pertama dan ketiga serta teknologi pelacakan untuk perbaikan produk dan kegunaan. Penyimpanan iklan ditolak; Microsoft Advertising tidak terintegrasi. Hanya beranda tanpa daftar tersimpan direkam; pembuatan, daftar pribadi dan privasi dikecualikan. Anda dapat menerima, menolak atau mencabut di sini. Penolakan mencegah pemuatan Clarity.",
+    "localData": "Server menyimpan daftar, item dan nama dalam JSONL. Browser menyimpan identitas, daftar dan edit offline. Tautan memberikan akses: jaga kerahasiaannya. Pilihan disimpan lokal di browser ini.",
+    "pending": "Analitik: belum dipilih.",
+    "accepted": "Analitik: diizinkan pada beranda yang memenuhi syarat.",
+    "declined": "Analitik: ditolak.",
+    "storageError": "Pilihan tidak dapat disimpan. Penerimaan yang gagal membuat analitik tetap mati. Periksa penyimpanan."
   }
 }

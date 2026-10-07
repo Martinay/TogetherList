@@ -176,5 +176,19 @@
     "recovery": "Abandonnez cette modification, puis modifiez à nouveau la liste pour la corriger.",
     "discard": "Abandonner la modification et les changements dépendants",
     "discardConfirm": "Abandonner cette modification ? Les changements de l’élément créé par cette opération seront aussi abandonnés. Les changements indépendants ultérieurs seront conservés."
+  },
+  "privacy": {
+    "title": "Confidentialité",
+    "accept": "Autoriser les analyses",
+    "decline": "Refuser / révoquer les analyses",
+    "home": "Accueil",
+    "microsoft": "Déclaration de confidentialité Microsoft",
+    "disclosure": "Avec votre accord, Microsoft Clarity collecte des données d’utilisation pour améliorer TogetherList.",
+    "statement": "Microsoft Clarity facultatif collecte des mesures comportementales, cartes de chaleur et enregistrements de sessions avec des cookies internes et tiers et des technologies de suivi pour améliorer le produit et son ergonomie. Le stockage publicitaire est refusé ; Microsoft Advertising n’est pas intégré. Seul l’accueil sans listes enregistrées est analysé ; création, listes privées et confidentialité sont exclus. Vous pouvez accepter, refuser ou révoquer ici. Le refus empêche le chargement de Clarity.",
+    "localData": "Le serveur stocke listes, éléments et noms en JSONL. Le navigateur stocke identité, listes et modifications hors ligne. Les liens donnent accès : gardez-les privés. Le choix est local à ce navigateur.",
+    "pending": "Analyses : aucun choix.",
+    "accepted": "Analyses : autorisées sur les accueils admissibles.",
+    "declined": "Analyses : refusées.",
+    "storageError": "Impossible d’enregistrer le choix. Un accord non enregistré laisse les analyses désactivées. Vérifiez le stockage."
   }
 }

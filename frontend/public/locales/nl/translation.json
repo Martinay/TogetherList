@@ -176,5 +176,19 @@
     "recovery": "Verwijder deze wijziging en bewerk de lijst opnieuw om deze te corrigeren.",
     "discard": "Wijziging en afhankelijke bewerkingen verwijderen",
     "discardConfirm": "Deze wijziging verwijderen? Bewerkingen van het hiermee gemaakte item worden ook verwijderd. Latere onafhankelijke wijzigingen blijven bewaard."
+  },
+  "privacy": {
+    "title": "Privacy",
+    "accept": "Analyse toestaan",
+    "decline": "Analyse weigeren / intrekken",
+    "home": "Home",
+    "microsoft": "Privacyverklaring van Microsoft",
+    "disclosure": "Met uw toestemming verzamelt Microsoft Clarity gebruiksgegevens om TogetherList te verbeteren.",
+    "statement": "Optionele Microsoft Clarity verzamelt gedragsmetingen, heatmaps en sessieopnamen via eigen cookies, cookies van derden en trackingtechnologie voor productverbetering en gebruiksgemak. Advertentieopslag wordt geweigerd; Microsoft Advertising is niet geïntegreerd. Alleen startpagina’s zonder opgeslagen lijsten worden opgenomen; aanmaken, privélijsten en privacy zijn uitgesloten. U kunt hier toestaan, weigeren of intrekken. Weigeren voorkomt het laden van Clarity.",
+    "localData": "De server bewaart lijsten, items en namen in JSONL. De browser bewaart identiteit, lijsten en offline wijzigingen. Links geven toegang: houd ze privé. De keuze is lokaal in deze browser.",
+    "pending": "Analyse: nog geen keuze.",
+    "accepted": "Analyse: toegestaan op geschikte startpagina’s.",
+    "declined": "Analyse: geweigerd.",
+    "storageError": "De keuze kon niet worden opgeslagen. Bij mislukte toestemming blijft analyse uit. Controleer de opslag."
   }
 }

@@ -176,5 +176,19 @@
     "recovery": "Discard this edit, then edit the list again to save a corrected change.",
     "discard": "Discard edit and dependent item edits",
     "discardConfirm": "Discard this edit? Edits to an item created by this operation will also be discarded. Later independent edits will be retained."
+  },
+  "privacy": {
+    "title": "Privacy",
+    "accept": "Allow analytics",
+    "decline": "Decline / revoke analytics",
+    "home": "Home",
+    "microsoft": "Microsoft Privacy Statement",
+    "disclosure": "With your permission, we use Microsoft Clarity to collect website usage data to improve TogetherList.",
+    "statement": "Optional Microsoft Clarity collects behavioral metrics, heatmaps and session replay using first-party and third-party cookies and tracking technologies for product improvement and usability. Advertising storage is denied; Microsoft Advertising is not integrated. Recording is restricted to clean landing pages without saved lists; list creation, private lists and privacy pages are excluded. You can accept, decline or revoke below. Declining prevents loading Clarity.",
+    "localData": "List names, items and participant names are stored by our server in JSONL files. Your browser stores per-list identity, saved lists and offline edits. Shared list links grant access: keep them private. Analytics choices are stored locally in this browser.",
+    "pending": "Analytics: no choice yet.",
+    "accepted": "Analytics: allowed on eligible landing pages.",
+    "declined": "Analytics: declined.",
+    "storageError": "Your choice could not be saved. Analytics stays off after a failed acceptance. Please check browser storage settings."
   }
 }

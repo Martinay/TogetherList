@@ -176,5 +176,19 @@
     "recovery": "Bỏ thay đổi này, rồi sửa lại danh sách để lưu thay đổi đúng.",
     "discard": "Bỏ thay đổi và các chỉnh sửa phụ thuộc",
     "discardConfirm": "Bỏ thay đổi này? Các chỉnh sửa mục được tạo bởi thao tác này cũng sẽ bị bỏ. Các thay đổi độc lập sau đó sẽ được giữ lại."
+  },
+  "privacy": {
+    "title": "Quyền riêng tư",
+    "accept": "Cho phép phân tích",
+    "decline": "Từ chối / thu hồi phân tích",
+    "home": "Trang chủ",
+    "microsoft": "Tuyên bố về Quyền riêng tư của Microsoft",
+    "disclosure": "Với sự đồng ý của bạn, Microsoft Clarity thu thập dữ liệu sử dụng để cải thiện TogetherList.",
+    "statement": "Microsoft Clarity tùy chọn thu thập số liệu hành vi, bản đồ nhiệt và bản ghi phiên bằng cookie bên thứ nhất, bên thứ ba và công nghệ theo dõi để cải thiện sản phẩm và tính dễ sử dụng. Lưu trữ quảng cáo bị từ chối; Microsoft Advertising không được tích hợp. Chỉ ghi trang chủ không có danh sách đã lưu; loại trừ tạo danh sách, danh sách riêng và quyền riêng tư. Bạn có thể chấp nhận, từ chối hoặc thu hồi tại đây. Từ chối ngăn tải Clarity.",
+    "localData": "Máy chủ lưu danh sách, mục và tên trong JSONL. Trình duyệt lưu danh tính, danh sách và sửa đổi ngoại tuyến. Liên kết cho phép truy cập: hãy giữ kín. Lựa chọn được lưu cục bộ trong trình duyệt này.",
+    "pending": "Phân tích: chưa chọn.",
+    "accepted": "Phân tích: được phép trên trang chủ phù hợp.",
+    "declined": "Phân tích: đã từ chối.",
+    "storageError": "Không lưu được lựa chọn. Chấp nhận thất bại giữ phân tích tắt. Hãy kiểm tra bộ nhớ."
   }
 }
