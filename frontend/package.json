@@ -10,8 +10,8 @@
     "test": "vitest",
     "test:run": "vitest run",
     "test:e2e": "vitest --config vitest.e2e.config.ts",
-    "test:e2e:run": "vitest run --config vitest.e2e.config.ts",
-    "test:offline:run": "bun run build && vitest run --config vitest.offline.config.ts",
+    "test:e2e:run": "bun run build && vitest run --config vitest.e2e.config.ts",
+    "test:offline:run": "bun run test:e2e:run -- src/test/e2e/offline.production.test.ts",
     "lint": "eslint ."
   },
   "devDependencies": {

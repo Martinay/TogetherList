@@ -25,3 +25,11 @@ You MUST read the relevant skill when working in that domain.
 ## Proactive Actions
 * Update or create requirements in case something changes without the user asking for doing that.
 * Create ADRs proactive in case you see a gap.
+
+## Required E2E Coverage
+
+* Every new or changed user-facing feature MUST include real frontend/backend/JSONL-storage end-to-end tests in the same change, including applicable unhappy paths, persistence, identity/sharing, collaboration and offline behavior.
+* Update [the feature-to-test inventory](docs/e2e-coverage.md) with exact scenarios, tests and remaining gaps. For nonbehavioral production changes, document the reason existing tests suffice for reviewer approval.
+* Run `bun run test:e2e:run` from `frontend/`, repeat for flake detection, run existing quality checks and report actual counts/results. Never skip/focus/conditionally omit tests or weaken assertions to pass.
+* Use test-first reproduction and the minimal fix for production bugs. Follow [CONTRIBUTING.md](CONTRIBUTING.md) and the PR checklist.
+* Structural CI guardrails do not prove feature completeness. Reviewers and agents must inspect coverage against actual routes/actions and assess omissions honestly.

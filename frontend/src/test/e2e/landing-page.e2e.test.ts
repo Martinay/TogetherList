@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest'
-import { createBrowser, BASE_URL } from './browser-helper'
+import { closeBrowser, createBrowser, BASE_URL } from './browser-helper'
 import type { Browser } from 'webdriverio'
 
 describe('Landing Page SEO/GEO', () => {
@@ -11,7 +11,7 @@ describe('Landing Page SEO/GEO', () => {
 
     afterAll(async () => {
         if (browser) {
-            await browser.deleteSession()
+            await closeBrowser(browser)
         }
     })
 

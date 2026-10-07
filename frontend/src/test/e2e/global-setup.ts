@@ -1,98 +1,51 @@
-import { type ChildProcess, spawn } from 'child_process'
-import { resolve } from 'path'
+import { spawn, execFileSync, type ChildProcess } from 'node:child_process'
+import { mkdir, mkdtemp, rm } from 'node:fs/promises'
+import { createWriteStream } from 'node:fs'
+import { resolve } from 'node:path'
+import { once } from 'node:events'
 
-const DEV_SERVER_URL = 'http://localhost:5173'
-const BACKEND_URL = 'http://localhost:8080/health'
-const MAX_WAIT_MS = 15_000
-const POLL_INTERVAL_MS = 500
-
-let devServerProcess: ChildProcess | undefined
-let backendProcess: ChildProcess | undefined
-let backendWasAlreadyRunning = false
-
-/**
- * Wait until a server responds to HTTP requests.
- */
-async function waitForServer(url: string, label: string): Promise<void> {
-    const start = Date.now()
-    while (Date.now() - start < MAX_WAIT_MS) {
-        try {
-            const response = await fetch(url)
-            if (response.ok) return
-        } catch {
-            // Server not ready yet — retry
-        }
-        await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS))
+const processes: ChildProcess[] = []
+let data: string
+export async function ready(url: string) {
+    for (let i = 0; i < 150; i++) {
+        try { if ((await fetch(url)).ok) return } catch { /* Startup. */ }
+        await new Promise(resolve => setTimeout(resolve, 200))
     }
-    throw new Error(`${label} at ${url} did not start within ${MAX_WAIT_MS}ms`)
+    throw new Error(`Server unavailable: ${url}`)
 }
-
-/**
- * Check if the backend server is already running.
- */
-async function isBackendRunning(): Promise<boolean> {
+async function requireFree(url: string) {
+    try { await fetch(url) } catch { return }
+    throw new Error(`E2E requires its own service; port already occupied: ${url}`)
+}
+export async function setup() {
+    await rm('e2e-artifacts', { recursive: true, force: true })
+    await mkdir('e2e-artifacts', { recursive: true })
+    await requireFree('http://localhost:5173/health')
+    await requireFree('http://localhost:19517/status')
+    data = await mkdtemp(resolve('e2e-artifacts/data-'))
     try {
-        const response = await fetch(BACKEND_URL)
-        return response.ok
-    } catch {
-        return false
-    }
-}
-
-/**
- * Vitest globalSetup — starts the Go backend and Vite dev server before all E2E tests.
- */
-export async function setup(): Promise<void> {
-    // Start Go backend if not already running
-    backendWasAlreadyRunning = await isBackendRunning()
-
-    if (!backendWasAlreadyRunning) {
-        const frontendDir = new URL('../../..', import.meta.url).pathname
-        const backendDir = resolve(frontendDir, '..', 'backend')
-
-        backendProcess = spawn('go', ['run', './cmd/server/...'], {
-            cwd: backendDir,
-            stdio: 'pipe',
-            env: { ...process.env },
+        execFileSync(process.env.GO_BINARY || 'go', ['build', '-o', resolve('e2e-artifacts/server'), './cmd/server'], { cwd: resolve('../backend'), env: process.env })
+        const server = spawn(resolve('e2e-artifacts/server'), [], {
+            env: { ...process.env, PORT: '5173', DATA_DIR: data, STATIC_DIR: resolve('dist') }, stdio: ['ignore', 'pipe', 'pipe'],
         })
-
-        backendProcess.stderr?.on('data', (data: Buffer) => {
-            process.stderr.write(`[backend] ${data.toString()}`)
-        })
-
-        await waitForServer(BACKEND_URL, 'Go backend')
-        console.log('✓ Go backend started')
-    } else {
-        console.log('✓ Go backend already running')
-    }
-
-    // Start Vite dev server
-    const frontendDir = new URL('../../..', import.meta.url).pathname
-    devServerProcess = spawn('bun', ['run', 'dev'], {
-        cwd: frontendDir,
-        stdio: 'pipe',
-        env: { ...process.env },
-    })
-
-    devServerProcess.stderr?.on('data', (data: Buffer) => {
-        process.stderr.write(`[dev-server] ${data.toString()}`)
-    })
-
-    await waitForServer(DEV_SERVER_URL, 'Dev server')
-    console.log(`✓ Dev server ready at ${DEV_SERVER_URL}`)
+        const driver = spawn(process.env.CHROMEDRIVER_BINARY || 'chromedriver', ['--port=19517'], { stdio: ['ignore', 'pipe', 'pipe'] })
+        for (const [child, name] of [[server, 'server'], [driver, 'driver']] as const) {
+            processes.push(child)
+            const log = createWriteStream(`e2e-artifacts/${name}.log`)
+            child.stdout?.pipe(log); child.stderr?.pipe(log)
+            child.on('error', error => log.write(String(error)))
+        }
+        await ready('http://localhost:5173/health')
+        await ready('http://localhost:19517/status')
+    } catch (error) { await teardown(); throw error }
 }
-
-/**
- * Vitest globalSetup teardown — stops the servers after all E2E tests.
- */
-export async function teardown(): Promise<void> {
-    if (devServerProcess) {
-        devServerProcess.kill('SIGTERM')
-        console.log('✓ Dev server stopped')
+export async function teardown() {
+    for (const child of processes) {
+        if (child.exitCode === null && child.pid) {
+            const exited = once(child, 'exit')
+            child.kill('SIGTERM')
+            await exited
+        }
     }
-
-    if (backendProcess && !backendWasAlreadyRunning) {
-        backendProcess.kill('SIGTERM')
-        console.log('✓ Go backend stopped')
-    }
+    // Keep JSONL data with logs for failure diagnosis; the next run starts clean.
 }

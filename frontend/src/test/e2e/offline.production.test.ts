@@ -1,47 +1,16 @@
 import { beforeAll, afterAll, beforeEach, expect, it } from 'vitest'
-import { spawn, execFileSync, type ChildProcess } from 'node:child_process'
-import { mkdir, mkdtemp, rm } from 'node:fs/promises'
-import { resolve } from 'node:path'
-import { remote, type Browser } from 'webdriverio'
-
-const url = 'http://localhost:18087'
-let server: ChildProcess, driver: ChildProcess, browser: Browser, data: string
-async function ready(endpoint: string) {
-    for (let i = 0; i < 100; i++) {
-        try { if ((await fetch(endpoint)).ok) return } catch { /* Startup. */ }
-        await new Promise(resolve => setTimeout(resolve, 200))
-    }
-    throw new Error(`Server unavailable: ${endpoint}`)
-}
-async function cdp(cmd: string, params: Record<string, unknown>) {
-    const response = await fetch(`http://localhost:19517/session/${browser.sessionId}/goog/cdp/execute`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ cmd, params }) })
-    if (!response.ok) throw new Error(await response.text())
-}
-beforeAll(async () => {
-    await mkdir('.cache', { recursive: true })
-    data = await mkdtemp(resolve('.cache/offline-data-'))
-    execFileSync(process.env.GO_BINARY || 'go', ['build', '-o', resolve('.cache/offline-server'), './cmd/server'], { cwd: resolve('../backend'), env: process.env })
-    server = spawn(resolve('.cache/offline-server'), [], {
-        cwd: resolve('../backend'), env: { ...process.env, PORT: '18087', DATA_DIR: data, STATIC_DIR: resolve('dist') }, stdio: 'inherit',
-    })
-    driver = spawn(process.env.CHROMEDRIVER_BINARY || 'chromedriver', ['--port=19517'], { stdio: 'ignore' })
-    await ready(`${url}/health`)
-    await ready('http://localhost:19517/status')
-    browser = await remote({ hostname: 'localhost', port: 19517, logLevel: 'error', capabilities: {
-        browserName: 'chrome', 'goog:chromeOptions': {
-            ...(process.env.CHROME_BINARY ? { binary: process.env.CHROME_BINARY } : {}),
-            args: ['--headless', '--no-sandbox', '--disable-gpu'],
-        },
-    } })
-})
+import type { Browser } from 'webdriverio'
+import { closeBrowser, createBrowser, BASE_URL, cdp as command } from './browser-helper'
+const url = BASE_URL
+let browser: Browser
+const cdp = (cmd: string, params: Record<string, unknown>) => command(browser, cmd, params)
+beforeAll(async () => { browser = await createBrowser() })
 beforeEach(async () => {
     await cdp('Network.enable', {})
     await cdp('Network.emulateNetworkConditions', { offline: false, latency: 0, downloadThroughput: -1, uploadThroughput: -1 })
 })
 afterAll(async () => {
-    if (browser) await browser.deleteSession()
-    server?.kill('SIGTERM'); driver?.kill('SIGTERM')
-    if (data) await rm(data, { recursive: true, force: true })
+    if (browser) await closeBrowser(browser)
 })
 it('reloads the production shell and durable edits offline, then automatically replays exactly once', async () => {
     const created = await fetch(`${url}/api/v1/list/create`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: 'Offline groceries', creator: 'Alex', participants: ['Alex'] }) })

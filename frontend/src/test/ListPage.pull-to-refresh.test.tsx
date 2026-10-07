@@ -54,6 +54,8 @@ it('replays pending edits then refetches an empty list on a downward pull', asyn
     mockFetchListState.mockResolvedValue({ name: 'Test List', participants: ['Alice'], items: {} })
     renderListPage()
     const empty = await screen.findByText(/No items/)
+    // The rendered empty state can precede attachment of native touch listeners.
+    await act(async () => {})
     fireEvent.touchStart(empty, { touches: [{ identifier: 1, clientX: 20, clientY: 20 }] })
     fireEvent.touchMove(empty, { touches: [{ identifier: 1, clientX: 20, clientY: 110 }] })
     fireEvent.touchEnd(empty, { touches: [], changedTouches: [{ identifier: 1, clientX: 20, clientY: 110 }] })

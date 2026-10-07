@@ -49,6 +49,7 @@
 - [ ] **0016: Implement CORS & Integration** -> `docs/tasks/0016_implement_cors_and_integration.md`
 
 ### In Progress
+- [ ] **0030: Comprehensive E2E coverage** -> `docs/tasks/0030_comprehensive-e2e.md` (Scope: E2E harness/specs, CI, inventory and contribution policy; verification and PR review pending)
 - [ ] **0027: Implement offline mode** -> `docs/tasks/0027_implement-offline-mode.md` (review fixes and automated checks implemented in this worktree; browser/unit/backend checks pass; race check blocked by missing C compiler; requirements/ADR and user acceptance pending)
 - [ ] **0026: Upgrade Go to 1.27.1** -> `docs/tasks/0026_upgrade-go-1.27.1.md` (Scope: Go pins, SPA security fix, CI and development docs; local checks pass, race tests blocked, CI and user acceptance pending)
 

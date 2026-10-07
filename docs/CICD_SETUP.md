@@ -175,3 +175,9 @@ curl http://localhost:8080/health
 | Container won't start | Check logs: `az containerapp logs show --name togetherlist --resource-group myResourceGroup` |
 | Azure can't pull from GHCR | Use a GitHub PAT with `read:packages` scope |
 | Tests fail in CI | Run locally: `go test ./...` or `bun run test:run` |
+
+## Production E2E gate
+
+The `Production E2E` job runs on all pull requests and pushes to main without path filters. It installs Go 1.27.1, Bun 1.4.2 and checksummed Chrome/ChromeDriver 149.0.7827.155, Linux browser libraries and fonts. The test harness owns the Go service and synthetic JSONL data; no deployed environment or cloud credentials are needed. The full production suite runs twice and JUnit must contain executed tests with no skips or failures. Logs, screenshots, DOM, console, JSONL stores and both reports are uploaded for 14 days, including on failure. Container publishing depends on E2E passing. Branch protection remains an administrator decision and is not modified here.
+
+The PR guard requires updated coverage inventory when production files change, detects focused/skipped test declarations and checks route/spec inventory. It is a structural check, not proof of behavioral completeness; use the PR checklist and [inventory](e2e-coverage.md) during review. Run `python3 scripts/test_e2e_policy.py` to test the report guard.

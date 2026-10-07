@@ -113,3 +113,7 @@ go build ./...
 │   └── requirements/  # EARS-syntax specifications
 └── .github/workflows/ # CI/CD pipeline
 ```
+
+## End-to-end testing
+
+Run `bun run test:e2e:run` from `frontend/` to build and test the real production frontend, Go backend and isolated JSONL storage. See the [feature coverage inventory](docs/e2e-coverage.md) for browser installation, exact commands, failure artifacts and coverage limits. PR and main CI run the suite twice. New user-facing behavior must include real E2E scenarios and update the inventory; see [contributor rules](CONTRIBUTING.md).
