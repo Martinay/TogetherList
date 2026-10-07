@@ -103,6 +103,8 @@
     },
     "placeholder": "Brzy…",
     "loading": "Načítání…",
+    "pullHint": "Obnovte tažením dolů",
+    "pullRelease": "Uvolněte pro obnovení",
     "emptyList": "Zatím žádné položky. Přidejte první!",
     "addItem": {
       "placeholder": "Co je třeba udělat?",

@@ -103,6 +103,8 @@
     },
     "placeholder": "Segera hadir…",
     "loading": "Memuat daftar…",
+    "pullHint": "Tarik ke bawah untuk menyegarkan",
+    "pullRelease": "Lepaskan untuk menyegarkan",
     "emptyList": "Belum ada item. Tambahkan satu!",
     "addItem": {
       "placeholder": "Apa yang harus dilakukan?",

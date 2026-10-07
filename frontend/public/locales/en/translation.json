@@ -103,6 +103,8 @@
     },
     "placeholder": "List page coming soon...",
     "loading": "Loading list...",
+    "pullHint": "Pull down to refresh",
+    "pullRelease": "Release to refresh",
     "emptyList": "No items yet. Add your first one!",
     "addItem": {
       "placeholder": "What needs to be done?",

@@ -103,6 +103,8 @@
     },
     "placeholder": "Hamarosan…",
     "loading": "Betöltés…",
+    "pullHint": "Húzza lefelé a frissítéshez",
+    "pullRelease": "Engedje el a frissítéshez",
     "emptyList": "Még nincsenek elemek. Add hozzá az elsőt!",
     "addItem": {
       "placeholder": "Mit kell csinálni?",

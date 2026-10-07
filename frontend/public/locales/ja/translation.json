@@ -103,6 +103,8 @@
     },
     "placeholder": "近日公開…",
     "loading": "読み込み中…",
+    "pullHint": "下に引いて更新",
+    "pullRelease": "離して更新",
     "emptyList": "まだ何もありません。追加しましょう！",
     "addItem": {
       "placeholder": "何をしますか？",

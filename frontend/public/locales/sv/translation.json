@@ -103,6 +103,8 @@
     },
     "placeholder": "Kommer snart…",
     "loading": "Laddar…",
+    "pullHint": "Dra nedåt för att uppdatera",
+    "pullRelease": "Släpp för att uppdatera",
     "emptyList": "Inga punkter än. Lägg till en!",
     "addItem": {
       "placeholder": "Vad behöver göras?",

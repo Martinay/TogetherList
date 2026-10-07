@@ -103,6 +103,8 @@
     },
     "placeholder": "Wkrótce…",
     "loading": "Ładowanie…",
+    "pullHint": "Pociągnij w dół, aby odświeżyć",
+    "pullRelease": "Puść, aby odświeżyć",
     "emptyList": "Brak elementów. Dodaj pierwszy!",
     "addItem": {
       "placeholder": "Co jest do zrobienia?",

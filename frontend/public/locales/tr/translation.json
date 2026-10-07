@@ -103,6 +103,8 @@
     },
     "placeholder": "Yakında…",
     "loading": "Yükleniyor…",
+    "pullHint": "Yenilemek için aşağı çekin",
+    "pullRelease": "Yenilemek için bırakın",
     "emptyList": "Henüz öğe yok. İlkini ekle!",
     "addItem": {
       "placeholder": "Ne yapılması gerekiyor?",
