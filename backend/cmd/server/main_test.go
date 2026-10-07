@@ -3,6 +3,8 @@ package main
 import (
 	"net/http"
 	"net/http/httptest"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 )
@@ -59,3 +61,19 @@ func TestMCPEndpoint_Route(t *testing.T) {
 	}
 }
 
+func TestUnknownAPIRouteDoesNotServeSPA(t *testing.T) {
+	directory := t.TempDir()
+	if err := os.WriteFile(filepath.Join(directory, "index.html"), []byte("<html>SPA shell</html>"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("STATIC_DIR", directory)
+	request := httptest.NewRequest(http.MethodGet, "/api/v1/does-not-exist", nil)
+	recorder := httptest.NewRecorder()
+	setupRoutes().ServeHTTP(recorder, request)
+	if recorder.Code != http.StatusNotFound {
+		t.Fatalf("expected API 404, got %d", recorder.Code)
+	}
+	if strings.Contains(recorder.Header().Get("Content-Type"), "text/html") {
+		t.Fatal("unknown API route served SPA HTML")
+	}
+}
