@@ -23,7 +23,7 @@ for match in re.finditer(r'mux.Handle(?:Func)?\("([^"]+)"', (ROOT / 'backend/cmd
     assert f'`{match[1]}`' in inventory, f'Uninventoried backend route: {match[1]}'
 if args.base:
     changes = subprocess.check_output(['git', 'diff', '--name-only', f'{args.base}...HEAD'], cwd=ROOT, text=True).splitlines()
-    production = any(path.startswith(('frontend/src/features/', 'frontend/src/components/', 'frontend/src/api/', 'backend/internal/', 'backend/cmd/')) and not re.search(r'(?:_test\.go|\.(?:test|spec)\.[tj]sx?)$', path) for path in changes)
+    production = any(path.startswith(('frontend/src/', 'backend/internal/', 'backend/cmd/')) and not path.startswith('frontend/src/test/') and not re.search(r'(?:_test\.go|\.(?:test|spec)\.[tj]sx?)$', path) for path in changes)
     production |= any(path in ('frontend/src/App.tsx', 'frontend/src/main.tsx', 'frontend/vite.config.ts') or path.startswith('frontend/public/') for path in changes)
     if production:
         assert 'docs/e2e-coverage.md' in changes, 'Production change requires an inventory update with coverage or an explicit reviewed rationale'

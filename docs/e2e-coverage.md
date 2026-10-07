@@ -70,7 +70,7 @@ Browser runs block external Google Fonts requests to keep the local integration 
 
 The corrected full local suite executed **66 tests in 13 files**, all passing with zero skips (135.66 seconds); the saved JUnit report passed `python3 scripts/check-e2e-policy.py --report frontend/e2e-artifacts/results.xml`. The suite has 24 more scenarios than the previous 42 tests including the separate offline suite (40 in the old default suite).
 
-`bun run test:run -- --coverage` passed all 117 unit tests. Backend build/race tests/vet/staticcheck/gosec passed after the production fixes (11 packages; zero gosec issues). Frontend lint/type-check and all four report-policy tests passed. The existing `bun pm scan` prints an internal error despite returning zero, and independent `bun audit` reports 102 dependency advisories; security cleanliness is not claimed.
+`bun run test:run -- --coverage` passed all 117 unit tests. Backend build/race tests/vet/staticcheck/gosec passed after the production fixes (11 packages; zero gosec issues). Frontend lint/type-check and all five policy tests passed (including root-level frontend source change enforcement). The existing `bun pm scan` prints an internal error despite returning zero, and independent `bun audit` reports 102 dependency advisories; security cleanliness is not claimed.
 
 The first exploratory full run failed 6 of 66 tests. Diagnosis reproduced timestamp precision loss and API-to-SPA fallback bugs before minimal production fixes; existing absent-list HTTP 200 and omitted empty optional fields were verified against the established backend contract rather than changed. Driver input, network emulation, animation timing and SSE chunk boundaries were corrected without dropping assertions.
 
