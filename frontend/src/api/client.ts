@@ -43,8 +43,9 @@ export async function apiGet<T>(endpoint: string): Promise<T> {
 /**
  * POST request helper
  */
-export async function apiPost<T>(endpoint: string, body: unknown): Promise<T> {
+export async function apiPost<T>(endpoint: string, body: unknown, idempotencyKey?: string): Promise<T> {
     return apiFetch<T>(endpoint, {
+        headers: idempotencyKey ? { 'Idempotency-Key': idempotencyKey } : {},
         method: 'POST',
         body: JSON.stringify(body),
     })

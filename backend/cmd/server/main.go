@@ -57,7 +57,7 @@ func setupRoutes() http.Handler {
 	c := cors.New(cors.Options{
 		AllowedOrigins:   []string{"http://localhost:5173", "http://localhost:3000"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowedHeaders:   []string{"Content-Type", "Authorization"},
+		AllowedHeaders:   []string{"Content-Type", "Authorization", "Idempotency-Key", "If-Match"},
 		AllowCredentials: true,
 	})
 

@@ -9,19 +9,20 @@ import (
 
 // ItemState represents the current state of a list item.
 type ItemState struct {
-	ID          string `json:"id"`
-	Title       string `json:"title"`
-	CreatedBy   string `json:"created_by"`
-	CreatedAt   string `json:"created_at"`
+	ID          string   `json:"id"`
+	Title       string   `json:"title"`
+	CreatedBy   string   `json:"created_by"`
+	CreatedAt   string   `json:"created_at"`
 	AssignedTo  []string `json:"assigned_to,omitempty"`
-	Completed   bool   `json:"completed"`
-	CompletedBy string `json:"completed_by,omitempty"`
-	CompletedAt string `json:"completed_at,omitempty"`
-	Description string `json:"description,omitempty"`
+	Completed   bool     `json:"completed"`
+	CompletedBy string   `json:"completed_by,omitempty"`
+	CompletedAt string   `json:"completed_at,omitempty"`
+	Description string   `json:"description,omitempty"`
 }
 
 // ListState represents the current state of a list, reconstructed from events.
 type ListState struct {
+	Revision     string                `json:"revision"`
 	Name         string                `json:"name"`
 	Participants []string              `json:"participants"`
 	Items        map[string]*ItemState `json:"items"`
@@ -41,6 +42,7 @@ func ReconstructListState(events []Event) (*ListState, error) {
 	state := NewListState()
 
 	for _, event := range events {
+		state.Revision = event.ID
 		if err := applyEvent(state, event); err != nil {
 			return nil, fmt.Errorf("failed to apply event %s: %w", event.ID, err)
 		}

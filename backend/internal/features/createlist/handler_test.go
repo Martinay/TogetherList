@@ -8,6 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
+ "github.com/google/uuid"
 )
 
 func TestHandler(t *testing.T) {
@@ -116,5 +117,24 @@ func TestHandler(t *testing.T) {
 				}
 			}
 		})
+	}
+}
+
+func TestHandler_IdempotentCreation(t *testing.T) {
+	t.Setenv("DATA_DIR", t.TempDir())
+	key := uuid.New().String()
+	send := func(name string) *httptest.ResponseRecorder {
+		req := httptest.NewRequest(http.MethodPost, "/", bytes.NewBufferString(`{"name":"`+name+`","creator":"Alice"}`))
+		req.Header.Set("Idempotency-Key", key)
+		rr := httptest.NewRecorder()
+		Handler(rr, req)
+		return rr
+	}
+	first, second := send("Test"), send("Test")
+	if first.Code != 201 || second.Code != 201 || first.Body.String() != second.Body.String() {
+		t.Fatalf("retry responses: %v %v", first, second)
+	}
+	if send("Other").Code != 409 {
+		t.Fatal("expected conflicting key rejection")
 	}
 }

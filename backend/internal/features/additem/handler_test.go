@@ -1,14 +1,16 @@
 package additem
 
 import (
-	"github.com/google/uuid"
+	"backend/internal/events"
 	"bytes"
 	"encoding/json"
+	"github.com/google/uuid"
 	"net/http"
 	"net/http/httptest"
 	"os"
 	"path/filepath"
 	"testing"
+	"time"
 )
 
 func TestHandler_Success(t *testing.T) {
@@ -28,6 +30,10 @@ func TestHandler_Success(t *testing.T) {
 	listDir := filepath.Join(tempDir, listID)
 	if err := os.MkdirAll(listDir, 0755); err != nil {
 		t.Fatalf("failed to create list dir: %v", err)
+	}
+
+	if err := events.NewFileEventStore().Append(listID, events.Event{ID: uuid.New().String(), Type: events.EventTypeListCreated, Timestamp: time.Now(), Payload: events.ListCreatedPayload{Name: "Test", Participants: []string{"Alice"}}}); err != nil {
+		t.Fatal(err)
 	}
 
 	body := bytes.NewBufferString(`{"title":"Buy groceries","createdBy":"Alice"}`)
@@ -68,7 +74,7 @@ func TestHandler_Success(t *testing.T) {
 func TestHandler_EmptyTitle(t *testing.T) {
 	body := bytes.NewBufferString(`{"title":"","createdBy":"Alice"}`)
 	listID := uuid.New().String()
-	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/" + listID + "/items", body)
+	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/"+listID+"/items", body)
 	req.SetPathValue("id", listID)
 	req.Header.Set("Content-Type", "application/json")
 
@@ -83,7 +89,7 @@ func TestHandler_EmptyTitle(t *testing.T) {
 func TestHandler_WhitespaceOnlyTitle(t *testing.T) {
 	body := bytes.NewBufferString(`{"title":"   ","createdBy":"Alice"}`)
 	listID := uuid.New().String()
-	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/" + listID + "/items", body)
+	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/"+listID+"/items", body)
 	req.SetPathValue("id", listID)
 	req.Header.Set("Content-Type", "application/json")
 
@@ -97,7 +103,7 @@ func TestHandler_WhitespaceOnlyTitle(t *testing.T) {
 
 func TestHandler_MethodNotAllowed(t *testing.T) {
 	listID := uuid.New().String()
-	req := httptest.NewRequest(http.MethodGet, "/api/v1/list/" + listID + "/items", nil)
+	req := httptest.NewRequest(http.MethodGet, "/api/v1/list/"+listID+"/items", nil)
 	req.SetPathValue("id", listID)
 
 	rr := httptest.NewRecorder()
@@ -111,7 +117,7 @@ func TestHandler_MethodNotAllowed(t *testing.T) {
 func TestHandler_InvalidJSON(t *testing.T) {
 	body := bytes.NewBufferString(`{invalid json}`)
 	listID := uuid.New().String()
-	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/" + listID + "/items", body)
+	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/"+listID+"/items", body)
 	req.SetPathValue("id", listID)
 
 	rr := httptest.NewRecorder()
@@ -125,7 +131,7 @@ func TestHandler_InvalidJSON(t *testing.T) {
 func TestHandler_EmptyCreatedBy(t *testing.T) {
 	body := bytes.NewBufferString(`{"title":"Test item","createdBy":""}`)
 	listID := uuid.New().String()
-	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/" + listID + "/items", body)
+	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/"+listID+"/items", body)
 	req.SetPathValue("id", listID)
 	req.Header.Set("Content-Type", "application/json")
 
@@ -140,7 +146,7 @@ func TestHandler_EmptyCreatedBy(t *testing.T) {
 func TestHandler_MissingCreatedBy(t *testing.T) {
 	body := bytes.NewBufferString(`{"title":"Test item"}`)
 	listID := uuid.New().String()
-	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/" + listID + "/items", body)
+	req := httptest.NewRequest(http.MethodPost, "/api/v1/list/"+listID+"/items", body)
 	req.SetPathValue("id", listID)
 	req.Header.Set("Content-Type", "application/json")
 
@@ -149,5 +155,34 @@ func TestHandler_MissingCreatedBy(t *testing.T) {
 
 	if rr.Code != http.StatusBadRequest {
 		t.Errorf("expected status %d, got %d", http.StatusBadRequest, rr.Code)
+	}
+}
+
+func TestHandler_IdempotentRetry(t *testing.T) {
+	t.Setenv("DATA_DIR", t.TempDir())
+	listID := uuid.New().String()
+	if err := events.NewFileEventStore().Append(listID, events.Event{ID: uuid.New().String(), Type: events.EventTypeListCreated, Payload: events.ListCreatedPayload{Name: "Test", Participants: []string{"Alice"}}}); err != nil {
+		t.Fatal(err)
+	}
+	key := uuid.New().String()
+	send := func(title string) *httptest.ResponseRecorder {
+		req := httptest.NewRequest(http.MethodPost, "/", bytes.NewBufferString(`{"title":"`+title+`","createdBy":"Alice"}`))
+		req.SetPathValue("id", listID)
+		req.Header.Set("Idempotency-Key", key)
+		rr := httptest.NewRecorder()
+		Handler(rr, req)
+		return rr
+	}
+	first := send("Milk")
+	second := send("Milk")
+	if first.Code != 201 || second.Code != 201 || first.Body.String() != second.Body.String() {
+		t.Fatalf("retry responses: %v %v", first, second)
+	}
+	if send("Other").Code != 409 {
+		t.Fatal("expected conflict")
+	}
+	all, err := events.NewFileEventStore().ReadAll(listID)
+	if err != nil || len(all) != 2 {
+		t.Fatalf("events=%d err=%v", len(all), err)
 	}
 }

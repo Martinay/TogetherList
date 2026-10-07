@@ -11,6 +11,7 @@ export interface Item {
 }
 
 export interface ListState {
+    revision?: string
     name: string
     participants: string[]
     items: Record<string, Item>

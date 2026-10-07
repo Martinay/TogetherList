@@ -154,5 +154,25 @@
     "button": "Teilen",
     "copied": "Kopiert!",
     "message": "Tritt meiner gemeinsamen Liste bei"
+  },
+  "offline": {
+    "offline": "Offline — Änderungen werden auf diesem Gerät gespeichert.",
+    "syncing": "Gespeicherte Änderungen werden synchronisiert…",
+    "pending": "Ausstehende Änderungen: {{count}}.",
+    "failed": "Eine Änderung konnte nicht synchronisiert werden. Änderungen bleiben gespeichert; Liste prüfen und erneut versuchen.",
+    "retry": "Gespeicherte Änderungen auf gemeinsame Werte anwenden",
+    "storageError": "Lokaler Speicher ist nicht verfügbar. Änderungen können nicht sicher gespeichert werden.",
+    "createUnavailable": "Zum Erstellen einer Liste ist eine Internetverbindung erforderlich.",
+    "createFailed": "Liste konnte nicht erstellt werden. Verbindung vor einem erneuten Versuch prüfen.",
+    "savedLists": "Gespeicherte Listen auf diesem Gerät",
+    "review": "Ausstehende Änderungen prüfen",
+    "savedValue": "Gespeicherter Wert",
+    "serverValue": "Gemeinsamer Wert",
+    "unsupported": "Listenänderungen erfordern einen Browser mit Web Locks (aktuelles Chrome, Edge, Firefox oder Safari) und HTTPS. Lesen bleibt möglich.",
+    "rejected": "Abgelehnt (HTTP {{status}})",
+    "fieldConflict": "Der gemeinsame Wert wurde geändert.",
+    "recovery": "Verwirf diese Änderung und bearbeite die Liste erneut, um sie zu korrigieren.",
+    "discard": "Änderung und abhängige Eintragsänderungen verwerfen",
+    "discardConfirm": "Diese Änderung verwerfen? Änderungen an einem damit erstellten Eintrag werden ebenfalls verworfen. Spätere unabhängige Änderungen bleiben erhalten."
   }
 }

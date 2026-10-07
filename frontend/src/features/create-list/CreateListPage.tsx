@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
@@ -12,6 +13,9 @@ interface CreateListResponse {
 
 function CreateListPage() {
     const navigate = useNavigate()
+    const { t } = useTranslation()
+    const [error, setError] = useState('')
+    const [creationId] = useState(() => crypto.randomUUID())
     const [step, setStep] = useState<WizardStep>('listName')
     const [listName, setListName] = useState('')
     const [creatorName, setCreatorName] = useState('')
@@ -32,6 +36,8 @@ function CreateListPage() {
     }
 
     const handleCreate = async (participants: string[]) => {
+        if (!navigator.onLine) { setError(t('offline.createUnavailable')); return }
+        setError('')
         setIsCreating(true)
 
         try {
@@ -39,7 +45,7 @@ function CreateListPage() {
                 name: listName,
                 creator: creatorName,
                 participants: participants,
-            })
+            }, creationId)
 
             // Store creator name in localStorage for this list
             localStorage.setItem(`list:${data.listId}:username`, creatorName)
@@ -47,6 +53,7 @@ function CreateListPage() {
             navigate(`/list/${data.listId}`, { replace: true })
         } catch (error) {
             console.error('Error creating list:', error)
+            setError(t('offline.createFailed'))
             setIsCreating(false)
         }
     }
@@ -57,6 +64,7 @@ function CreateListPage() {
             <div className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-[radial-gradient(ellipse_at_center,var(--color-accent-glow)_0%,transparent_50%)] opacity-60 animate-pulse" />
 
             <div className="relative z-10 w-full max-w-[400px]">
+                {error && <p role="alert" className="text-error mb-4">{error}</p>}
                 <AnimatePresence mode="wait">
                     {step === 'listName' && (
                         <EnterNameStep

@@ -154,5 +154,25 @@
     "button": "Chia sẻ",
     "copied": "Đã sao chép!",
     "message": "Tham gia danh sách chung của tôi"
+  },
+  "offline": {
+    "offline": "Ngoại tuyến — thay đổi được lưu trên thiết bị này.",
+    "syncing": "Đang đồng bộ…",
+    "pending": "Thay đổi đang chờ: {{count}}.",
+    "failed": "Không thể đồng bộ. Thay đổi được giữ lại; kiểm tra danh sách và thử lại.",
+    "retry": "Thay giá trị chia sẻ bằng thay đổi đã lưu",
+    "storageError": "Bộ nhớ cục bộ không khả dụng. Không thể lưu thay đổi.",
+    "createUnavailable": "Kết nối internet để tạo danh sách.",
+    "createFailed": "Không thể tạo danh sách. Kiểm tra kết nối trước khi thử lại.",
+    "savedLists": "Danh sách đã lưu trên thiết bị này",
+    "review": "Xem thay đổi đang chờ",
+    "savedValue": "Giá trị đã lưu",
+    "serverValue": "Giá trị chia sẻ",
+    "unsupported": "Chỉnh sửa danh sách cần Web Locks (Chrome, Edge, Firefox hoặc Safari mới nhất) và HTTPS. Vẫn có thể đọc danh sách.",
+    "rejected": "Bị từ chối (HTTP {{status}})",
+    "fieldConflict": "Giá trị dùng chung đã thay đổi.",
+    "recovery": "Bỏ thay đổi này, rồi sửa lại danh sách để lưu thay đổi đúng.",
+    "discard": "Bỏ thay đổi và các chỉnh sửa phụ thuộc",
+    "discardConfirm": "Bỏ thay đổi này? Các chỉnh sửa mục được tạo bởi thao tác này cũng sẽ bị bỏ. Các thay đổi độc lập sau đó sẽ được giữ lại."
   }
 }

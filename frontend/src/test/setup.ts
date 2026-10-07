@@ -1,5 +1,7 @@
 import '@testing-library/jest-dom/vitest'
 import { vi } from 'vitest'
+Object.defineProperty(globalThis, 'localStorage', { value: window.localStorage, configurable: true, writable: true })
+
 import translations from '../../public/locales/en/translation.json'
 
 /**
@@ -45,3 +47,16 @@ vi.mock('react-i18next', () => ({
         init: () => {},
     },
 }))
+
+// Share lock queues across module reloads to model tabs using the same origin.
+const lockQueues = new Map<string, Promise<unknown>>()
+Object.defineProperty(navigator, 'locks', { configurable: true, value: {
+    request: async (name: string, optionsOrWork: { ifAvailable?: boolean } | ((lock: object) => unknown), callback?: (lock: object | null) => unknown) => {
+        const work = typeof optionsOrWork === 'function' ? optionsOrWork : callback!
+        const previous = lockQueues.get(name)
+        if (typeof optionsOrWork !== 'function' && optionsOrWork.ifAvailable && previous) return work(null!)
+        const result = (previous || Promise.resolve()).then(() => work({ name }))
+        lockQueues.set(name, result)
+        try { return await result } finally { if (lockQueues.get(name) === result) lockQueues.delete(name) }
+    },
+} })

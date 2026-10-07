@@ -154,5 +154,25 @@
     "button": "Megosztás",
     "copied": "Másolva!",
     "message": "Csatlakozz a listámhoz"
+  },
+  "offline": {
+    "offline": "Offline — a módosítások ezen az eszközön mentve.",
+    "syncing": "Szinkronizálás…",
+    "pending": "Függő módosítások: {{count}}.",
+    "failed": "Sikertelen szinkronizálás. A módosítások megmaradnak; ellenőrizze a listát és próbálja újra.",
+    "retry": "Megosztott értékek felülírása mentett módosításokkal",
+    "storageError": "A helyi tárhely nem érhető el. A módosítások nem menthetők.",
+    "createUnavailable": "Lista létrehozásához csatlakozzon az internethez.",
+    "createFailed": "A lista nem hozható létre. Újrapróbálkozás előtt ellenőrizze a kapcsolatot.",
+    "savedLists": "Ezen az eszközön mentett listák",
+    "review": "Módosítások áttekintése",
+    "savedValue": "Mentett érték",
+    "serverValue": "Megosztott érték",
+    "unsupported": "A listaszerkesztéshez Web Locks (friss Chrome, Edge, Firefox vagy Safari) és HTTPS szükséges. Az olvasás továbbra is elérhető.",
+    "rejected": "Elutasítva (HTTP {{status}})",
+    "fieldConflict": "A megosztott érték megváltozott.",
+    "recovery": "Vesse el ezt a módosítást, majd szerkessze újra a listát a javításhoz.",
+    "discard": "Módosítás és függő szerkesztések elvetése",
+    "discardConfirm": "Elveti ezt a módosítást? Az ezzel létrehozott elem szerkesztései is elvesznek. A későbbi független módosítások megmaradnak."
   }
 }

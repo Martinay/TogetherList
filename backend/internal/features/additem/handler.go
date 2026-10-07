@@ -25,6 +25,9 @@ type AddItemResponse struct {
 // Handler handles POST requests to add a new item to a list.
 // Expected URL pattern: /api/v1/list/{id}/items
 func Handler(w http.ResponseWriter, r *http.Request) {
+	if !events.ValidateRequestID(w, r) {
+		return
+	}
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
@@ -57,13 +60,31 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	// Generate new item ID
 	itemID := uuid.New().String()
+	if r.Header.Get("Idempotency-Key") != "" {
+		parsed, err := uuid.Parse(r.Header.Get("Idempotency-Key"))
+		if err != nil || parsed.Version() != 4 {
+			http.Error(w, "Invalid idempotency key", http.StatusBadRequest)
+			return
+		}
+		itemID = parsed.String()
+	}
+	existing, err := events.NewFileEventStore().ReadAll(listID)
+	if err != nil {
+		http.Error(w, "Failed to read list", http.StatusInternalServerError)
+		return
+	}
+	if len(existing) == 0 {
+		http.Error(w, "List not found", http.StatusNotFound)
+		return
+	}
 
 	// Create and persist ItemAdded event
 	store := events.NewFileEventStore()
 	event := events.Event{
-		ID:        uuid.New().String(),
-		Type:      events.EventTypeItemAdded,
-		Timestamp: time.Now().UTC(),
+		ExpectedRevision: r.Header.Get("If-Match"),
+		ID:               events.RequestID(r),
+		Type:             events.EventTypeItemAdded,
+		Timestamp:        time.Now().UTC(),
 		Payload: events.ItemAddedPayload{
 			ItemID:    itemID,
 			Title:     title,
@@ -72,7 +93,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := store.Append(listID, event); err != nil {
-		http.Error(w, "Failed to add item", http.StatusInternalServerError)
+		events.WriteAppendError(w, err, "Failed to add item")
 		return
 	}
 

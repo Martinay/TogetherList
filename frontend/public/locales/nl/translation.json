@@ -154,5 +154,25 @@
     "button": "Delen",
     "copied": "Gekopieerd!",
     "message": "Doe mee met mijn gedeelde lijst"
+  },
+  "offline": {
+    "offline": "Offline — wijzigingen opgeslagen op dit apparaat.",
+    "syncing": "Synchroniseren…",
+    "pending": "Wachtende wijzigingen: {{count}}.",
+    "failed": "Synchronisatie mislukt. Wijzigingen bewaard; controleer de lijst en probeer opnieuw.",
+    "retry": "Opgeslagen wijzigingen over gedeelde waarden toepassen",
+    "storageError": "Lokale opslag niet beschikbaar. Wijzigingen kunnen niet worden opgeslagen.",
+    "createUnavailable": "Maak verbinding om een lijst te maken.",
+    "createFailed": "Lijst maken mislukt. Controleer je verbinding voordat je opnieuw probeert.",
+    "savedLists": "Opgeslagen lijsten op dit apparaat",
+    "review": "Wijzigingen bekijken",
+    "savedValue": "Opgeslagen waarde",
+    "serverValue": "Gedeelde waarde",
+    "unsupported": "Lijsten bewerken vereist Web Locks (recente Chrome, Edge, Firefox of Safari) en HTTPS. Lezen blijft beschikbaar.",
+    "rejected": "Geweigerd (HTTP {{status}})",
+    "fieldConflict": "De gedeelde waarde is gewijzigd.",
+    "recovery": "Verwijder deze wijziging en bewerk de lijst opnieuw om deze te corrigeren.",
+    "discard": "Wijziging en afhankelijke bewerkingen verwijderen",
+    "discardConfirm": "Deze wijziging verwijderen? Bewerkingen van het hiermee gemaakte item worden ook verwijderd. Latere onafhankelijke wijzigingen blijven bewaard."
   }
 }

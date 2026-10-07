@@ -154,5 +154,25 @@
     "button": "Bagikan",
     "copied": "Disalin!",
     "message": "Bergabung ke daftar saya"
+  },
+  "offline": {
+    "offline": "Offline — perubahan disimpan di perangkat ini.",
+    "syncing": "Menyinkronkan…",
+    "pending": "Perubahan tertunda: {{count}}.",
+    "failed": "Sinkronisasi gagal. Perubahan tetap disimpan; periksa daftar dan coba lagi.",
+    "retry": "Ganti nilai bersama dengan perubahan tersimpan",
+    "storageError": "Penyimpanan lokal tidak tersedia. Perubahan tidak dapat disimpan.",
+    "createUnavailable": "Hubungkan ke internet untuk membuat daftar.",
+    "createFailed": "Daftar tidak dapat dibuat. Periksa koneksi sebelum mencoba lagi.",
+    "savedLists": "Daftar tersimpan di perangkat ini",
+    "review": "Tinjau perubahan tertunda",
+    "savedValue": "Nilai tersimpan",
+    "serverValue": "Nilai bersama",
+    "unsupported": "Mengedit daftar memerlukan Web Locks (Chrome, Edge, Firefox atau Safari terbaru) dan HTTPS. Daftar tetap dapat dibaca.",
+    "rejected": "Ditolak (HTTP {{status}})",
+    "fieldConflict": "Nilai bersama telah berubah.",
+    "recovery": "Buang perubahan ini, lalu edit daftar lagi untuk memperbaikinya.",
+    "discard": "Buang perubahan dan edit yang bergantung",
+    "discardConfirm": "Buang perubahan ini? Edit pada item yang dibuat oleh operasi ini juga akan dibuang. Perubahan mandiri berikutnya tetap disimpan."
   }
 }

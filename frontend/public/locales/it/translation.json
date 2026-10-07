@@ -154,5 +154,25 @@
     "button": "Condividi",
     "copied": "Copiato!",
     "message": "Unisciti alla mia lista condivisa"
+  },
+  "offline": {
+    "offline": "Offline — modifiche salvate su questo dispositivo.",
+    "syncing": "Sincronizzazione…",
+    "pending": "Modifiche in attesa: {{count}}.",
+    "failed": "Sincronizzazione non riuscita. Modifiche conservate; controlla la lista e riprova.",
+    "retry": "Sostituisci i valori condivisi con le modifiche salvate",
+    "storageError": "Memoria locale non disponibile. Impossibile salvare le modifiche.",
+    "createUnavailable": "Connettiti per creare una lista.",
+    "createFailed": "Creazione non riuscita. Controlla la connessione prima di riprovare.",
+    "savedLists": "Liste salvate su questo dispositivo",
+    "review": "Controlla le modifiche",
+    "savedValue": "Valore salvato",
+    "serverValue": "Valore condiviso",
+    "unsupported": "Le modifiche richiedono Web Locks (Chrome, Edge, Firefox o Safari aggiornati) e HTTPS. La lettura resta disponibile.",
+    "rejected": "Rifiutato (HTTP {{status}})",
+    "fieldConflict": "Il valore condiviso è cambiato.",
+    "recovery": "Scarta questa modifica e modifica di nuovo la lista per correggerla.",
+    "discard": "Scarta modifica e modifiche dipendenti",
+    "discardConfirm": "Scartare questa modifica? Saranno scartate anche le modifiche all’elemento creato da questa operazione. Le modifiche indipendenti successive saranno conservate."
   }
 }
