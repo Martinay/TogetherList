@@ -2,10 +2,9 @@ module backend
 
 go 1.27.1
 
-require github.com/google/uuid v1.6.0
-
 require (
-	github.com/mark3labs/mcp-go v1.1.1
+	github.com/google/uuid v1.6.0
+	github.com/mark3labs/mcp-go v1.2.1
 	github.com/rs/cors v1.11.1
 )
 
