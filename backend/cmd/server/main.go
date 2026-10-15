@@ -38,12 +38,12 @@ func setupRoutes() http.Handler {
 
 	// Model Context Protocol (MCP) server endpoints
 	mcpServer := mcpserver.NewServer(nil)
-	mux.Handle("POST /api/v1/mcp", mcpServer)
+	mux.Handle("/api/v1/mcp", mcpServer)
 	mux.Handle("GET /api/v1/mcp/sse", mcpServer.SSEServer().SSEHandler())
 	mux.Handle("POST /api/v1/mcp/messages", mcpServer.SSEServer().MessageHandler())
 
 	// MCP route aliases for convenience
-	mux.Handle("POST /mcp", mcpServer)
+	mux.Handle("/mcp", mcpServer)
 	mux.Handle("GET /mcp/sse", mcpServer.SSEServer().SSEHandler())
 	mux.Handle("POST /mcp/messages", mcpServer.SSEServer().MessageHandler())
 

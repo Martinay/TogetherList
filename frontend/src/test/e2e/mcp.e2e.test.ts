@@ -19,6 +19,18 @@ it('uses every MCP tool over HTTP with the same persisted state visible in the b
     expect(initialized.result.serverInfo).toMatchObject({ name: 'TogetherList' })
     const tools = await rpc('tools/list', {}, '/mcp')
     expect((tools.result.tools as Array<{ name: string }>).map(t => t.name).sort()).toEqual(['get_list', 'create_list', 'rename_list', 'add_item', 'complete_item', 'assign_item', 'update_item_title', 'update_item_description'].sort())
+    for (const path of ['/mcp', '/api/v1/mcp']) {
+        const response = await fetch(`${BASE_URL}${path}`, { headers: { Accept: 'text/event-stream' } })
+        expect(response.status).toBe(405)
+        expect(response.headers.get('allow')).toBe('POST')
+        expect(response.headers.get('content-type')).not.toContain('text/html')
+        const discovered = await rpc('tools/list', {}, path)
+        for (const entry of discovered.result.tools as Array<{ name: string; annotations: Record<string, boolean> }>) {
+            expect(entry.annotations).toMatchObject(entry.name === 'get_list'
+                ? { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true }
+                : { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: true })
+        }
+    }
     const { listId } = await tool('create_list', { name: 'MCP groceries', creator: 'Alex', participants: ['Sam'] })
     const { itemId } = await tool('add_item', { list_id: listId, title: 'Milk', created_by: 'Alex' })
     const target = { list_id: listId, item_id: itemId }

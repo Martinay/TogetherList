@@ -18,6 +18,9 @@ func (s *Server) registerTools() {
 	s.mcpServer.AddTool(
 		mcp.NewTool(
 			"get_list",
+			mcp.WithReadOnlyHintAnnotation(true),
+			mcp.WithDestructiveHintAnnotation(false),
+			mcp.WithIdempotentHintAnnotation(true),
 			mcp.WithDescription("Get the full current state of a shared list including items, completion status, and participants"),
 			mcp.WithString("list_id", mcp.Required(), mcp.Description("The UUID of the list")),
 		),
