@@ -5,7 +5,7 @@ type: Functional
 priority: P1
 source: user request
 created: 2026-09-21
-updated: 2026-09-21
+updated: 2026-10-15
 links:
   adr: [AD-0025]
   requirements: [REQ-0002, REQ-0006, REQ-0007, REQ-0008, REQ-0009]
@@ -24,7 +24,7 @@ TogetherList needs to expose its core list and item management capabilities dire
 **Pattern:** Event-driven
 
 **Statement:**  
-When an MCP client initiates a connection to the application's HTTP MCP endpoint, the system shall provide Model Context Protocol services allowing the client to initialize a session, discover available tools, and execute operations to create lists, retrieve lists, list existing lists, rename lists, add items, complete items, assign items, update item titles, and edit item descriptions.
+When an MCP client initiates a connection to the application's HTTP MCP endpoint, the system shall provide Model Context Protocol services allowing the client to initialize a session, discover available tools, and execute operations to create lists, retrieve lists, rename lists, add items, complete items, assign items, update item titles, and edit item descriptions.
 
 ## Rationale
 
@@ -40,7 +40,7 @@ When an MCP client initiates a connection to the application's HTTP MCP endpoint
 
 - Given an active MCP session
 - When an MCP client requests the list of tools (`tools/list`)
-- Then the system shall return tool definitions with JSON schemas for: `create_list`, `get_list`, `list_lists`, `rename_list`, `add_item`, `complete_item`, `assign_item`, `update_item_title`, and `update_item_description`
+- Then the system shall return tool definitions with JSON schemas for: `create_list`, `get_list`, `rename_list`, `add_item`, `complete_item`, `assign_item`, `update_item_title`, and `update_item_description`
 
 - Given an active MCP session
 - When an MCP client invokes a tool via `tools/call` with valid parameters
@@ -53,6 +53,12 @@ When an MCP client initiates a connection to the application's HTTP MCP endpoint
 - Given an MCP client sends a direct JSON-RPC POST request to `/api/v1/mcp`
 - When the request body contains a valid JSON-RPC 2.0 message
 - Then the system shall process the request and return the JSON-RPC response with `Content-Type: application/json`
+
+- Given existing stored lists
+- When a client calls `list_lists`
+- Then the system shall reject it as an unknown tool; `tools/list` shall advertise exactly the eight tools above
+
+- Resource discovery shall expose no stored list instances; the `list://{listId}` template shall retain access by known ID
 
 ## Verification
 

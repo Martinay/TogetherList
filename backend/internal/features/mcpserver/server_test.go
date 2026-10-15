@@ -92,7 +92,6 @@ func TestServer_DirectJSONRPC_ToolsList(t *testing.T) {
 	}
 
 	expectedTools := []string{
-		"list_lists",
 		"get_list",
 		"create_list",
 		"rename_list",
@@ -103,11 +102,17 @@ func TestServer_DirectJSONRPC_ToolsList(t *testing.T) {
 		"update_item_description",
 	}
 
+	if len(resp.Result.Tools) != len(expectedTools) {
+		t.Errorf("expected exactly %d tools, got %d", len(expectedTools), len(resp.Result.Tools))
+	}
 	foundMap := make(map[string]bool)
 	for _, tool := range resp.Result.Tools {
 		foundMap[tool.Name] = true
 	}
 
+	if foundMap["list_lists"] {
+		t.Error("tools/list must not advertise list_lists")
+	}
 	for _, expected := range expectedTools {
 		if !foundMap[expected] {
 			t.Errorf("expected tool %s not found in tools/list response", expected)
@@ -243,8 +248,8 @@ func TestServer_ToolLifecycle_CreateGetAddItemCompleteAssignRename(t *testing.T)
 	}
 
 	var stateData struct {
-		Name         string                        `json:"name"`
-		Participants []string                      `json:"participants"`
+		Name         string                       `json:"name"`
+		Participants []string                     `json:"participants"`
 		Items        map[string]*events.ItemState `json:"items"`
 	}
 	if err := json.Unmarshal([]byte(callResp.Result.Content[0].Text), &stateData); err != nil {
@@ -271,25 +276,34 @@ func TestServer_ToolLifecycle_CreateGetAddItemCompleteAssignRename(t *testing.T)
 		t.Errorf("expected item assigned to Bob, got %v", item.AssignedTo)
 	}
 
-	// 9. List Lists
-	listListsPayload := `{"jsonrpc":"2.0","id":18,"method":"tools/call","params":{"name":"list_lists","arguments":{}}}`
-	req = httptest.NewRequest(http.MethodPost, "/api/v1/mcp", bytes.NewBufferString(listListsPayload))
-	rr = httptest.NewRecorder()
-	s.ServeHTTP(rr, req)
-	_ = json.Unmarshal(rr.Body.Bytes(), &callResp)
-	if callResp.Result.IsError {
-		t.Fatalf("list_lists failed: %v", callResp.Result.Content[0].Text)
+	// Resource discovery must not reveal the persisted list.
+	for _, method := range []string{"resources/list", "resources/templates/list"} {
+		t.Run(method, func(t *testing.T) {
+			payload := fmt.Sprintf(`{"jsonrpc":"2.0","id":20,"method":%q}`, method)
+			req := httptest.NewRequest(http.MethodPost, "/api/v1/mcp", strings.NewReader(payload))
+			rr := httptest.NewRecorder()
+			s.ServeHTTP(rr, req)
+			var resp struct {
+				Result struct {
+					Resources []json.RawMessage `json:"resources"`
+					Templates []struct {
+						URI string `json:"uriTemplate"`
+					} `json:"resourceTemplates"`
+				} `json:"result"`
+				Error json.RawMessage `json:"error"`
+			}
+			if err := json.Unmarshal(rr.Body.Bytes(), &resp); err != nil {
+				t.Fatal(err)
+			}
+			if len(resp.Error) != 0 || len(resp.Result.Resources) != 0 || strings.Contains(rr.Body.String(), listID) || strings.Contains(rr.Body.String(), "Birthday Bash") {
+				t.Fatalf("resource discovery exposed stored lists or failed: %s", rr.Body.String())
+			}
+			if method == "resources/templates/list" && (len(resp.Result.Templates) != 1 || resp.Result.Templates[0].URI != "list://{listId}") {
+				t.Fatalf("expected only known-ID resource template, got %s", rr.Body.String())
+			}
+		})
 	}
-
-	var summaries []ListSummary
-	if err := json.Unmarshal([]byte(callResp.Result.Content[0].Text), &summaries); err != nil {
-		t.Fatalf("failed to decode summaries: %v", err)
-	}
-	if len(summaries) != 1 || summaries[0].ID != listID || summaries[0].Name != "Birthday Bash" {
-		t.Errorf("unexpected summaries: %+v", summaries)
-	}
-
-	// 10. Read Resource list://{listId}
+	// 9. Read Resource list://{listId}
 	readResourcePayload := fmt.Sprintf(`{"jsonrpc":"2.0","id":19,"method":"resources/read","params":{"uri":"list://%s"}}}`, listID)
 	req = httptest.NewRequest(http.MethodPost, "/api/v1/mcp", bytes.NewBufferString(readResourcePayload))
 	rr = httptest.NewRecorder()
@@ -361,10 +375,10 @@ type pipeResponseWriter struct {
 	code   int
 }
 
-func (p *pipeResponseWriter) Header() http.Header { return p.header }
+func (p *pipeResponseWriter) Header() http.Header         { return p.header }
 func (p *pipeResponseWriter) Write(b []byte) (int, error) { return p.writer.Write(b) }
-func (p *pipeResponseWriter) WriteHeader(code int) { p.code = code }
-func (p *pipeResponseWriter) Flush() {}
+func (p *pipeResponseWriter) WriteHeader(code int)        { p.code = code }
+func (p *pipeResponseWriter) Flush()                      {}
 
 func TestServer_SSEServer_Lifecycle(t *testing.T) {
 	s, _, _ := setupTestServer(t)
@@ -441,3 +455,22 @@ func TestServer_SSEServer_Lifecycle(t *testing.T) {
 	time.Sleep(20 * time.Millisecond)
 }
 
+func TestServer_RejectsListEnumeration(t *testing.T) {
+	s, _, _ := setupTestServer(t)
+	req := httptest.NewRequest(http.MethodPost, "/api/v1/mcp", strings.NewReader(`{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"list_lists","arguments":{}}}`))
+	rr := httptest.NewRecorder()
+	s.ServeHTTP(rr, req)
+	var resp struct {
+		Error *struct {
+			Code    int    `json:"code"`
+			Message string `json:"message"`
+		} `json:"error"`
+		Result json.RawMessage `json:"result"`
+	}
+	if err := json.Unmarshal(rr.Body.Bytes(), &resp); err != nil {
+		t.Fatal(err)
+	}
+	if resp.Error == nil || resp.Error.Code != -32602 || !strings.Contains(resp.Error.Message, "list_lists") || len(resp.Result) != 0 {
+		t.Fatalf("expected unknown-tool protocol error without list data, got %s", rr.Body.String())
+	}
+}
