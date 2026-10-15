@@ -83,7 +83,8 @@ func TestServer_DirectJSONRPC_ToolsList(t *testing.T) {
 	var resp struct {
 		Result struct {
 			Tools []struct {
-				Name string `json:"name"`
+				Name        string          `json:"name"`
+				Annotations map[string]bool `json:"annotations"`
 			} `json:"tools"`
 		} `json:"result"`
 	}
@@ -108,6 +109,15 @@ func TestServer_DirectJSONRPC_ToolsList(t *testing.T) {
 	foundMap := make(map[string]bool)
 	for _, tool := range resp.Result.Tools {
 		foundMap[tool.Name] = true
+		expected := map[string]bool{"readOnlyHint": false, "destructiveHint": true, "idempotentHint": false, "openWorldHint": true}
+		if tool.Name == "get_list" {
+			expected["readOnlyHint"], expected["destructiveHint"], expected["idempotentHint"] = true, false, true
+		}
+		for hint, want := range expected {
+			if got, present := tool.Annotations[hint]; !present || got != want {
+				t.Errorf("%s annotation %s = %v (present %v), want %v", tool.Name, hint, got, present, want)
+			}
+		}
 	}
 
 	if foundMap["list_lists"] {

@@ -71,3 +71,25 @@ func TestUnknownAPIRouteDoesNotServeSPA(t *testing.T) {
 		t.Fatal("unknown API route served SPA HTML")
 	}
 }
+
+func TestMCPExactEndpointsRejectGET(t *testing.T) {
+	directory := t.TempDir()
+	if err := os.WriteFile(filepath.Join(directory, "index.html"), []byte("<html>SPA shell</html>"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("STATIC_DIR", directory)
+	handler := setupRoutes()
+	for _, path := range []string{"/mcp", "/api/v1/mcp"} {
+		for _, method := range []string{http.MethodGet, http.MethodHead, http.MethodPut} {
+			t.Run(method+path, func(t *testing.T) {
+				req := httptest.NewRequest(method, path, nil)
+				req.Header.Set("Accept", "text/event-stream")
+				rec := httptest.NewRecorder()
+				handler.ServeHTTP(rec, req)
+				if rec.Code != http.StatusMethodNotAllowed || rec.Header().Get("Allow") != "POST" || strings.Contains(rec.Header().Get("Content-Type"), "text/html") {
+					t.Fatalf("expected MCP 405 Allow POST, got %d %v: %s", rec.Code, rec.Header(), rec.Body.String())
+				}
+			})
+		}
+	}
+}
