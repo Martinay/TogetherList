@@ -30,13 +30,15 @@ TogetherList provides a built-in MCP server accessible over HTTP, allowing AI as
 ### Supported Tools
 - `create_list` — Create a new shared list with creator and participants
 - `get_list` — Retrieve full current state of a list
-- `list_lists` — Enumerate existing shared lists
 - `rename_list` — Rename a shared list
 - `add_item` — Add an item to a list
 - `complete_item` — Toggle completion status of an item
 - `assign_item` — Assign an item to participant(s)
 - `update_item_title` — Edit item title
 - `update_item_description` — Edit item description
+
+
+MCP exposes exactly eight tools. Existing lists are accessible only by known ID through `get_list` or `list://{listId}`. MCP does not enumerate stored lists: `list_lists` is unregistered and rejected, and `resources/list` returns no list instances.
 
 ### Client Configuration (e.g. Cursor / Claude Desktop)
 ```json

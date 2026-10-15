@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -32,32 +33,25 @@ func TestHealthHandler(t *testing.T) {
 
 func TestMCPEndpoint_Route(t *testing.T) {
 	handler := setupRoutes()
-
-	// Test POST /api/v1/mcp
-	reqBody := `{"jsonrpc":"2.0","id":1,"method":"tools/list"}`
-	req := httptest.NewRequest(http.MethodPost, "/api/v1/mcp", strings.NewReader(reqBody))
-	req.Header.Set("Content-Type", "application/json")
-	rec := httptest.NewRecorder()
-
-	handler.ServeHTTP(rec, req)
-
-	if rec.Code != http.StatusOK {
-		t.Errorf("expected status 200, got %d: %s", rec.Code, rec.Body.String())
-	}
-
-	if !strings.Contains(rec.Body.String(), "list_lists") {
-		t.Errorf("expected response to contain 'list_lists', got %s", rec.Body.String())
-	}
-
-	// Test POST /mcp alias
-	req = httptest.NewRequest(http.MethodPost, "/mcp", strings.NewReader(reqBody))
-	req.Header.Set("Content-Type", "application/json")
-	rec = httptest.NewRecorder()
-
-	handler.ServeHTTP(rec, req)
-
-	if rec.Code != http.StatusOK {
-		t.Errorf("expected status 200 for /mcp alias, got %d: %s", rec.Code, rec.Body.String())
+	for _, path := range []string{"/api/v1/mcp", "/mcp"} {
+		t.Run(path, func(t *testing.T) {
+			req := httptest.NewRequest(http.MethodPost, path, strings.NewReader(`{"jsonrpc":"2.0","id":1,"method":"tools/list"}`))
+			rec := httptest.NewRecorder()
+			handler.ServeHTTP(rec, req)
+			var resp struct {
+				Result struct {
+					Tools []struct {
+						Name string `json:"name"`
+					} `json:"tools"`
+				} `json:"result"`
+			}
+			if err := json.Unmarshal(rec.Body.Bytes(), &resp); err != nil {
+				t.Fatal(err)
+			}
+			if rec.Code != http.StatusOK || len(resp.Result.Tools) != 8 || strings.Contains(rec.Body.String(), "list_lists") {
+				t.Fatalf("expected eight tools without list_lists, got %d: %s", rec.Code, rec.Body.String())
+			}
+		})
 	}
 }
 

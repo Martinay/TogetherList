@@ -13,26 +13,8 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 )
 
-// ListSummary represents high-level metadata about an existing list.
-type ListSummary struct {
-	ID               string `json:"id"`
-	Name             string `json:"name"`
-	ParticipantCount int    `json:"participantCount"`
-	ItemCount        int    `json:"itemCount"`
-	CompletedCount   int    `json:"completedCount"`
-}
-
 func (s *Server) registerTools() {
-	// 1. list_lists
-	s.mcpServer.AddTool(
-		mcp.NewTool(
-			"list_lists",
-			mcp.WithDescription("List all existing shared lists with summary metadata (IDs, names, participant counts, item counts)"),
-		),
-		s.handleListLists,
-	)
-
-	// 2. get_list
+	// 1. get_list
 	s.mcpServer.AddTool(
 		mcp.NewTool(
 			"get_list",
@@ -42,7 +24,7 @@ func (s *Server) registerTools() {
 		s.handleGetList,
 	)
 
-	// 3. create_list
+	// 2. create_list
 	s.mcpServer.AddTool(
 		mcp.NewTool(
 			"create_list",
@@ -58,7 +40,7 @@ func (s *Server) registerTools() {
 		s.handleCreateList,
 	)
 
-	// 4. rename_list
+	// 3. rename_list
 	s.mcpServer.AddTool(
 		mcp.NewTool(
 			"rename_list",
@@ -70,7 +52,7 @@ func (s *Server) registerTools() {
 		s.handleRenameList,
 	)
 
-	// 5. add_item
+	// 4. add_item
 	s.mcpServer.AddTool(
 		mcp.NewTool(
 			"add_item",
@@ -82,7 +64,7 @@ func (s *Server) registerTools() {
 		s.handleAddItem,
 	)
 
-	// 6. complete_item
+	// 5. complete_item
 	s.mcpServer.AddTool(
 		mcp.NewTool(
 			"complete_item",
@@ -95,7 +77,7 @@ func (s *Server) registerTools() {
 		s.handleCompleteItem,
 	)
 
-	// 7. assign_item
+	// 6. assign_item
 	s.mcpServer.AddTool(
 		mcp.NewTool(
 			"assign_item",
@@ -112,7 +94,7 @@ func (s *Server) registerTools() {
 		s.handleAssignItem,
 	)
 
-	// 8. update_item_title
+	// 7. update_item_title
 	s.mcpServer.AddTool(
 		mcp.NewTool(
 			"update_item_title",
@@ -124,7 +106,7 @@ func (s *Server) registerTools() {
 		s.handleUpdateItemTitle,
 	)
 
-	// 9. update_item_description
+	// 8. update_item_description
 	s.mcpServer.AddTool(
 		mcp.NewTool(
 			"update_item_description",
@@ -135,46 +117,6 @@ func (s *Server) registerTools() {
 		),
 		s.handleUpdateItemDescription,
 	)
-}
-
-func (s *Server) handleListLists(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-	ids, err := s.store.ListIDs()
-	if err != nil {
-		return mcp.NewToolResultError(fmt.Sprintf("Failed to list lists: %v", err)), nil
-	}
-
-	summaries := make([]ListSummary, 0, len(ids))
-	for _, id := range ids {
-		allEvents, err := s.store.ReadAll(id)
-		if err != nil || len(allEvents) == 0 {
-			continue
-		}
-		state, err := events.ReconstructListState(allEvents)
-		if err != nil {
-			continue
-		}
-
-		completed := 0
-		for _, item := range state.Items {
-			if item.Completed {
-				completed++
-			}
-		}
-
-		summaries = append(summaries, ListSummary{
-			ID:               id,
-			Name:             state.Name,
-			ParticipantCount: len(state.Participants),
-			ItemCount:        len(state.Items),
-			CompletedCount:   completed,
-		})
-	}
-
-	bytes, err := json.Marshal(summaries)
-	if err != nil {
-		return mcp.NewToolResultError(fmt.Sprintf("Failed to marshal list summaries: %v", err)), nil
-	}
-	return mcp.NewToolResultText(string(bytes)), nil
 }
 
 func (s *Server) handleGetList(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {

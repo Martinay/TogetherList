@@ -20,9 +20,9 @@ Implement a Model Context Protocol (MCP) server exposed as an HTTP endpoint on t
 - `docs/requirements/0019_mcp_server.md`: REQ-0019 EARS requirement for MCP interface.
 
 ## Granular Instructions
-- [x] Add `ListIDs()` method to `FileEventStore` in `backend/internal/events/store.go` with tests in `store_test.go`.
+- Privacy follow-up (2026-10-15): removed MCP list enumeration and its unused `ListIDs()` storage helper; access to existing lists requires a known ID.
 - [x] Implement `mcpserver` feature slice in `backend/internal/features/mcpserver/` using `github.com/mark3labs/mcp-go`.
-- [x] Register tools: `create_list`, `get_list`, `list_lists`, `rename_list`, `add_item`, `complete_item`, `assign_item`, `update_item_title`, `update_item_description`.
+- [x] Register tools: `create_list`, `get_list`, `rename_list`, `add_item`, `complete_item`, `assign_item`, `update_item_title`, `update_item_description`.
 - [x] Mount MCP HTTP handlers in `backend/cmd/server/main.go` on `/api/v1/mcp/sse` and `/api/v1/mcp/messages` (with `/mcp/sse` and `/mcp/messages` aliases).
 - [x] Write comprehensive unit and integration tests in `backend/internal/features/mcpserver/server_test.go`.
 - [x] Verify tests pass (`go test -race ./...`) and lint checks pass (`go vet ./...`).

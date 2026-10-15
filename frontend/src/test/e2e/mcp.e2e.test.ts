@@ -18,7 +18,7 @@ it('uses every MCP tool over HTTP with the same persisted state visible in the b
     const initialized = await rpc('initialize', { protocolVersion: '2024-11-05', capabilities: {}, clientInfo: { name: 'e2e', version: '1' } })
     expect(initialized.result.serverInfo).toMatchObject({ name: 'TogetherList' })
     const tools = await rpc('tools/list', {}, '/mcp')
-    expect((tools.result.tools as Array<{ name: string }>).map(t => t.name).sort()).toEqual(['list_lists', 'get_list', 'create_list', 'rename_list', 'add_item', 'complete_item', 'assign_item', 'update_item_title', 'update_item_description'].sort())
+    expect((tools.result.tools as Array<{ name: string }>).map(t => t.name).sort()).toEqual(['get_list', 'create_list', 'rename_list', 'add_item', 'complete_item', 'assign_item', 'update_item_title', 'update_item_description'].sort())
     const { listId } = await tool('create_list', { name: 'MCP groceries', creator: 'Alex', participants: ['Sam'] })
     const { itemId } = await tool('add_item', { list_id: listId, title: 'Milk', created_by: 'Alex' })
     const target = { list_id: listId, item_id: itemId }
@@ -29,8 +29,15 @@ it('uses every MCP tool over HTTP with the same persisted state visible in the b
     await tool('complete_item', { ...target, completed: true, completed_by: 'Sam' })
     const read = await tool('get_list', { list_id: listId })
     expect(read).toMatchObject({ name: 'MCP shopping', items: { [itemId]: { title: 'Oat milk', description: 'Two cartons', completed: true, completed_by: 'Sam', assigned_to: ['Alex', 'Sam'] } } })
-    const summaries = await tool('list_lists', {})
-    expect(summaries).toEqual(expect.arrayContaining([expect.objectContaining({ id: listId, completedCount: 1, itemCount: 1 })]))
+    for (const path of ['/api/v1/mcp', '/mcp']) {
+        const rejected = await rpc('tools/call', { name: 'list_lists', arguments: {} }, path)
+        expect(rejected.error).toMatchObject({ code: -32602 })
+        expect(rejected.result).toBeUndefined()
+        const resources = await rpc('resources/list', {}, path)
+        expect(resources.result.resources).toEqual([])
+        const templates = await rpc('resources/templates/list', {}, path)
+        expect(templates.result.resourceTemplates).toEqual([expect.objectContaining({ uriTemplate: 'list://{listId}' })])
+    }
     const resource = await rpc('resources/read', { uri: `list://${listId}` })
     expect(JSON.parse((resource.result.contents as Array<{ text: string }>)[0]!.text)).toMatchObject({ name: 'MCP shopping' })
     const browser = await createBrowser()
@@ -78,7 +85,8 @@ it.each(['/api/v1/mcp/sse', '/mcp/sse'])('roundtrips JSON-RPC through an SSE ses
         const message = await readEvent()
         const payload = JSON.parse(message.match(/data: (.*)/)![1]!)
         expect(payload.id).toBe(42)
-        expect(payload.result.tools).toHaveLength(9)
+        expect(payload.result.tools).toHaveLength(8)
+        expect(payload.result.tools.map((tool: { name: string }) => tool.name)).not.toContain('list_lists')
     } finally { abort.abort() }
     const response = await fetch(`${BASE_URL}${path.replace('/sse', '/messages')}`, { method: 'POST', body: '{}' })
     expect(response.status).toBe(400)
