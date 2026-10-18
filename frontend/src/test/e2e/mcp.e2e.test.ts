@@ -59,6 +59,13 @@ it('uses every MCP tool over HTTP with the same persisted state visible in the b
         expect(await browser.$('[data-testid="list-title"]').getText()).toBe('MCP shopping')
         expect(await browser.$('button[aria-label="Mark incomplete"]').isDisplayed()).toBe(true)
         expect(await browser.$('body').getText()).toContain('Two cartons')
+        await browser.$('button[aria-label="Mark incomplete"]').click()
+        await browser.waitUntil(async () => !(await state(listId)).items[itemId]?.completed)
+        const refreshed = await tool('get_list', { list_id: listId })
+        expect(refreshed.items[itemId]).toMatchObject({ completed: false, title: 'Oat milk', description: 'Two cartons' })
+        await browser.refresh()
+        await browser.$('span=Oat milk').waitForDisplayed()
+        expect(await browser.$('button[aria-label="Mark complete"]').isDisplayed()).toBe(true)
     } finally { await closeBrowser(browser) }
     await tool('complete_item', { ...target, completed: false, completed_by: 'Alex' })
     expect((await state(listId)).items[itemId]?.completed).toBe(false)

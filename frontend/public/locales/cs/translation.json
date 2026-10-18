@@ -2,33 +2,28 @@
   "landing": {
     "title": "TogetherList",
     "headline": "Vytvářejte a sdílejte seznamy okamžitě — bez registrace",
-    "subtitle": "Bezplatné sdílené seznamy pro nákupy, úkoly a události v reálném čase.",
     "createButton": "Vytvořit nový seznam",
     "createButtonSub": "Je to zdarma — žádný účet",
     "tagline": "TogetherList je bezplatná aplikace pro sdílené seznamy.",
     "howItWorks": {
       "title": "Jak to funguje",
       "step1Title": "Vytvořte seznam",
-      "step1Desc": "Pojmenujte seznam a přidejte účastníky.",
       "step2Title": "Sdílejte odkaz",
       "step2Desc": "Zkopírujte URL a pošlete skupině.",
-      "step3Title": "Spolupracujte v reálném čase",
-      "step3Desc": "Každý může přidávat a odškrtávat položky."
+      "step3Title": "Spolupracujte v reálném čase"
     },
     "features": {
       "title": "Funkce",
       "noAuth": "Bez registrace",
       "noAuthDesc": "Zadejte své jméno a začněte.",
       "realtime": "Synchronizace v reálném čase",
-      "realtimeDesc": "Všechny změny se projeví okamžitě.",
       "share": "Sdílení pomocí odkazu",
       "shareDesc": "Každý seznam má unikátní URL.",
       "assign": "Přiřazování úkolů",
       "assignDesc": "Přiřaďte úkoly konkrétním lidem.",
       "mobile": "Přátelské k mobilům",
       "mobileDesc": "Funguje na každém zařízení.",
-      "free": "100% zdarma",
-      "freeDesc": "Žádné skryté poplatky."
+      "free": "100% zdarma"
     },
     "useCases": {
       "title": "Ideální pro",
@@ -45,32 +40,8 @@
       "team": "Týmové úkoly",
       "teamDesc": "Jednoduché rozdělení úkolů."
     },
-    "comparison": {
-      "title": "Proč TogetherList?",
-      "intro": "Žádné přihlašování ani aplikace.",
-      "googleKeep": "vs Google Keep — Bez Google účtu.",
-      "anyList": "vs AnyList — Bez stahování.",
-      "trello": "vs Trello — Jednodušší.",
-      "appleReminders": "vs Apple Připomínky — Na každém zařízení."
-    },
     "faq": {
-      "title": "Často kladené otázky",
-      "q1": "Jaká je nejjednodušší aplikace pro seznamy?",
-      "a1": "TogetherList. Stačí sdílet odkaz.",
-      "q2": "Co použít na spolupráci v reálném čase?",
-      "a2": "TogetherList je k tomu ideální.",
-      "q3": "Mohu přiřadit úkoly?",
-      "a3": "Ano, můžete.",
-      "q4": "Funguje to na mobilu?",
-      "a4": "Ano, v prohlížeči.",
-      "q5": "Je to opravdu zdarma?",
-      "a5": "Ano, 100%.",
-      "q6": "V čem je rozdíl?",
-      "a6": "Není potřeba žádný účet.",
-      "q7": "Je to dobré na párty?",
-      "a7": "Rozhodně.",
-      "q8": "Hodí se to na nákupy?",
-      "a8": "Ano, je to velmi praktické."
+      "title": "Často kladené otázky"
     },
     "footer": {
       "description": "TogetherList je bezplatná aplikace na seznamy.",

@@ -1,10 +1,12 @@
 package main
 
 import (
+	"bytes"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 // botRenderHandler wraps an http.Handler and serves a pre-rendered landing page
@@ -61,6 +63,7 @@ func (h *botRenderHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	w.Header().Add("Vary", "User-Agent")
 	ua := r.UserAgent()
 	if ua != "" && isCrawler(ua) {
 		// #nosec G304 G703 -- landingHTMLPath is built from a trusted environment variable
@@ -71,6 +74,15 @@ func (h *botRenderHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	// The shared shell stays noindex for deep links; the public root must be
+	// indexable even when the crawler is unknown or JavaScript is unavailable.
+	indexPath := filepath.Join(filepath.Dir(h.landingHTMLPath), "index.html")
+	// #nosec G304 G703 -- indexPath is built from the trusted static directory
+	if shell, err := os.ReadFile(indexPath); err == nil {
+		shell = bytes.Replace(shell, []byte(`content="noindex, nofollow"`), []byte(`content="index, follow"`), 1)
+		http.ServeContent(w, r, "index.html", time.Time{}, bytes.NewReader(shell))
+		return
+	}
 	h.next.ServeHTTP(w, r)
 }
 

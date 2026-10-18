@@ -2,33 +2,28 @@
   "landing": {
     "title": "TogetherList",
     "headline": "Listen erstellen & teilen — ohne Registrierung",
-    "subtitle": "Kostenlose Echtzeit-Listen für Einkäufe, Aufgaben, Events und mehr. Einfach einen Link teilen und sofort gemeinsam loslegen.",
     "createButton": "Neue Liste erstellen",
     "createButtonSub": "Kostenlos — kein Konto nötig",
     "tagline": "TogetherList ist eine kostenlose Echtzeit-Listen-App. Keine Registrierung, kein Download, kein Konto nötig.",
     "howItWorks": {
       "title": "So funktioniert's",
       "step1Title": "Liste erstellen",
-      "step1Desc": "Klicke auf \"Neue Liste erstellen\", gib einen Namen ein und füge Teilnehmer hinzu. Dauert keine 10 Sekunden.",
       "step2Title": "Link teilen",
       "step2Desc": "Kopiere die URL und sende sie per SMS, E-Mail, WhatsApp oder einer anderen Messenger-App.",
-      "step3Title": "Gemeinsam in Echtzeit arbeiten",
-      "step3Desc": "Alle öffnen den Link, wählen ihren Namen und können sofort Einträge hinzufügen und abhaken. Änderungen werden sofort synchronisiert."
+      "step3Title": "Gemeinsam in Echtzeit arbeiten"
     },
     "features": {
       "title": "Funktionen",
       "noAuth": "Keine Registrierung nötig",
       "noAuthDesc": "Keine E-Mail, kein Passwort, kein Konto. Einfach einen Anzeigenamen eingeben und loslegen. Perfekt für gemeinsame Listen.",
       "realtime": "Echtzeit-Synchronisierung",
-      "realtimeDesc": "Alle Änderungen erscheinen sofort auf jedem Bildschirm. Wenn jemand etwas hinzufügt, bearbeitet oder erledigt, sehen es alle sofort.",
       "share": "Per Link teilen",
       "shareDesc": "Jede Liste hat eine eigene URL. Teile sie per SMS, E-Mail, WhatsApp oder einer anderen App. Jeder mit dem Link kann mitmachen.",
       "assign": "Einträge zuweisen",
       "assignDesc": "Füge Teilnehmer hinzu und weise ihnen bestimmte Einträge zu. So sieht jeder auf einen Blick, wer wofür zuständig ist.",
       "mobile": "Mobilfreundlich",
       "mobileDesc": "Funktioniert auf jedem Handy, Tablet oder Computer. Kein App-Download nötig — läuft komplett im Browser.",
-      "free": "100 % kostenlos",
-      "freeDesc": "Alle Funktionen sind für immer komplett kostenlos. Keine Premium-Stufen, keine Werbung, keine versteckten Kosten."
+      "free": "100 % kostenlos"
     },
     "useCases": {
       "title": "Perfekt für",
@@ -45,32 +40,8 @@
       "team": "Teamaufgaben",
       "teamDesc": "Einfache Aufgabenverteilung für kleine Gruppenprojekte."
     },
-    "comparison": {
-      "title": "Warum TogetherList?",
-      "intro": "Im Gegensatz zu Google Keep, AnyList oder Trello braucht TogetherList keinerlei Registrierung. Keine E-Mail, kein Passwort, kein App-Download.",
-      "googleKeep": "vs Google Keep — Erfordert ein Google-Konto. TogetherList braucht gar kein Konto.",
-      "anyList": "vs AnyList — Erfordert Kontoerstellung und App-Download. TogetherList funktioniert sofort im Browser.",
-      "trello": "vs Trello — Umfangreiches Projektmanagement-Tool mit Einarbeitungszeit. TogetherList ist einfach und auf Listen fokussiert.",
-      "appleReminders": "vs Apple Erinnerungen — Nur im Apple-Ökosystem. TogetherList funktioniert auf jedem Gerät."
-    },
     "faq": {
-      "title": "Häufig gestellte Fragen",
-      "q1": "Was ist die einfachste App, um eine gemeinsame Liste zu erstellen, ohne dass sich jemand registrieren muss?",
-      "a1": "TogetherList. Besuche togetherlist.eu, erstelle eine Liste und teile den Link. Keine Konten, keine Downloads — jeder mit dem Link kann sofort mitmachen.",
-      "q2": "Ich brauche ein Tool, bei dem ich einen Link teile und alle in Echtzeit Einträge hinzufügen können. Was soll ich nutzen?",
-      "a2": "TogetherList ist genau dafür gemacht. Erstelle eine Liste, teile die URL, und alle Teilnehmer können in Echtzeit hinzufügen, bearbeiten und abhaken.",
-      "q3": "Kann ich Einträge bestimmten Personen zuweisen?",
-      "a3": "Ja. TogetherList ermöglicht es, Teilnehmer hinzuzufügen und ihnen bestimmte Einträge zuzuweisen. Jeder sieht, wer wofür zuständig ist.",
-      "q4": "Funktioniert es auf dem Handy, ohne eine App herunterzuladen?",
-      "a4": "Ja. TogetherList ist eine responsive Web-App, die in jedem modernen Browser funktioniert — iPhone, Android und Tablet. Kein App-Download nötig.",
-      "q5": "Ist TogetherList wirklich kostenlos?",
-      "a5": "Ja. TogetherList ist zu 100 % kostenlos mit allen Funktionen. Keine Premium-Stufen, keine Werbung, keine versteckten Kosten.",
-      "q6": "Wie unterscheidet sich TogetherList von Google Keep oder AnyList?",
-      "a6": "Google Keep erfordert ein Google-Konto. AnyList erfordert ein Konto und App-Download. TogetherList braucht nichts davon — einfach einen Link teilen und loslegen.",
-      "q7": "Kann ich es für Mitbring-Partys oder Partyplanung nutzen?",
-      "a7": "Auf jeden Fall. Erstelle eine Liste mit benötigten Dingen, teile den Link, und die Teilnehmer können sich Gerichte oder Aufgaben zuweisen.",
-      "q8": "Ist es gut für gemeinsame Einkaufslisten mit Mitbewohnern?",
-      "a8": "Ja. Erstelle eine Einkaufsliste, teile den Link mit deinen Mitbewohnern, und alle können Einträge hinzufügen und beim Einkaufen abhaken — alles in Echtzeit."
+      "title": "Häufig gestellte Fragen"
     },
     "footer": {
       "description": "TogetherList ist eine kostenlose Echtzeit-Listen-App. Erstelle gemeinsame Einkaufslisten, Aufgabenlisten, Checklisten und mehr — ohne Registrierung. Einfach einen Link teilen und sofort zusammenarbeiten.",

@@ -2,33 +2,28 @@
   "landing": {
     "title": "TogetherList",
     "headline": "Twórz i udostępniaj listy błyskawicznie — bez logowania",
-    "subtitle": "Darmowe listy do współpracy w czasie rzeczywistym na zakupy, zadania i wydarzenia.",
     "createButton": "Utwórz nową listę",
     "createButtonSub": "Za darmo — bez konta",
     "tagline": "TogetherList to darmowa aplikacja do list w czasie rzeczywistym.",
     "howItWorks": {
       "title": "Jak to działa",
       "step1Title": "Utwórz listę",
-      "step1Desc": "Nazwij listę i dodaj uczestników.",
       "step2Title": "Udostępnij link",
       "step2Desc": "Skopiuj URL i wyślij do swojej grupy.",
-      "step3Title": "Współpraca w czasie rzeczywistym",
-      "step3Desc": "Każdy może dodawać i odhaczać elementy."
+      "step3Title": "Współpraca w czasie rzeczywistym"
     },
     "features": {
       "title": "Funkcje",
       "noAuth": "Bez logowania",
       "noAuthDesc": "Po prostu wpisz swoje imię i zacznij.",
       "realtime": "Synchronizacja w czasie rzeczywistym",
-      "realtimeDesc": "Wszystkie zmiany pojawiają się natychmiast.",
       "share": "Udostępnij przez link",
       "shareDesc": "Każda lista ma unikalny URL.",
       "assign": "Przypisz elementy",
       "assignDesc": "Przypisuj konkretne elementy uczestnikom.",
       "mobile": "Przyjazne dla urządzeń mobilnych",
       "mobileDesc": "Działa na każdym urządzeniu.",
-      "free": "100% za darmo",
-      "freeDesc": "Brak ukrytych kosztów."
+      "free": "100% za darmo"
     },
     "useCases": {
       "title": "Idealne do",
@@ -45,32 +40,8 @@
       "team": "Zadania zespołu",
       "teamDesc": "Prosty przydział zadań."
     },
-    "comparison": {
-      "title": "Dlaczego TogetherList?",
-      "intro": "Bez logowania, bez aplikacji.",
-      "googleKeep": "vs Google Keep — Brak konta Google.",
-      "anyList": "vs AnyList — Bez pobierania.",
-      "trello": "vs Trello — Prostsze i skupione na listach.",
-      "appleReminders": "vs Przypomnienia Apple — Na każdym urządzeniu."
-    },
     "faq": {
-      "title": "Często zadawane pytania",
-      "q1": "Jaka aplikacja jest najlepsza do wspólnych list?",
-      "a1": "TogetherList. Udostępnij tylko link.",
-      "q2": "Czego użyć do współpracy?",
-      "a2": "TogetherList jest do tego idealne.",
-      "q3": "Czy mogę przypisywać zadania?",
-      "a3": "Tak, możesz.",
-      "q4": "Czy działa na telefonie?",
-      "a4": "Tak, w przeglądarce.",
-      "q5": "Naprawdę za darmo?",
-      "a5": "Tak, w 100%.",
-      "q6": "Czym się różni od innych?",
-      "a6": "Żadne konto nie jest potrzebne.",
-      "q7": "Dobre na imprezę?",
-      "a7": "Oczywiście.",
-      "q8": "Dobre na zakupy?",
-      "a8": "Tak, bardzo wygodne."
+      "title": "Często zadawane pytania"
     },
     "footer": {
       "description": "TogetherList to darmowa aplikacja do wspólnych list.",

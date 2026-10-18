@@ -2,33 +2,28 @@
   "landing": {
     "title": "TogetherList",
     "headline": "Maak & Deel Lijsten Direct — Geen Registratie Nodig",
-    "subtitle": "Gratis, real-time samenwerkingslijsten voor boodschappen, taken, evenementen en meer.",
     "createButton": "Nieuwe Lijst Maken",
     "createButtonSub": "Het is gratis — geen account nodig",
     "tagline": "TogetherList is een gratis, real-time samenwerkingslijst app.",
     "howItWorks": {
       "title": "Hoe het Werkt",
       "step1Title": "Maak een Lijst",
-      "step1Desc": "Geef je lijst een naam en voeg deelnemers toe.",
       "step2Title": "Deel de Link",
       "step2Desc": "Kopieer de URL en stuur deze naar je groep.",
-      "step3Title": "Samenwerken in Real-Time",
-      "step3Desc": "Iedereen kan direct items toevoegen en afvinken."
+      "step3Title": "Samenwerken in Real-Time"
     },
     "features": {
       "title": "Functies",
       "noAuth": "Geen Registratie Nodig",
       "noAuthDesc": "Voer gewoon je naam in en begin.",
       "realtime": "Real-Time Synchronisatie",
-      "realtimeDesc": "Alle wijzigingen verschijnen direct.",
       "share": "Delen via Link",
       "shareDesc": "Elke lijst heeft een unieke URL.",
       "assign": "Items Toewijzen",
       "assignDesc": "Wijs specifieke items toe aan deelnemers.",
       "mobile": "Mobielvriendelijk",
       "mobileDesc": "Werkt op elk apparaat, zonder app.",
-      "free": "100% Gratis",
-      "freeDesc": "Geen verborgen kosten."
+      "free": "100% Gratis"
     },
     "useCases": {
       "title": "Perfect Voor",
@@ -45,32 +40,8 @@
       "team": "Teamtaken",
       "teamDesc": "Eenvoudige taakverdeling voor projecten."
     },
-    "comparison": {
-      "title": "Waarom TogetherList?",
-      "intro": "Geen login, geen app nodig.",
-      "googleKeep": "vs Google Keep — Geen Google-account nodig.",
-      "anyList": "vs AnyList — Werkt in de browser.",
-      "trello": "vs Trello — Eenvoudiger en gefocust op lijsten.",
-      "appleReminders": "vs Apple Reminders — Werkt op alle apparaten."
-    },
     "faq": {
-      "title": "Veelgestelde Vragen",
-      "q1": "Wat is de makkelijkste app voor gedeelde lijsten?",
-      "a1": "TogetherList. Deel gewoon de link.",
-      "q2": "Wat te gebruiken voor real-time samenwerking?",
-      "a2": "TogetherList is hier perfect voor.",
-      "q3": "Kan ik taken toewijzen?",
-      "a3": "Ja, dat kan.",
-      "q4": "Werkt het op een telefoon?",
-      "a4": "Ja, in de browser.",
-      "q5": "Is het echt gratis?",
-      "a5": "Ja, 100% gratis.",
-      "q6": "Wat is het verschil met andere apps?",
-      "a6": "Geen account nodig.",
-      "q7": "Is het goed voor feestjes?",
-      "a7": "Absoluut.",
-      "q8": "Goed voor boodschappen?",
-      "a8": "Ja, heel handig."
+      "title": "Veelgestelde Vragen"
     },
     "footer": {
       "description": "TogetherList is een gratis app voor gedeelde lijsten.",

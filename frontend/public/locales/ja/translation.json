@@ -2,33 +2,28 @@
   "landing": {
     "title": "TogetherList",
     "headline": "登録不要でリストを即座に作成＆共有",
-    "subtitle": "買い物、タスク、イベントなどに使える無料のリアルタイム共有リスト。",
     "createButton": "新しいリストを作成",
     "createButtonSub": "完全無料 — アカウント不要",
     "tagline": "TogetherListは無料のリアルタイム共有リストアプリです。",
     "howItWorks": {
       "title": "使い方",
       "step1Title": "リストを作成",
-      "step1Desc": "リストに名前を付け、参加者を追加します。",
       "step2Title": "リンクを共有",
       "step2Desc": "URLをコピーしてグループに送信します。",
-      "step3Title": "リアルタイムで共同編集",
-      "step3Desc": "誰でもアイテムを追加してチェックできます。"
+      "step3Title": "リアルタイムで共同編集"
     },
     "features": {
       "title": "特徴",
       "noAuth": "登録不要",
       "noAuthDesc": "名前を入力するだけで始められます。",
       "realtime": "リアルタイム同期",
-      "realtimeDesc": "すべての変更が即座に反映されます。",
       "share": "リンクで共有",
       "shareDesc": "誰でもリンクを知っていれば参加できます。",
       "assign": "アイテムの割り当て",
       "assignDesc": "参加者にアイテムを割り当てられます。",
       "mobile": "モバイル対応",
       "mobileDesc": "アプリなしでどのデバイスでも使えます。",
-      "free": "100%無料",
-      "freeDesc": "ずっと無料で使えます。"
+      "free": "100%無料"
     },
     "useCases": {
       "title": "おすすめの用途",
@@ -45,32 +40,8 @@
       "team": "チームタスク",
       "teamDesc": "プロジェクトのタスク管理に。"
     },
-    "comparison": {
-      "title": "TogetherListを選ぶ理由",
-      "intro": "ログインもアプリも不要です。",
-      "googleKeep": "vs Google Keep — Googleアカウントは不要です。",
-      "anyList": "vs AnyList — アプリのダウンロードは不要です。",
-      "trello": "vs Trello — リストに特化したシンプルなツール。",
-      "appleReminders": "vs Apple Reminders — どのデバイスでも動きます。"
-    },
     "faq": {
-      "title": "よくある質問",
-      "q1": "登録なしでリストを作れるアプリは？",
-      "a1": "TogetherListです。リンクを共有するだけ。",
-      "q2": "リアルタイムで同期できるツールは？",
-      "a2": "TogetherListが最適です。",
-      "q3": "アイテムの割り当てはできますか？",
-      "a3": "はい、可能です。",
-      "q4": "スマホで使えますか？",
-      "a4": "はい、ブラウザで使えます。",
-      "q5": "本当に無料ですか？",
-      "a5": "はい、100%無料です。",
-      "q6": "他のアプリとの違いは？",
-      "a6": "アカウントが一切不要な点です。",
-      "q7": "パーティの計画に使えますか？",
-      "a7": "はい、もちろんです。",
-      "q8": "買い物リストに使えますか？",
-      "a8": "はい、とても便利です。"
+      "title": "よくある質問"
     },
     "footer": {
       "description": "TogetherListは無料の共有リストアプリです。",

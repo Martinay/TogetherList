@@ -2,33 +2,28 @@
   "landing": {
     "title": "TogetherList",
     "headline": "Anında Liste Oluşturun ve Paylaşın — Kayıt Gerekmez",
-    "subtitle": "Alışveriş, görevler, etkinlikler ve daha fazlası için ücretsiz, gerçek zamanlı ortak listeler.",
     "createButton": "Yeni Liste Oluştur",
     "createButtonSub": "Ücretsizdir — hesaba gerek yok",
     "tagline": "TogetherList ücretsiz, gerçek zamanlı ortak bir liste uygulamasıdır.",
     "howItWorks": {
       "title": "Nasıl Çalışır",
       "step1Title": "Liste Oluşturun",
-      "step1Desc": "Listenizi adlandırın ve katılımcıları ekleyin.",
       "step2Title": "Bağlantıyı Paylaşın",
       "step2Desc": "URL'yi kopyalayıp grubunuza gönderin.",
-      "step3Title": "Gerçek Zamanlı Ortak Çalışın",
-      "step3Desc": "Herkes öğe eklemeye ve işaretlemeye başlayabilir."
+      "step3Title": "Gerçek Zamanlı Ortak Çalışın"
     },
     "features": {
       "title": "Özellikler",
       "noAuth": "Kayıt Gerekmez",
       "noAuthDesc": "Sadece adınızı girin ve başlayın.",
       "realtime": "Gerçek Zamanlı Senkronizasyon",
-      "realtimeDesc": "Tüm değişiklikler anında görünür.",
       "share": "Bağlantı ile Paylaşın",
       "shareDesc": "Her listenin benzersiz bir URL'si vardır.",
       "assign": "Öğe Ata",
       "assignDesc": "Katılımcılara belirli öğeler atayın.",
       "mobile": "Mobil Uyumlu",
       "mobileDesc": "Herhangi bir cihazda çalışır.",
-      "free": "%100 Ücretsiz",
-      "freeDesc": "Gizli ücret yok."
+      "free": "%100 Ücretsiz"
     },
     "useCases": {
       "title": "Şunlar İçin Mükemmel",
@@ -45,32 +40,8 @@
       "team": "Ekip Görevleri",
       "teamDesc": "Projeler için basit görev dağılımı."
     },
-    "comparison": {
-      "title": "Neden TogetherList?",
-      "intro": "Hesap veya uygulama indirmeye gerek yok.",
-      "googleKeep": "vs Google Keep — Google hesabı gerekmez.",
-      "anyList": "vs AnyList — Uygulama indirme gerekmez.",
-      "trello": "vs Trello — Daha basit ve listelere odaklı.",
-      "appleReminders": "vs Apple Reminders — Tüm cihazlarda çalışır."
-    },
     "faq": {
-      "title": "Sıkça Sorulan Sorular",
-      "q1": "Kayıt olmadan ortak liste oluşturmak için en iyi uygulama nedir?",
-      "a1": "TogetherList. Sadece bağlantıyı paylaşın.",
-      "q2": "Gerçek zamanlı ortak çalışma için ne kullanmalıyım?",
-      "a2": "TogetherList bunun için mükemmeldir.",
-      "q3": "Öğeleri atayabilir miyim?",
-      "a3": "Evet, atayabilirsiniz.",
-      "q4": "Telefonda çalışır mı?",
-      "a4": "Evet, tarayıcı üzerinden.",
-      "q5": "Gerçekten ücretsiz mi?",
-      "a5": "Evet, %100 ücretsiz.",
-      "q6": "Diğerlerinden farkı ne?",
-      "a6": "Hiçbir hesaba gerek yok.",
-      "q7": "Parti için kullanabilir miyim?",
-      "a7": "Kesinlikle.",
-      "q8": "Alışveriş listesi için uygun mu?",
-      "a8": "Evet, çok pratik."
+      "title": "Sıkça Sorulan Sorular"
     },
     "footer": {
       "description": "TogetherList ücretsiz bir ortak liste uygulamasıdır.",

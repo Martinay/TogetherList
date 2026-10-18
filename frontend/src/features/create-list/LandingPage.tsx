@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+import { landingTitle, landingDescription, landingUrl, socialImage, landingSchema } from './landing-metadata'
 import StoredLists from '../offline/StoredLists'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -31,6 +33,11 @@ const USE_CASE_ICONS: Record<string, string> = {
 function LandingPage() {
     const { t } = useTranslation()
     const navigate = useNavigate()
+    useEffect(() => {
+        const robots = document.querySelector('meta[name="robots"]')
+        robots?.setAttribute('content', 'index, follow')
+        return () => { robots?.setAttribute('content', 'noindex, nofollow') }
+    }, [])
 
     const handleCreateList = () => {
         if (import.meta.env.PROD) window.location.assign('/list/new')
@@ -40,10 +47,22 @@ function LandingPage() {
     const featureKeys = ['noAuth', 'realtime', 'share', 'assign', 'mobile', 'free'] as const
     const useCaseKeys = ['shopping', 'party', 'trip', 'potluck', 'chores', 'team'] as const
     const faqKeys = ['1', '2', '3', '4', '5', '6', '7', '8'] as const
-    const comparisonKeys = ['googleKeep', 'anyList', 'trello', 'appleReminders'] as const
 
     return (
         <main className="flex-1 flex flex-col items-center relative overflow-hidden">
+            <title>{landingTitle}</title>
+            <meta name="description" content={landingDescription} />
+            <link rel="canonical" href={landingUrl} />
+            <meta property="og:type" content="website" />
+            <meta property="og:title" content={landingTitle} />
+            <meta property="og:description" content={landingDescription} />
+            <meta property="og:url" content={landingUrl} />
+            <meta property="og:image" content={socialImage} />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content={landingTitle} />
+            <meta name="twitter:description" content={landingDescription} />
+            <meta name="twitter:image" content={socialImage} />
+            <script type="application/ld+json">{JSON.stringify(landingSchema(faqKeys.map(key => ({ question: t(`landing.faq.q${key}`), answer: t(`landing.faq.a${key}`) })))).replaceAll('<', '\\u003c')}</script>
             <StoredLists />
             {/* Radial glow background */}
             <div className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-[radial-gradient(ellipse_at_center,var(--color-accent-glow)_0%,transparent_50%)] opacity-60 animate-pulse" />
@@ -55,7 +74,7 @@ function LandingPage() {
 
             {/* ─── HERO SECTION ─── */}
             <section id="hero" className="relative z-10 max-w-[700px] text-center px-6 pt-16 pb-12">
-                <motion.p
+                <motion.p dir="auto"
                     className="text-accent-primary text-sm font-semibold uppercase tracking-widest mb-3"
                     {...fadeIn(0)}
                 >
@@ -67,7 +86,7 @@ function LandingPage() {
                 >
                     {t('landing.headline')}
                 </motion.h1>
-                <motion.p
+                <motion.p dir="auto"
                     className="text-[clamp(1rem,3vw,1.2rem)] text-text-secondary mb-10 font-medium leading-relaxed"
                     {...fadeIn(0.1)}
                 >
@@ -85,6 +104,7 @@ function LandingPage() {
                         {t('landing.createButton')}
                     </motion.button>
                     <span className="text-text-secondary text-xs font-medium">{t('landing.createButtonSub')}</span>
+                    <a href="#mcp" dir="auto" className="text-sm text-accent-primary underline underline-offset-4 mt-3">{t('landing.mcp.jump')}</a>
                 </motion.div>
             </section>
 
@@ -107,7 +127,7 @@ function LandingPage() {
                                 {i + 1}
                             </div>
                             <h3 className="font-semibold text-text-primary mb-2">{t(`landing.howItWorks.${step}Title`)}</h3>
-                            <p className="text-text-secondary text-sm">{t(`landing.howItWorks.${step}Desc`)}</p>
+                            <p dir="auto" className="text-text-secondary text-sm">{t(`landing.howItWorks.${step}Desc`)}</p>
                         </motion.li>
                     ))}
                 </ol>
@@ -130,7 +150,7 @@ function LandingPage() {
                         >
                             <div className="text-2xl mb-3">{FEATURE_ICONS[key]}</div>
                             <h3 className="font-semibold text-text-primary mb-2">{t(`landing.features.${key}`)}</h3>
-                            <p className="text-text-secondary text-sm leading-relaxed">{t(`landing.features.${key}Desc`)}</p>
+                            <p dir="auto" className="text-text-secondary text-sm leading-relaxed">{t(`landing.features.${key}Desc`)}</p>
                         </motion.div>
                     ))}
                 </div>
@@ -153,37 +173,31 @@ function LandingPage() {
                         >
                             <div className="text-3xl mb-2">{USE_CASE_ICONS[key]}</div>
                             <h3 className="font-semibold text-text-primary text-sm mb-1">{t(`landing.useCases.${key}`)}</h3>
-                            <p className="text-text-secondary text-xs">{t(`landing.useCases.${key}Desc`)}</p>
+                            <p dir="auto" className="text-text-secondary text-xs">{t(`landing.useCases.${key}Desc`)}</p>
                         </motion.div>
                     ))}
                 </div>
             </section>
 
-            {/* ─── COMPARISON ─── */}
-            <section id="comparison" className="relative z-10 w-full max-w-[700px] px-6 py-12">
-                <motion.h2
-                    className="text-2xl font-bold text-center text-text-primary mb-4"
-                    {...fadeIn(0)}
-                >
-                    {t('landing.comparison.title')}
-                </motion.h2>
-                <motion.p
-                    className="text-text-secondary text-center mb-6"
-                    {...fadeIn(0.05)}
-                >
-                    {t('landing.comparison.intro')}
-                </motion.p>
-                <ul className="space-y-3 list-none">
-                    {comparisonKeys.map((key, i) => (
-                        <motion.li
-                            key={key}
-                            className="bg-bg-card rounded-lg p-4 border border-border-light text-text-secondary text-sm"
-                            {...fadeIn(0.05 * i)}
-                        >
-                            {t(`landing.comparison.${key}`)}
-                        </motion.li>
-                    ))}
-                </ul>
+            <section dir="auto" id="mcp" aria-labelledby="mcp-title" className="relative z-10 w-full max-w-[900px] px-6 py-12">
+                <div className="rounded-2xl border border-accent-primary bg-bg-card p-6 sm:p-10 shadow-lg">
+                    <p className="text-accent-primary font-semibold mb-3">{t('landing.mcp.label')}</p>
+                    <h2 id="mcp-title" className="text-2xl font-bold mb-4">{t('landing.mcp.title')}</h2>
+                    <p dir="auto" className="text-text-secondary mb-6">{t('landing.mcp.intro')}</p>
+                    <h3 className="font-semibold mb-3">{t('landing.mcp.workflowTitle')}</h3>
+                    <ol className="list-decimal ps-6 space-y-3 text-text-secondary">
+                        {[1, 2, 3].map(step => <li key={step}>{t(`landing.mcp.step${step}`)}</li>)}
+                    </ol>
+                    <p className="my-6 text-text-secondary">{t('landing.mcp.capabilities')}</p>
+                    <h3 className="font-semibold mb-3">{t('landing.mcp.setupTitle')}</h3>
+                    <p dir="auto" className="text-text-secondary mb-3 break-words">{t('landing.mcp.setup')}</p>
+                    <p dir="auto" className="text-text-secondary mb-6 break-words">{t('landing.mcp.transport')}</p>
+                    <p className="border-s-4 border-accent-primary ps-4 font-medium">{t('landing.mcp.privacy')}</p>
+                    <nav className="flex flex-wrap gap-6 mt-6 underline">
+                        <a href="/llms-full.txt">{t('landing.mcp.docs')}</a>
+                        <a href="/privacy">{t('landing.mcp.privacyLink')}</a>
+                    </nav>
+                </div>
             </section>
 
             {/* ─── FAQ ─── */}
@@ -197,6 +211,7 @@ function LandingPage() {
                 <div className="space-y-3">
                     {faqKeys.map((key, i) => (
                         <motion.details
+                            dir="auto"
                             key={key}
                             className="bg-bg-card rounded-lg border border-border-light overflow-hidden [&[open]_summary]:border-b [&[open]_summary]:border-border-light"
                             {...fadeIn(0.03 * i)}
@@ -214,7 +229,7 @@ function LandingPage() {
 
             {/* ─── BOTTOM CTA ─── */}
             <section id="bottom-cta" className="relative z-10 w-full max-w-[700px] px-6 py-12 text-center">
-                <motion.p
+                <motion.p dir="auto"
                     className="text-text-secondary mb-6 text-sm leading-relaxed"
                     {...fadeIn(0)}
                 >

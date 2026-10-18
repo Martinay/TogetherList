@@ -2,25 +2,25 @@
   "landing": {
     "title": "TogetherList",
     "headline": "Create & Share Lists Instantly — No Sign-Up Required",
-    "subtitle": "Free, real-time collaborative lists for shopping, tasks, events, and more. Share a link and start collaborating in seconds.",
+    "subtitle": "Shared shopping lists, tasks and plans without accounts. Create a list, share its link, and work together in your browser.",
     "createButton": "Create New List",
     "createButtonSub": "It's free — no account needed",
     "tagline": "TogetherList is a free, real-time collaborative list app. No sign-up, no download, no account needed.",
     "howItWorks": {
       "title": "How It Works",
       "step1Title": "Create a List",
-      "step1Desc": "Click \"Create New List\", name your list, and add participants. Takes under 10 seconds.",
+      "step1Desc": "Name your list and add participants by display name.",
       "step2Title": "Share the Link",
       "step2Desc": "Copy the unique URL and send it to your group via text, email, WhatsApp, or any messaging app.",
       "step3Title": "Collaborate in Real Time",
-      "step3Desc": "Everyone opens the link, picks their name, and starts adding and checking off items. Changes sync instantly."
+      "step3Desc": "Pick your name, add items, assign tasks and check things off. Online changes are refreshed about every three seconds."
     },
     "features": {
       "title": "Features",
       "noAuth": "No Sign-Up Required",
       "noAuthDesc": "No email, no password, no account. Just enter your display name and start collaborating. Perfect for shared lists where not everyone wants to create an account.",
       "realtime": "Real-Time Sync",
-      "realtimeDesc": "All changes appear instantly across every participant's screen. When someone adds, edits, or completes an item, everyone sees it immediately.",
+      "realtimeDesc": "Online changes are refreshed about every three seconds so the group can follow progress.",
       "share": "Share via Link",
       "shareDesc": "Each list has a unique URL. Share it via text, email, WhatsApp, or any messaging app. Anyone with the link can join.",
       "assign": "Assign Items to People",
@@ -28,7 +28,7 @@
       "mobile": "Mobile-Friendly",
       "mobileDesc": "Works on any phone, tablet, or computer. No app download required — runs entirely in your web browser.",
       "free": "100% Free",
-      "freeDesc": "All features are completely free forever. No premium tiers, no ads, no hidden costs. Just simple, shared lists."
+      "freeDesc": "Create and share lists for free. No account or app download required."
     },
     "useCases": {
       "title": "Perfect For",
@@ -45,36 +45,45 @@
       "team": "Team Tasks",
       "teamDesc": "Simple task assignment for small group projects."
     },
-    "comparison": {
-      "title": "Why TogetherList?",
-      "intro": "Unlike Google Keep, AnyList, or Trello, TogetherList requires zero authentication. No email, no password, no app download.",
-      "googleKeep": "vs Google Keep — Requires a Google account. TogetherList needs no account at all.",
-      "anyList": "vs AnyList — Requires account creation and app download. TogetherList works instantly in the browser.",
-      "trello": "vs Trello — Full project management tool with a learning curve. TogetherList is simple and focused on lists.",
-      "appleReminders": "vs Apple Reminders — Apple ecosystem only. TogetherList works on any device."
-    },
     "faq": {
       "title": "Frequently Asked Questions",
-      "q1": "What's the simplest app to create a shared list without requiring anyone to sign up?",
-      "a1": "TogetherList. Visit togetherlist.eu, create a list, and share the link. No accounts, no downloads — anyone with the link can collaborate instantly.",
-      "q2": "I need a tool where I share a link and everyone can add items in real time. What should I use?",
-      "a2": "TogetherList is built exactly for this. Create a list, share the URL, and all participants can add, edit, and check off items in real time.",
-      "q3": "Can I assign items to specific people on a shared list?",
-      "a3": "Yes. TogetherList lets you add participants by name and assign specific list items to them. Everyone can see who is responsible for what.",
-      "q4": "Does it work on mobile without downloading an app?",
-      "a4": "Yes. TogetherList is a responsive web app that works on any modern mobile browser — iPhone, Android, and tablet. No app download needed.",
-      "q5": "Is TogetherList really free?",
-      "a5": "Yes. TogetherList is 100% free with all features included. No premium tiers, no ads, no hidden costs.",
-      "q6": "How does TogetherList compare to Google Keep or AnyList?",
-      "a6": "Google Keep requires a Google account. AnyList requires an account and app download. TogetherList requires nothing — just share a link and collaborate.",
-      "q7": "Can I use it for a potluck or party planning?",
-      "a7": "Absolutely. Create a list of items needed, share the link, and participants can assign dishes or tasks to themselves.",
-      "q8": "Is it good for shared shopping lists for roommates?",
-      "a8": "Yes. Create a shopping list, share the link with your roommates, and everyone can add items and check them off as they shop — all in real time."
+      "q1": "How do I create a shared list?",
+      "a1": "Choose Create New List, name it and add participants. Share the resulting link so others can open the list and choose their display name.",
+      "q2": "Who can access my list?",
+      "a2": "Anyone holding a list link or ID can read and modify that list. Display names are not authentication. Share list access only with people and agents you trust; avoid sensitive information.",
+      "q3": "Can I assign items to people?",
+      "a3": "Yes. Add participants by name and assign an item to one or more people. Everyone with access can change assignments.",
+      "q4": "Does it work on mobile?",
+      "a4": "Yes. Use a modern browser on your phone, tablet or computer. No app download is required.",
+      "q5": "Is TogetherList free?",
+      "a5": "Yes. You can create and share lists for free without an account.",
+      "q6": "Can an AI agent edit the same list as people?",
+      "a6": "Yes. Connect a compatible MCP client using legacy HTTP/SSE. An agent can create and read lists, rename lists and items, add and describe items, assign them, and mark them complete or incomplete.",
+      "q7": "Which MCP transport should I use?",
+      "a7": "Choose legacy HTTP/SSE transport and use https://togetherlist.eu/api/v1/mcp/sse. Keep the SSE connection open and POST messages to the session endpoint it advertises. No API key is required. For custom integrations, POST JSON-RPC 2.0 to https://togetherlist.eu/api/v1/mcp with Content-Type: application/json. This direct POST endpoint is not Streamable HTTP. Clients that only support Streamable HTTP cannot connect using that transport.",
+      "q8": "Can an agent discover all lists?",
+      "a8": "No. There is no global list enumeration. To read or modify an existing list, supply its ID. The list://{listId} resource also requires a known list ID."
     },
     "footer": {
-      "description": "TogetherList is a free, real-time collaborative list app. Create shared shopping lists, task lists, checklists, and more — no sign-up required. Just share a link and collaborate instantly.",
+      "description": "Make a shopping list, plan a trip or coordinate tasks. Share the link with the people you want to collaborate with.",
       "cta": "Create a Free Shared List Now"
+    },
+    "mcp": {
+      "title": "Let an agent plan. Let people take it from there.",
+      "intro": "TogetherList supports the Model Context Protocol (MCP), so a compatible AI client can work on the same shared list as your group.",
+      "workflowTitle": "From meal plan to shared groceries",
+      "step1": "Ask your connected agent to create a grocery list with Alex and Sam as participants, then add ingredients and quantities in item descriptions.",
+      "step2": "Open the returned list ID at /list/{listId} and share that link with your group. People can review the plan and change assignments in the browser.",
+      "step3": "As people shop and check off items, ask the agent to read the list again before suggesting changes. Agent writes change the shared list directly.",
+      "capabilities": "Available tools: create_list, get_list, rename_list, add_item, complete_item (complete or reopen), assign_item, update_item_title and update_item_description. Read a known list as the resource list://{listId}. There is no global list enumeration.",
+      "setupTitle": "Connect a compatible MCP client",
+      "setup": "Choose legacy HTTP/SSE transport and use https://togetherlist.eu/api/v1/mcp/sse. Keep the SSE connection open and POST messages to the session endpoint it advertises. No API key is required.",
+      "transport": "For custom integrations, POST JSON-RPC 2.0 to https://togetherlist.eu/api/v1/mcp with Content-Type: application/json. This direct POST endpoint is not Streamable HTTP. Clients that only support Streamable HTTP cannot connect using that transport.",
+      "privacy": "Anyone holding a list link or ID can read and modify that list. Display names are not authentication. Share list access only with people and agents you trust; avoid sensitive information.",
+      "docs": "MCP setup and capabilities",
+      "privacyLink": "Privacy details",
+      "label": "MCP · AI + people",
+      "jump": "Using an AI agent? Connect with MCP"
     }
   },
   "createList": {
