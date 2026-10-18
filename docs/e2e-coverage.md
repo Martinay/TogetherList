@@ -1,5 +1,13 @@
 # Feature-to-test coverage inventory
 
+## PR #123 test dependency compatibility
+
+This dependency-only fix aligns `vitest` with the retained `@vitest/coverage-istanbul` upgrade at exactly 5.0.3 and regenerates `frontend/bun.lock` with CI's Bun 1.4.2. No application code, test assertions, test selection or coverage configuration changes. Existing identity/sharing/collaboration, offline recovery and JSONL restart scenarios remain sufficient because application behavior is unchanged; the full existing suites validate the upgraded runner.
+
+Before edits, CI's exact `bun run test:run -- --coverage` failed with `AssertionError: coverageFilesDirectory is required`, 14 run errors and empty coverage. The 5.0.3 provider requires Vitest 5.0.3 and expects the coverage directory in its runner callback; Vitest 4.1.11 does not supply it. After alignment, all 131 unit tests in 14 files pass with Istanbul coverage: statements 85.58%, branches 78.65%, functions 83.56%, lines 88.76%. Lint, production build, frozen install (unchanged lockfile), inventory policy and all five policy self-tests pass. Install still emits the previously documented security scanner invalid-advisories error; coverage emits a stale Browserslist data notice. Neither is changed by this narrow fix.
+
+Both complete `bun run test:e2e:run` runs passed all 72 tests in 14 files, zero skips/failures, in 161.04s and 160.83s. Both JUnit reports pass the policy check. Evidence: `/tmp/pr123-coverage-before.log`, `/tmp/pr123-coverage-after.log`, `/tmp/pr123-lint.log`, `/tmp/pr123-build.log`, `/tmp/pr123-frozen-after.log`, `/tmp/pr123-e2e-1.log`, `/tmp/pr123-e2e-2.log`, first JUnit `/tmp/pr123-e2e-1-results.xml`, final JUnit `frontend/e2e-artifacts/results.xml`. No new feature coverage or acceptance is claimed.
+
 Scope: current source on `test/comprehensive-e2e`. This inventory maps implemented behavior rather than the older status kanban. Tests use the built React application served by a real Go process and isolated temporary JSONL event storage; there is no SQL database or account authentication in this product. Sharing a URL grants access and each device chooses a participant display name. Authentication/authorization tests are therefore not applicable. No login, logout, delete item/list, participant editing after creation, or unknown-route recovery UI exists.
 
 ## Browser features and initial gaps
