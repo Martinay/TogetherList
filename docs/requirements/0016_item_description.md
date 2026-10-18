@@ -18,7 +18,7 @@ tags: [item, description, editing]
 
 Items currently only have a title. Users need the ability to add more detailed information about an item, such as notes, instructions, or additional context.
 The description is optional and can be edited by any participant.
-A preview of the description (first line) is shown in the collapsed item view.
+A preview of at most two lines is shown in the collapsed item view, with an ellipsis (…) only when additional content overflows.
 
 ## Requirement (EARS)
 
@@ -32,7 +32,7 @@ When a user edits an item's description, the system shall update and persist the
 Item descriptions:
 - Allow users to add context beyond the title (e.g., "Buy milk" → "Get 2% organic from Trader Joe's")
 - Support collaborative clarification — anyone can add details
-- 1-line preview in collapsed view helps users quickly scan important notes
+- Two-line preview in collapsed view helps users quickly scan important notes
 - Generates an `ItemDescriptionEdited` event for audit and sync
 
 ## Acceptance Criteria
@@ -44,7 +44,9 @@ Item descriptions:
 
 - Given an item has a description
 - When the item is collapsed
-- Then the first line of the description is shown in a smaller font below the title
+- Then at most two lines of the description are shown in a smaller font below the title, preserving line breaks and wrapping long unbroken text
+- And overflowing content is indicated with an ellipsis (…) without truncating short content
+- And expanding shows the full autosized description, editable for active items and disabled for completed items
 
 - Given an item has no description
 - When the item is collapsed

@@ -1,35 +1,32 @@
-# 0034: Full item descriptions
+# 0034: Two-line collapsed description correction
 
-Status: Implemented; user acceptance pending.
+Status: implemented; user review pending. No task completion or requirement status transition is implied.
 
-Scope: `frontend/src/features/view-list/ListItem.tsx`, `frontend/src/test/e2e/item-description.e2e.test.ts`, `frontend/src/test/ListItem.test.tsx`, coverage inventory and this handoff. No backend changes.
+Scope: `frontend/src/features/view-list/ListItem.tsx`, description browser regressions, REQ-0016, coverage inventory and this handoff. No backend changes.
 
-Normal (collapsed) list items show the complete description with preserved newlines, dynamic height and wrapping for unbroken text. The containing flex button can shrink within the row. Expanded editable and completed disabled descriptions also show the full text. The textarea measures content when opening and editing, and observes width changes to grow or shrink with wrapping. The 120px textarea and 700px expanded-details caps are removed.
+User correction supersedes the previous full collapsed preview proposal: collapsed descriptions show at most two lines with a native ellipsis (…) only on overflow. Short text remains natural height; line breaks and long-word wrapping are preserved. Expanded descriptions retain PR130 full-height textarea autosizing on opening, editing and viewport resize, including completed disabled items. The production fix adds only Tailwind `line-clamp-2` to the collapsed span.
 
-Test-first reproduction: the new real browser/Go/JSONL scenario failed before the fix (16px description height versus at least 208px). Existing add/edit/clear/reload assertions remain; the obsolete assertion requiring truncation was replaced by actual layout checks. The new scenario saves 12 lines and a long unbroken string through the UI, verifies HTTP state, reloads and checks full text, height, whitespace, clipping and card/page bounds at 1280px and 360px.
+Test-first: the replacement browser regression failed before the production change (computed clamp `none` rather than `2`; 2 other tests passed). It covers one line, exactly two lines, overflowing multiline and unbroken text, desktop/mobile, completion and reload through the real Go/JSONL stack. The expanded autosizing regression remains unchanged. REQ-0016 preview wording is reconciled with the explicit user correction; its status remains Proposed. No ADR is needed for this local presentation fix.
 
-## Proposed requirement clarification for review
+Next step: user review of this correction and verification below; no further implementation task is proposed.
 
-The workflow requires confirmation before updating existing requirements. Proposed EARS statement: “When a list item has a description, the system shall display its complete text with dynamic height, preserved line breaks and wrapping within the item width in both the collapsed preview and the expanded editable or completed disabled description.”
+## Verification
 
-After acceptance, reconcile the first-line preview language in [REQ-0016](../requirements/0016_item_description.md) and two-line preview language in [REQ-0015](../requirements/0015_item_details_view.md). Existing requirement statuses and status kanban remain unchanged pending confirmation. No architectural decision is needed for this local layout fix.
+Environment: sourced `/tmp/full-description-env.sh`; Bun 1.4.3. Temporary logs and copied JUnit reports use `$TMPDIR/two-line-*`; normal ignored E2E harness artifacts remain in `frontend/e2e-artifacts/`.
 
-## Handoff
+Commands from `frontend/`:
 
-Next step: user review and acceptance of this change and proposed clarification; no additional implementation task is proposed. Do not commit, push, open a PR, merge or deploy.
+- `bun install --frozen-lockfile`: success, 551 packages installed; configured npm scanner returned its pre-existing invalid `advisories` response parsing error. Security auditing remains unverified; no dependency or lockfile changes.
+- `bun run test:e2e:run -- src/test/e2e/item-description.e2e.test.ts`: before fix **2 passed / 1 failed**, 11.69s; after fix **3/3 passed**, 21.73s. Logs: `two-line-red.log`, `two-line-green.log`.
+- `bun run test:run`: **131/131 tests, 14 files**, 9.77s; `two-line-unit.log`.
+- `bun run lint`: passed; `two-line-lint.log`.
+- `bun run build`: passed, includes TypeScript; production JS 150.70 kB gzip, CSS 7.38 kB gzip; `two-line-build.log`.
+- Exploratory `bun run test:e2e:run`: **75 passed / 1 failed**, 184.75s. The production build was mistakenly run concurrently and replaced served E2E assets; the privacy no-analytics assertion detected the enabled SDK. This run is superseded by two isolated runs, with no weakened assertions. Log/report: `two-line-e2e-1.{log,xml}`.
+- First isolated `bun run test:e2e:run`: **76/76 tests, 14 files, zero failures/skips**, 179.77s; `two-line-e2e-2.{log,xml}`.
+- Repeat isolated `bun run test:e2e:run`: **76/76 tests, 14 files, zero failures/skips**, 179.07s; `two-line-e2e-3.{log,xml}`. Both isolated runs use identical final production/test source.
 
-## Expanded editor regression and verification
+From `backend/`: `go test ./...` passed **11 packages**; `go vet ./...` passed. No backend source changes; logs `two-line-go-{test,vet}.log`.
 
-The browser regression “autosizes expanded descriptions on opening, viewport resize, edits and completion without clipping details” exercises persisted 35-line content, reopening after reload, narrow/wide resizing, editing growth and shrinking, and completed disabled content with reload. It asserts full content and footer containment beyond 700px without internal scrolling or horizontal page overflow. jsdom receives a local ResizeObserver stub in ListItem unit tests; geometry is verified in the real browser.
+From repository root: `python3 scripts/test_e2e_policy.py` passed **5 tests**; `python3 scripts/check-e2e-policy.py --report "$TMPDIR/two-line-e2e-2.xml"` passed **76 executed, zero skips/failures, 14 inventoried specs**. The same policy command passed for `two-line-e2e-3.xml` (**76 executed, zero skips/failures**). `git diff --check` passed.
 
-Test-first evidence: the other agent's second full-suite run picked up this new test before the autosize fix and reported **75 passed / 1 failed**, with “Full textarea content and details footer must fit without internal scrolling or clipping.” Its first full run, before this regression was added, passed **75/75**. These are pre-extension results, not final whole-suite validation.
-
-Final extension commands, from `frontend/` with the environment in `/tmp/full-description-env.sh`:
-
-- `bun run node_modules/vitest/vitest.mjs run --config vitest.e2e.config.ts src/test/e2e/item-description.e2e.test.ts`: **3/3 passed twice**, 13.06s and 11.98s. No further whole-suite runs.
-- `bun run test:run`: **131/131 passed**, 14 files.
-- `bun run build`: passed, including TypeScript checking and production bundling.
-- `bun run lint`: passed.
-- `git diff --check` from the repository root: passed.
-
-Scratch logs: `$TMPDIR/full-description-autosize-{browser,browser-repeat,unit,build,lint}.log`; the pre-fix second full-suite JUnit report was preserved at `$TMPDIR/full-description-before-autosize-results.xml` before targeted verification. Requirements and status acceptance remain pending; no commit/push/PR/deployment was performed.
+No commit, push, PR, merge or deployment. Existing requirement statuses and status kanban remain unchanged pending user acceptance.

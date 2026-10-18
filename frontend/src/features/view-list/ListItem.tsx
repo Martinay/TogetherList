@@ -235,7 +235,7 @@ export function ListItem({ item, listId, locale, currentUser, participants, onIt
                             </span>
 
                             {!isExpanded && item.description && (
-                                <span data-testid="item-description-preview" className={`w-full text-xs text-text-secondary mt-1 whitespace-pre-wrap [overflow-wrap:anywhere] ${isCompleted ? 'opacity-50' : ''}`}>
+                                <span data-testid="item-description-preview" className={`w-full text-xs text-text-secondary mt-1 line-clamp-2 whitespace-pre-wrap [overflow-wrap:anywhere] ${isCompleted ? 'opacity-50' : ''}`}>
                                     {item.description}
                                 </span>
                             )}
