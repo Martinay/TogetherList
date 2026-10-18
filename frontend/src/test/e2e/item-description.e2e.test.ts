@@ -44,50 +44,69 @@ it('allows adding, editing, and previewing item description', async () => {
 })
 
 
-it('shows full multiline and unbroken descriptions within normal item cards at desktop and mobile widths after reload', async () => {
+it('clamps overflowing collapsed descriptions to two lines with ellipsis on desktop and mobile, including completed items after reload', async () => {
     const browser = await createBrowser()
     try {
-        const id = await seed('Full description E2E')
+        const id = await seed('Two line description E2E')
         await join(browser, id)
-        await add(browser, 'Read every line')
-        const description = Array.from({ length: 12 }, (_, i) => `Line ${i + 1}: keep this entire description visible.`).join('\n') + '\n' + 'unbroken'.repeat(80)
+        await add(browser, 'Preview description')
         const toggle = 'button[aria-expanded]:not([aria-haspopup])'
-        await browser.$(toggle).click()
-        await setText(browser, 'textarea[aria-label="Item description"]', description)
-        await browser.$(toggle).click()
-        await settled(browser)
-        expect(Object.values((await state(id)).items)[0]?.description).toBe(description)
-
-        for (const width of [1280, 360]) {
-            await browser.setWindowSize(width, 1000)
-            await browser.refresh()
-            await browser.$('[data-testid="item-description-preview"]').waitForDisplayed()
-            const layout = await browser.execute(() => {
-                const preview = document.querySelector<HTMLElement>('[data-testid="item-description-preview"]')!
-                const style = getComputedStyle(preview)
-                const card = preview.closest('button')!.parentElement!.parentElement!
-                const rect = preview.getBoundingClientRect()
-                const cardRect = card.getBoundingClientRect()
-                return {
-                    text: preview.textContent,
-                    height: rect.height,
-                    lineHeight: parseFloat(style.lineHeight),
-                    whiteSpace: style.whiteSpace,
-                    textOverflow: style.textOverflow,
-                    fitsHeight: preview.scrollHeight <= preview.clientHeight + 1,
-                    fitsWidth: preview.scrollWidth <= preview.clientWidth + 1,
-                    insideCard: rect.left >= cardRect.left && rect.right <= cardRect.right && rect.bottom <= cardRect.bottom,
-                    pageFits: document.documentElement.scrollWidth <= window.innerWidth,
+        const selector = 'textarea[aria-label="Item description"]'
+        for (const description of ['Short text', 'First line\nSecond line', 'First line\nSecond line\nThird line\nFourth line', 'unbroken'.repeat(80)]) {
+            await browser.$(toggle).click()
+            await setText(browser, selector, description)
+            await browser.$(toggle).click()
+            await settled(browser)
+            expect(Object.values((await state(id)).items)[0]?.description).toBe(description)
+            for (const completed of [false, true]) {
+                if (completed) {
+                    await browser.$('button[aria-label="Mark complete"]').click()
+                    await settled(browser)
                 }
-            })
-            expect(layout.text).toBe(description)
-            expect(layout.height).toBeGreaterThanOrEqual(layout.lineHeight * 13)
-            expect(layout.whiteSpace).toBe('pre-wrap')
-            expect(layout.textOverflow).toBe('clip')
-            expect(layout.fitsHeight).toBe(true)
-            expect(layout.fitsWidth).toBe(true)
-            expect(layout.insideCard).toBe(true)
-            expect(layout.pageFits).toBe(true)
+                for (const width of [1280, 360]) {
+                    await browser.setWindowSize(width, 1000)
+                    await browser.refresh()
+                    await browser.$('[data-testid="item-description-preview"]').waitForDisplayed()
+                    const layout = await browser.execute(() => {
+                        const preview = document.querySelector<HTMLElement>('[data-testid="item-description-preview"]')!
+                        const style = getComputedStyle(preview)
+                        return {
+                            text: preview.textContent,
+                            height: preview.getBoundingClientRect().height,
+                            lineHeight: parseFloat(style.lineHeight),
+                            clamp: style.webkitLineClamp,
+                            orientation: style.webkitBoxOrient,
+                            display: style.display,
+                            overflow: style.overflow,
+                            overflows: preview.scrollHeight > preview.clientHeight + 1,
+                            fitsWidth: preview.scrollWidth <= preview.clientWidth + 1,
+                            pageFits: document.documentElement.scrollWidth <= window.innerWidth,
+                        }
+                    })
+                    expect(layout.text).toBe(description)
+                    expect(layout.height).toBeLessThanOrEqual(layout.lineHeight * 2 + 1)
+                    // Chromium's native two-line clamp paints an ellipsis only on overflow.
+                    expect(layout.clamp).toBe('2')
+                    expect(layout.orientation).toBe('vertical')
+                    expect(['-webkit-box', 'flow-root']).toContain(layout.display)
+                    expect(layout.overflow).toBe('hidden')
+                    expect(layout.overflows).toBe(description.length > 40)
+                    if (description === 'Short text') expect(layout.height).toBe(layout.lineHeight)
+                    if (description === 'First line\nSecond line') expect(layout.height).toBe(layout.lineHeight * 2)
+                    expect(layout.fitsWidth).toBe(true)
+                    expect(layout.pageFits).toBe(true)
+                    await browser.$(toggle).click()
+                    expect(await browser.$(selector).getValue()).toBe(description)
+                    expect(await browser.$(selector).isEnabled()).toBe(!completed)
+                    expect(await browser.execute(() => {
+                        const textarea = document.querySelector<HTMLTextAreaElement>('textarea[aria-label="Item description"]')!
+                        return textarea.scrollHeight <= textarea.clientHeight + 1
+                    })).toBe(true)
+                    await browser.$(toggle).click()
+                }
+            }
+            await browser.$('button[aria-label="Mark incomplete"]').click()
+            await settled(browser)
         }
     } finally { await closeBrowser(browser) }
 })
