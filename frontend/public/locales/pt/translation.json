@@ -2,33 +2,28 @@
   "landing": {
     "title": "TogetherList",
     "headline": "Crie e compartilhe listas instantaneamente — sem cadastro",
-    "subtitle": "Listas colaborativas gratuitas em tempo real para compras, tarefas, eventos e mais. Compartilhe um link e comece a colaborar em segundos.",
     "createButton": "Criar nova lista",
     "createButtonSub": "É grátis — sem conta necessária",
     "tagline": "TogetherList é um app gratuito de listas colaborativas em tempo real.",
     "howItWorks": {
       "title": "Como funciona",
       "step1Title": "Crie uma lista",
-      "step1Desc": "Clique em \"Criar nova lista\", dê um nome e adicione participantes. Leva menos de 10 segundos.",
       "step2Title": "Compartilhe o link",
       "step2Desc": "Copie a URL e envie por mensagem, e-mail, WhatsApp ou qualquer app de mensagens.",
-      "step3Title": "Colabore em tempo real",
-      "step3Desc": "Todos abrem o link, escolhem seu nome e começam a adicionar e marcar itens. As alterações sincronizam instantaneamente."
+      "step3Title": "Colabore em tempo real"
     },
     "features": {
       "title": "Recursos",
       "noAuth": "Sem cadastro",
       "noAuthDesc": "Sem e-mail, sem senha, sem conta. Digite seu nome e comece a colaborar.",
       "realtime": "Sincronização em tempo real",
-      "realtimeDesc": "Todas as alterações aparecem instantaneamente na tela de cada participante.",
       "share": "Compartilhar por link",
       "shareDesc": "Cada lista tem uma URL única. Compartilhe por qualquer app de mensagens.",
       "assign": "Atribuir itens",
       "assignDesc": "Adicione participantes e atribua itens específicos a eles.",
       "mobile": "Otimizado para celular",
       "mobileDesc": "Funciona em qualquer celular, tablet ou computador. Sem download de app.",
-      "free": "100% grátis",
-      "freeDesc": "Todos os recursos são gratuitos para sempre. Sem planos premium, sem anúncios."
+      "free": "100% grátis"
     },
     "useCases": {
       "title": "Perfeito para",
@@ -45,32 +40,8 @@
       "team": "Tarefas de equipe",
       "teamDesc": "Distribuição simples de tarefas para projetos em grupo."
     },
-    "comparison": {
-      "title": "Por que TogetherList?",
-      "intro": "Diferente do Google Keep, AnyList ou Trello, não requer nenhuma autenticação.",
-      "googleKeep": "vs Google Keep — Requer conta Google. TogetherList não precisa de conta.",
-      "anyList": "vs AnyList — Requer conta e download. TogetherList funciona no navegador.",
-      "trello": "vs Trello — Ferramenta complexa. TogetherList é simples e focada em listas.",
-      "appleReminders": "vs Lembretes Apple — Só ecossistema Apple. TogetherList funciona em qualquer dispositivo."
-    },
     "faq": {
-      "title": "Perguntas frequentes",
-      "q1": "Qual o app mais simples para criar uma lista compartilhada sem cadastro?",
-      "a1": "TogetherList. Visite o site, crie uma lista e compartilhe o link. Sem contas ou downloads.",
-      "q2": "Preciso de uma ferramenta para compartilhar um link e todos adicionarem itens em tempo real.",
-      "a2": "TogetherList foi feita para isso. Crie uma lista, compartilhe a URL e colabore em tempo real.",
-      "q3": "Posso atribuir itens a pessoas específicas?",
-      "a3": "Sim. Adicione participantes e atribua itens a eles.",
-      "q4": "Funciona no celular sem baixar app?",
-      "a4": "Sim. App web responsivo que funciona em qualquer navegador moderno.",
-      "q5": "É realmente grátis?",
-      "a5": "Sim. 100% grátis com todos os recursos.",
-      "q6": "Como se compara com Google Keep ou AnyList?",
-      "a6": "Google Keep requer conta Google. AnyList requer conta e download. TogetherList não requer nada.",
-      "q7": "Posso usar para planejar festas?",
-      "a7": "Claro. Crie uma lista, compartilhe o link e os participantes se atribuem tarefas.",
-      "q8": "É bom para listas de compras compartilhadas?",
-      "a8": "Sim. Crie uma lista, compartilhe e todos podem adicionar e marcar itens em tempo real."
+      "title": "Perguntas frequentes"
     },
     "footer": {
       "description": "TogetherList é um app gratuito de listas colaborativas em tempo real. Sem cadastro necessário.",

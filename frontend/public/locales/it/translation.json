@@ -2,33 +2,28 @@
   "landing": {
     "title": "TogetherList",
     "headline": "Crea e condividi liste all'istante — senza registrazione",
-    "subtitle": "Liste collaborative gratuite in tempo reale per spesa, compiti, eventi e altro.",
     "createButton": "Crea nuova lista",
     "createButtonSub": "È gratis — nessun account necessario",
     "tagline": "TogetherList è un'app gratuita per liste collaborative in tempo reale.",
     "howItWorks": {
       "title": "Come funziona",
       "step1Title": "Crea una lista",
-      "step1Desc": "Dai un nome alla lista e aggiungi partecipanti.",
       "step2Title": "Condividi il link",
       "step2Desc": "Copia l'URL e invialo al tuo gruppo.",
-      "step3Title": "Collabora in tempo reale",
-      "step3Desc": "Tutti possono aggiungere e spuntare elementi."
+      "step3Title": "Collabora in tempo reale"
     },
     "features": {
       "title": "Funzionalità",
       "noAuth": "Nessuna registrazione",
       "noAuthDesc": "Inserisci il tuo nome e inizia.",
       "realtime": "Sincronizzazione in tempo reale",
-      "realtimeDesc": "Tutte le modifiche appaiono all'istante.",
       "share": "Condividi tramite link",
       "shareDesc": "Ogni lista ha un URL univoco.",
       "assign": "Assegna elementi",
       "assignDesc": "Assegna elementi specifici ai partecipanti.",
       "mobile": "Ottimizzato per dispositivi mobili",
       "mobileDesc": "Funziona su qualsiasi dispositivo.",
-      "free": "100% gratuito",
-      "freeDesc": "Nessun costo nascosto."
+      "free": "100% gratuito"
     },
     "useCases": {
       "title": "Perfetto per",
@@ -45,32 +40,8 @@
       "team": "Compiti del team",
       "teamDesc": "Semplice assegnazione dei compiti."
     },
-    "comparison": {
-      "title": "Perché TogetherList?",
-      "intro": "Nessun login, nessuna app da scaricare.",
-      "googleKeep": "vs Google Keep — Nessun account Google necessario.",
-      "anyList": "vs AnyList — Nessuna app da scaricare.",
-      "trello": "vs Trello — Più semplice e focalizzato sulle liste.",
-      "appleReminders": "vs Promemoria Apple — Funziona su tutti i dispositivi."
-    },
     "faq": {
-      "title": "Domande frequenti",
-      "q1": "Qual è l'app più semplice per liste condivise?",
-      "a1": "TogetherList. Condividi solo il link.",
-      "q2": "Cosa usare per collaborare in tempo reale?",
-      "a2": "TogetherList è perfetto per questo.",
-      "q3": "Posso assegnare elementi?",
-      "a3": "Sì, puoi.",
-      "q4": "Funziona sul telefono?",
-      "a4": "Sì, dal browser.",
-      "q5": "È davvero gratis?",
-      "a5": "Sì, gratis al 100%.",
-      "q6": "Cosa c'è di diverso dalle altre app?",
-      "a6": "Nessun account richiesto.",
-      "q7": "Va bene per una festa?",
-      "a7": "Assolutamente sì.",
-      "q8": "Va bene per la spesa?",
-      "a8": "Sì, molto comodo."
+      "title": "Domande frequenti"
     },
     "footer": {
       "description": "TogetherList è un'app gratuita per liste collaborative.",

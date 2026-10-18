@@ -14,7 +14,7 @@ vi.mock('react-router-dom', async () => {
 })
 
 describe('LandingPage', () => {
-    it('renders the headline with SEO keywords', () => {
+    it('renders the no-signup headline', () => {
         render(
             <BrowserRouter>
                 <LandingPage />
@@ -92,17 +92,16 @@ describe('LandingPage', () => {
         expect(screen.getByText('Trip Packing')).toBeInTheDocument()
     })
 
-    it('renders the Comparison section', () => {
+    it('renders the MCP handoff section', () => {
         render(
             <BrowserRouter>
                 <LandingPage />
             </BrowserRouter>
         )
 
-        expect(screen.getByText('Why TogetherList?')).toBeInTheDocument()
-        expect(screen.getByText(/vs Google Keep/)).toBeInTheDocument()
-        expect(screen.getByText(/vs AnyList/)).toBeInTheDocument()
-        expect(screen.getByText(/vs Trello/)).toBeInTheDocument()
+        expect(screen.getByText('Let an agent plan. Let people take it from there.')).toBeInTheDocument()
+        expect(screen.getAllByText(/This direct POST endpoint is not Streamable HTTP/)).toHaveLength(2)
+        expect(screen.getAllByText(/Anyone holding a list link or ID/).length).toBe(2)
     })
 
     it('renders the FAQ section with collapsible questions', () => {
@@ -114,7 +113,7 @@ describe('LandingPage', () => {
 
         expect(screen.getByText('Frequently Asked Questions')).toBeInTheDocument()
         expect(
-            screen.getByText(/simplest app to create a shared list without requiring anyone to sign up/)
+            screen.getByText(/How do I create a shared list/)
         ).toBeInTheDocument()
     })
 

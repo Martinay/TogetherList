@@ -2,33 +2,28 @@
   "landing": {
     "title": "TogetherList",
     "headline": "Közös Listák Készítése Azonnal — Regisztráció Nélkül",
-    "subtitle": "Ingyenes, valós idejű közös listák vásárláshoz, feladatokhoz, eseményekhez.",
     "createButton": "Új Lista Készítése",
     "createButtonSub": "Ingyenes — nincs szükség fiókra",
     "tagline": "A TogetherList egy ingyenes közös lista alkalmazás.",
     "howItWorks": {
       "title": "Hogyan Működik",
       "step1Title": "Készíts Listát",
-      "step1Desc": "Nevezd el a listát és adj hozzá résztvevőket.",
       "step2Title": "Oszd Meg a Linket",
       "step2Desc": "Másold be az URL-t és küldd el a csoportnak.",
-      "step3Title": "Közös Munka Valós Időben",
-      "step3Desc": "Mindenki azonnal láthatja a változásokat."
+      "step3Title": "Közös Munka Valós Időben"
     },
     "features": {
       "title": "Funkciók",
       "noAuth": "Nincs Regisztráció",
       "noAuthDesc": "Csak add meg a neved és kezdd el.",
       "realtime": "Valós Idejű Szinkronizáció",
-      "realtimeDesc": "Minden változás azonnal megjelenik.",
       "share": "Megosztás Linkkel",
       "shareDesc": "Minden listának egyedi URL-je van.",
       "assign": "Elemek Hozzárendelése",
       "assignDesc": "Rendelj hozzá feladatokat a résztvevőkhöz.",
       "mobile": "Mobilbarát",
       "mobileDesc": "Minden eszközön működik böngészőből.",
-      "free": "100% Ingyenes",
-      "freeDesc": "Nincsenek rejtett költségek."
+      "free": "100% Ingyenes"
     },
     "useCases": {
       "title": "Tökéletes Erre",
@@ -45,32 +40,8 @@
       "team": "Csapatmunkák",
       "teamDesc": "Egyszerű feladatkiosztás."
     },
-    "comparison": {
-      "title": "Miért a TogetherList?",
-      "intro": "Nincs szükség letöltésre vagy fiókra.",
-      "googleKeep": "vs Google Keep — Nem kell Google fiók.",
-      "anyList": "vs AnyList — Nincs alkalmazás letöltés.",
-      "trello": "vs Trello — Egyszerűbb, listákra fókuszál.",
-      "appleReminders": "vs Apple Emlékeztetők — Minden eszközön jó."
-    },
     "faq": {
-      "title": "Gyakori Kérdések",
-      "q1": "Melyik a legjobb alkalmazás közös listákhoz?",
-      "a1": "A TogetherList. Csak oszd meg a linket.",
-      "q2": "Mit használjak valós idejű közös munkára?",
-      "a2": "A TogetherList tökéletes erre.",
-      "q3": "Hozzárendelhetek feladatokat?",
-      "a3": "Igen, lehetséges.",
-      "q4": "Működik mobilon?",
-      "a4": "Igen, böngészőből.",
-      "q5": "Tényleg ingyenes?",
-      "a5": "Igen, 100%-ban.",
-      "q6": "Miben más ez?",
-      "a6": "Egyáltalán nem kell fiók.",
-      "q7": "Jó buliszervezéshez?",
-      "a7": "Abszolút.",
-      "q8": "Jó bevásárlólistának?",
-      "a8": "Igen, nagyon praktikus."
+      "title": "Gyakori Kérdések"
     },
     "footer": {
       "description": "A TogetherList egy ingyenes közös lista alkalmazás.",

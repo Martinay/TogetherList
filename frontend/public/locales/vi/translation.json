@@ -2,33 +2,28 @@
   "landing": {
     "title": "TogetherList",
     "headline": "Tạo & Chia sẻ Danh sách Ngay lập tức — Không Cần Đăng ký",
-    "subtitle": "Danh sách cộng tác theo thời gian thực miễn phí.",
     "createButton": "Tạo Danh sách Mới",
     "createButtonSub": "Miễn phí — không cần tài khoản",
     "tagline": "TogetherList là ứng dụng danh sách cộng tác miễn phí.",
     "howItWorks": {
       "title": "Cách thức hoạt động",
       "step1Title": "Tạo Danh sách",
-      "step1Desc": "Đặt tên danh sách và thêm người tham gia.",
       "step2Title": "Chia sẻ Liên kết",
       "step2Desc": "Sao chép URL và gửi cho nhóm của bạn.",
-      "step3Title": "Cộng tác Thời gian Thực",
-      "step3Desc": "Mọi người đều có thể thêm và đánh dấu mục."
+      "step3Title": "Cộng tác Thời gian Thực"
     },
     "features": {
       "title": "Tính năng",
       "noAuth": "Không Cần Đăng ký",
       "noAuthDesc": "Chỉ cần nhập tên của bạn và bắt đầu.",
       "realtime": "Đồng bộ Thời gian Thực",
-      "realtimeDesc": "Tất cả thay đổi xuất hiện ngay lập tức.",
       "share": "Chia sẻ qua Liên kết",
       "shareDesc": "Mỗi danh sách có một URL duy nhất.",
       "assign": "Giao Mục",
       "assignDesc": "Giao các mục cụ thể cho người tham gia.",
       "mobile": "Thân thiện với Di động",
       "mobileDesc": "Hoạt động trên mọi thiết bị.",
-      "free": "Miễn phí 100%",
-      "freeDesc": "Không có phí ẩn."
+      "free": "Miễn phí 100%"
     },
     "useCases": {
       "title": "Hoàn hảo cho",
@@ -45,32 +40,8 @@
       "team": "Nhiệm vụ Nhóm",
       "teamDesc": "Phân công nhiệm vụ đơn giản."
     },
-    "comparison": {
-      "title": "Tại sao chọn TogetherList?",
-      "intro": "Không cần đăng nhập, không cần ứng dụng.",
-      "googleKeep": "vs Google Keep — Không cần tài khoản Google.",
-      "anyList": "vs AnyList — Không cần tải ứng dụng.",
-      "trello": "vs Trello — Đơn giản hơn, tập trung vào danh sách.",
-      "appleReminders": "vs Apple Reminders — Hoạt động trên mọi thiết bị."
-    },
     "faq": {
-      "title": "Câu hỏi Thường gặp",
-      "q1": "Ứng dụng nào dễ nhất để tạo danh sách chung?",
-      "a1": "TogetherList. Chỉ cần chia sẻ liên kết.",
-      "q2": "Công cụ nào tốt cho cộng tác thời gian thực?",
-      "a2": "TogetherList rất phù hợp cho việc này.",
-      "q3": "Tôi có thể giao mục không?",
-      "a3": "Có, bạn có thể.",
-      "q4": "Có dùng được trên điện thoại không?",
-      "a4": "Có, qua trình duyệt.",
-      "q5": "Thật sự miễn phí chứ?",
-      "a5": "Đúng, miễn phí 100%.",
-      "q6": "Có gì khác biệt với các ứng dụng khác?",
-      "a6": "Không cần tài khoản gì cả.",
-      "q7": "Có thể dùng cho tiệc không?",
-      "a7": "Chắc chắn rồi.",
-      "q8": "Có hợp cho danh sách mua sắm không?",
-      "a8": "Có, rất tiện lợi."
+      "title": "Câu hỏi Thường gặp"
     },
     "footer": {
       "description": "TogetherList là ứng dụng danh sách cộng tác miễn phí.",

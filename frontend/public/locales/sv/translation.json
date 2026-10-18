@@ -2,33 +2,28 @@
   "landing": {
     "title": "TogetherList",
     "headline": "Skapa och dela listor direkt — utan konto",
-    "subtitle": "Gratis, samarbetslistor i realtid för inköp, uppgifter och evenemang.",
     "createButton": "Skapa ny lista",
     "createButtonSub": "Det är gratis — inget konto behövs",
     "tagline": "TogetherList är en gratis app för delade listor.",
     "howItWorks": {
       "title": "Hur det fungerar",
       "step1Title": "Skapa en lista",
-      "step1Desc": "Namnge listan och lägg till deltagare.",
       "step2Title": "Dela länken",
       "step2Desc": "Kopiera URL:en och skicka till gruppen.",
-      "step3Title": "Samarbeta i realtid",
-      "step3Desc": "Alla kan lägga till och bocka av direkt."
+      "step3Title": "Samarbeta i realtid"
     },
     "features": {
       "title": "Funktioner",
       "noAuth": "Inget konto krävs",
       "noAuthDesc": "Ange bara ditt namn och börja.",
       "realtime": "Synkning i realtid",
-      "realtimeDesc": "Alla ändringar syns direkt.",
       "share": "Dela via länk",
       "shareDesc": "Varje lista har en unik URL.",
       "assign": "Dela ut uppgifter",
       "assignDesc": "Tilldela uppgifter till deltagare.",
       "mobile": "Mobilvänlig",
       "mobileDesc": "Fungerar på alla enheter.",
-      "free": "100 % gratis",
-      "freeDesc": "Inga dolda kostnader."
+      "free": "100 % gratis"
     },
     "useCases": {
       "title": "Perfekt för",
@@ -45,32 +40,8 @@
       "team": "Teamuppgifter",
       "teamDesc": "Enkel fördelning av uppgifter."
     },
-    "comparison": {
-      "title": "Varför TogetherList?",
-      "intro": "Ingen inloggning krävs.",
-      "googleKeep": "vs Google Keep — Inget Google-konto.",
-      "anyList": "vs AnyList — Ingen app behövs.",
-      "trello": "vs Trello — Enklare.",
-      "appleReminders": "vs Apple Reminders — Fungerar överallt."
-    },
     "faq": {
-      "title": "Vanliga frågor",
-      "q1": "Vilken är den bästa appen för listor?",
-      "a1": "TogetherList. Bara dela länken.",
-      "q2": "Vad är bra för samarbete?",
-      "a2": "TogetherList passar utmärkt.",
-      "q3": "Kan jag tilldela uppgifter?",
-      "a3": "Ja, det går bra.",
-      "q4": "Fungerar det på mobilen?",
-      "a4": "Ja, i webbläsaren.",
-      "q5": "Är det helt gratis?",
-      "a5": "Ja, 100 %.",
-      "q6": "Vad är skillnaden?",
-      "a6": "Inget konto alls.",
-      "q7": "Bra för fester?",
-      "a7": "Absolut.",
-      "q8": "Bra för inköp?",
-      "a8": "Ja, väldigt praktiskt."
+      "title": "Vanliga frågor"
     },
     "footer": {
       "description": "TogetherList är en gratis app för listor.",
