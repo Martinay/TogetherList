@@ -1,7 +1,14 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach, beforeAll, afterAll } from 'vitest'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { ListItem } from '../features/view-list/ListItem'
 import '../i18n'
+
+// jsdom has no layout observer; real resizing is verified in item-description.e2e.test.ts.
+beforeAll(() => vi.stubGlobal('ResizeObserver', class {
+    observe() {}
+    disconnect() {}
+}))
+afterAll(() => vi.unstubAllGlobals())
 
 // Mock the API module
 vi.mock('../features/view-list/api', () => ({

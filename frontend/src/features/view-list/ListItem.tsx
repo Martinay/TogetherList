@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, type KeyboardEvent } from 'react'
+import { useState, useRef, useEffect, useLayoutEffect, type KeyboardEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { assignItemParticipants, renameItemTitle, toggleItemCompleted, editItemDescription } from './api'
 import type { Item } from './types'
@@ -38,6 +38,28 @@ export function ListItem({ item, listId, locale, currentUser, participants, onIt
     const [isSavingDesc, setIsSavingDesc] = useState(false)
     const [saveDescStatus, setSaveDescStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
     const descTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+    const descriptionRef = useRef<HTMLTextAreaElement>(null)
+
+    useLayoutEffect(() => {
+        const textarea = descriptionRef.current
+        if (!isExpanded || !textarea) return
+
+        const resize = () => {
+            // Reset first so deleting text or widening the editor can shrink it too.
+            textarea.style.height = 'auto'
+            textarea.style.height = `${textarea.scrollHeight + textarea.offsetHeight - textarea.clientHeight}px`
+        }
+        resize()
+        let width = textarea.clientWidth
+        const observer = new ResizeObserver(() => {
+            if (textarea.clientWidth === width) return
+            width = textarea.clientWidth
+            resize()
+        })
+        observer.observe(textarea)
+        return () => observer.disconnect()
+    }, [isExpanded, editDescription])
 
     const inputRef = useRef<HTMLInputElement>(null)
     const [assignedTo, setAssignedTo] = useState<string[]>(item.assigned_to || [])
@@ -204,7 +226,7 @@ export function ListItem({ item, listId, locale, currentUser, participants, onIt
                     <>
                         <button
                             type="button"
-                            className="flex-1 flex flex-col items-start gap-1 bg-transparent border-none cursor-pointer text-left font-[inherit] p-0 pr-8 relative"
+                            className="min-w-0 flex-1 flex flex-col items-start gap-1 bg-transparent border-none cursor-pointer text-left font-[inherit] p-0 pr-8 relative"
                             onClick={() => setIsExpanded(!isExpanded)}
                             aria-expanded={isExpanded}
                         >
@@ -213,7 +235,7 @@ export function ListItem({ item, listId, locale, currentUser, participants, onIt
                             </span>
 
                             {!isExpanded && item.description && (
-                                <span data-testid="item-description-preview" className={`w-full text-xs text-text-secondary mt-1 truncate ${isCompleted ? 'opacity-50' : ''}`}>
+                                <span data-testid="item-description-preview" className={`w-full text-xs text-text-secondary mt-1 whitespace-pre-wrap [overflow-wrap:anywhere] ${isCompleted ? 'opacity-50' : ''}`}>
                                     {item.description}
                                 </span>
                             )}
@@ -242,7 +264,7 @@ export function ListItem({ item, listId, locale, currentUser, participants, onIt
                     </>
                 )}
             </div>
-            <div className={`overflow-hidden transition-all duration-250 bg-bg-secondary border-t flex flex-col ${isExpanded ? 'max-h-[700px] opacity-100 p-4 border-t-border-light' : 'max-h-0 opacity-0 px-4 py-0 border-t-transparent'}`}>
+            <div className={`overflow-hidden transition-all duration-250 bg-bg-secondary border-t flex flex-col ${isExpanded ? 'opacity-100 p-4 border-t-border-light' : 'max-h-0 opacity-0 px-4 py-0 border-t-transparent'}`}>
                 <div className="mb-4">
                     <div className="mb-2 text-sm text-text-secondary">{t('list.itemDetails.assignedTo')}</div>
                     <div className="flex flex-wrap gap-2 mb-2">
@@ -273,7 +295,8 @@ export function ListItem({ item, listId, locale, currentUser, participants, onIt
 
                 <div className="mb-4 relative">
                     <textarea
-                        className={`w-full bg-bg-card border rounded-lg p-3 text-sm text-text-primary min-h-[80px] max-h-[120px] resize-none overflow-y-auto outline-none transition-colors
+                        ref={descriptionRef}
+                        className={`w-full bg-bg-card border rounded-lg p-3 text-sm text-text-primary min-h-[80px] resize-none overflow-hidden outline-none transition-colors
                             ${isCompleted ? 'opacity-60 cursor-not-allowed' : 'focus:border-accent-primary focus:ring-1 focus:ring-accent-primary'}
                             ${saveDescStatus === 'error' ? 'border-error' : 'border-border-light'}`}
                         placeholder={t('list.itemDetails.descriptionPlaceholder', 'Add description...')}
