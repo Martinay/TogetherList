@@ -63,6 +63,12 @@ jobs:
       - name: Run security scan (gosec)
         run: gosec -fmt=json -out=gosec-report.json ./...
 
+      - name: Validate Collector and local Application Insights pipeline
+        working-directory: .
+        env:
+          TMPDIR: ${{ runner.temp }}
+        run: bash scripts/check-observability.sh
+
       - name: Upload security report
         if: always()
         uses: actions/upload-artifact@v7

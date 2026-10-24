@@ -1,11 +1,15 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
+	"errors"
 	"log"
+	"net"
 	"net/http"
 	"os"
-	"strings"
+	"os/signal"
+	"syscall"
 	"time"
 
 	"github.com/rs/cors"
@@ -19,41 +23,50 @@ import (
 	"backend/internal/features/renameitemtitle"
 	"backend/internal/features/renamelist"
 	"backend/internal/features/viewlist"
+	"backend/internal/observability"
 )
 
-func setupRoutes() http.Handler {
+func setupRoutes() http.Handler { return setupRoutesWithTelemetry(nil) }
+
+func setupRoutesWithTelemetry(telemetry *observability.Telemetry) http.Handler {
 	mux := http.NewServeMux()
-	mux.HandleFunc("GET /health", healthHandler)
-	mux.HandleFunc("POST /api/v1/list/create", createlist.Handler)
-	mux.HandleFunc("GET /api/v1/list/{id}", viewlist.Handler)
-	mux.HandleFunc("PUT /api/v1/list/{id}/name", renamelist.Handler)
-	mux.HandleFunc("POST /api/v1/list/{id}/items", additem.Handler)
-	mux.HandleFunc("PUT /api/v1/list/{id}/items/{itemId}/title", renameitemtitle.Handler)
-	mux.HandleFunc("PUT /api/v1/list/{id}/items/{itemId}/description", edititemdescription.Handler)
-	mux.HandleFunc("PUT /api/v1/list/{id}/items/{itemId}/completed", completeitem.Handler)
-	mux.HandleFunc("PUT /api/v1/list/{id}/items/{itemId}/assigned-to", assignitem.Handler)
+	var patterns []string
+	handle := func(pattern string, handler http.Handler) {
+		patterns = append(patterns, pattern)
+		mux.Handle(pattern, handler)
+	}
+	handleFunc := func(pattern string, handler http.HandlerFunc) { handle(pattern, handler) }
+	handleFunc("GET /health", healthHandler)
+	handleFunc("POST /api/v1/list/create", createlist.Handler)
+	handleFunc("GET /api/v1/list/{id}", viewlist.Handler)
+	handleFunc("PUT /api/v1/list/{id}/name", renamelist.Handler)
+	handleFunc("POST /api/v1/list/{id}/items", additem.Handler)
+	handleFunc("PUT /api/v1/list/{id}/items/{itemId}/title", renameitemtitle.Handler)
+	handleFunc("PUT /api/v1/list/{id}/items/{itemId}/description", edititemdescription.Handler)
+	handleFunc("PUT /api/v1/list/{id}/items/{itemId}/completed", completeitem.Handler)
+	handleFunc("PUT /api/v1/list/{id}/items/{itemId}/assigned-to", assignitem.Handler)
 
 	// API misses must not fall through to the frontend SPA.
-	mux.HandleFunc("/api/", http.NotFound)
+	handleFunc("/api/", http.NotFound)
 
 	// Model Context Protocol (MCP) server endpoints
 	mcpServer := mcpserver.NewServer(nil)
-	mux.Handle("/api/v1/mcp", mcpServer)
-	mux.Handle("GET /api/v1/mcp/sse", mcpServer.SSEServer().SSEHandler())
-	mux.Handle("POST /api/v1/mcp/messages", mcpServer.SSEServer().MessageHandler())
+	handle("/api/v1/mcp", mcpServer)
+	handle("GET /api/v1/mcp/sse", mcpServer.SSEServer().SSEHandler())
+	handle("POST /api/v1/mcp/messages", mcpServer.SSEServer().MessageHandler())
 
 	// MCP route aliases for convenience
-	mux.Handle("/mcp", mcpServer)
-	mux.Handle("GET /mcp/sse", mcpServer.SSEServer().SSEHandler())
-	mux.Handle("POST /mcp/messages", mcpServer.SSEServer().MessageHandler())
+	handle("/mcp", mcpServer)
+	handle("GET /mcp/sse", mcpServer.SSEServer().SSEHandler())
+	handle("POST /mcp/messages", mcpServer.SSEServer().MessageHandler())
 
 	// Serve frontend SPA from STATIC_DIR if configured.
 	// Bot-rendering middleware serves pre-rendered HTML to AI/search crawlers.
 	staticDir := os.Getenv("STATIC_DIR")
 	if staticDir != "" {
 		spaHandler := newSPAHandler(staticDir)
-		mux.Handle("/", newBotRenderHandler(spaHandler, staticDir))
-		log.Printf("Serving SPA from: %s", strings.ReplaceAll(staticDir, "\n", "")) // #nosec
+		handle("/", newBotRenderHandler(spaHandler, staticDir))
+		log.Print("Serving frontend assets")
 	}
 
 	// Configure CORS
@@ -64,26 +77,62 @@ func setupRoutes() http.Handler {
 		AllowCredentials: true,
 	})
 
-	return c.Handler(mux)
+	return telemetry.Wrap(c.Handler(mux), mux, patterns...)
 }
 
 func main() {
-	handler := setupRoutes()
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+	defer stop()
+	if err := run(ctx); err != nil {
+		log.Print(err)
+		os.Exit(1)
+	}
+}
 
+func run(ctx context.Context) error {
+	cfg, err := observability.FromEnv()
+	if err != nil {
+		return err
+	}
+	telemetry, err := observability.New(ctx, cfg)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		flushCtx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		defer cancel()
+		if err := telemetry.Shutdown(flushCtx); err != nil {
+			log.Print("Telemetry flush incomplete")
+		}
+	}()
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
 	}
-
-	log.Printf("Server starting on :%s", strings.ReplaceAll(port, "\n", "")) // #nosec
 	server := &http.Server{
 		Addr:              ":" + port,
-		Handler:           handler,
+		Handler:           setupRoutesWithTelemetry(telemetry),
+		BaseContext:       func(net.Listener) context.Context { return ctx },
 		ReadHeaderTimeout: 3 * time.Second,
+		ErrorLog:          log.New(observability.SafeDiagnostics{}, "", 0),
 	}
-	if err := server.ListenAndServe(); err != nil {
-		log.Fatalf("Server failed to start: %v", err)
+	result := make(chan error, 1)
+	go func() { result <- server.ListenAndServe() }()
+	log.Print("Server starting")
+	select {
+	case err := <-result:
+		if !errors.Is(err, http.ErrServerClosed) {
+			return errors.New("HTTP server failed")
+		}
+	case <-ctx.Done():
+		shutdownCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
+		if err := server.Shutdown(shutdownCtx); err != nil {
+			_ = server.Close()
+		}
+		<-result
 	}
+	return nil
 }
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {

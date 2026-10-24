@@ -93,6 +93,15 @@ module containerAppEnv 'modules/container-app-env.bicep' = {
   }
 }
 
+module observability 'modules/observability.bicep' = {
+  name: 'deploy-observability'
+  params: {
+    name: baseName
+    location: location
+    tags: tags
+  }
+}
+
 module containerApp 'modules/container-app.bicep' = {
   name: 'deploy-container-app'
   params: {
@@ -101,6 +110,7 @@ module containerApp 'modules/container-app.bicep' = {
     environmentId: containerAppEnv.outputs.id
     environmentName: containerAppEnv.outputs.name
     containerImage: containerImage
+    applicationInsightsConnectionString: observability.outputs.connectionString
     registryUsername: registryUsername
     registryPassword: registryPassword
     customDomains: customDomains

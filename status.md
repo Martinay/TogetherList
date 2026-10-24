@@ -49,6 +49,7 @@
 - [ ] **0016: Implement CORS & Integration** -> `docs/tasks/0016_implement_cors_and_integration.md`
 
 ### In Progress
+- [ ] **0035: Backend observability** -> `docs/tasks/0035_backend-observability.md` (Scope: backend telemetry, Collector/Bicep/CI and documentation; implemented and locally verified (147 backend test/subtest records with race; 76 E2E tests twice); provider retention defaults; existing frontend audit findings, proposed ADR/requirements and user review pending)
 - [ ] **0032: MCP protocol metadata/routing fixes** -> `docs/tasks/0032_mcp-protocol-metadata.md` (implemented; regressions and backend checks pass; race/E2E environment blockers and user review pending)
 - [ ] **0030: Comprehensive E2E coverage** -> `docs/tasks/0030_comprehensive-e2e.md` (Scope: E2E harness/specs, CI, inventory and contribution policy; implemented in PR #117; 66-scenario production suite, inventory and CI enforcement; user review pending)
 - [ ] **0027: Implement offline mode** -> `docs/tasks/0027_implement-offline-mode.md` (review fixes and automated checks implemented in this worktree; browser/unit/backend checks pass; race check blocked by missing C compiler; requirements/ADR and user acceptance pending)
