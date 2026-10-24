@@ -1,0 +1,47 @@
+# Pinned contrib 0.147.0; receives backend telemetry only, never host/file logs.
+receivers:
+  otlp:
+    protocols:
+      http:
+        endpoint: 127.0.0.1:4318
+processors:
+  memory_limiter:
+    check_interval: 1s
+    limit_mib: 160
+    spike_limit_mib: 32
+  batch:
+    timeout: 1s
+    send_batch_size: 128
+    send_batch_max_size: 128
+exporters:
+  azuremonitor:
+    connection_string: ${env:APPLICATIONINSIGHTS_CONNECTION_STRING}
+    spaneventsenabled: false
+    custom_events_enabled: false
+    exception_events_enabled: false
+    maxbatchsize: 128
+    maxbatchinterval: 1s
+    shutdown_timeout: 5s
+    sending_queue:
+      enabled: true
+      num_consumers: 1
+      queue_size: 64
+service:
+  telemetry:
+    logs:
+      level: error
+    metrics:
+      level: none
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [azuremonitor]
+    metrics:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [azuremonitor]
+    logs:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [azuremonitor]

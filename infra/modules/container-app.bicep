@@ -41,6 +41,11 @@ param tags object = {}
 @description('Name of the storage mount in the environment')
 param storageMountName string
 
+@secure()
+param applicationInsightsConnectionString string
+
+var collectorImage = 'docker.io/otel/opentelemetry-collector-contrib:0.147.0'
+
 // Two-phase deployment: hostnames must be registered before certificates can be created
 resource managedCertificates 'Microsoft.App/managedEnvironments/managedCertificates@2024-03-01' = [for domain in customDomains: if (enableCertificateBinding) {
   name: '${environmentName}/cert-${replace(domain, '.', '-')}'
@@ -92,6 +97,10 @@ resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
           name: 'registry-password'
           value: registryPassword
         }
+        {
+          name: 'applicationinsights-connection-string'
+          value: applicationInsightsConnectionString
+        }
       ]
     }
     template: {
@@ -116,11 +125,38 @@ resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
               name: 'DATA_DIR'
               value: '/data'
             }
+            {
+              name: 'OTEL_EXPORTER_OTLP_ENDPOINT'
+              value: 'http://127.0.0.1:4318'
+            }
+            {
+              name: 'TL_OTEL_SAMPLE_RATIO'
+              value: '0.1'
+            }
           ]
           volumeMounts: [
             {
               volumeName: 'data-volume'
               mountPath: '/data'
+            }
+          ]
+        }
+        {
+          name: 'otel-collector'
+          image: collectorImage
+          args: ['--config=env:OTELCOL_CONFIG']
+          resources: {
+            cpu: json('0.25')
+            memory: '0.5Gi'
+          }
+          env: [
+            {
+              name: 'OTELCOL_CONFIG'
+              value: loadTextContent('../otel-collector.yaml')
+            }
+            {
+              name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+              secretRef: 'applicationinsights-connection-string'
             }
           ]
         }
