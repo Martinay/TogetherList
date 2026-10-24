@@ -180,3 +180,17 @@ This is a nonbehavioral backend production change: no frontend route, action, id
 Remaining gaps: no authorized live Azure deployment/ingestion/portal verification, no Docker daemon locally, no guaranteed telemetry delivery under queue overflow/SIGKILL/sidecar shutdown races. Local protocol tests do not prove Azure resource availability or service-side ingestion. These limits need reviewer acknowledgement.
 
 Final task 0035 evidence: full `bun run test:e2e:run` passed twice on byte-identical final backend/deployment source, each with 76 tests in 14 files, zero skips/failures/errors (182.05s / 178.90s). Both JUnit reports passed the policy checker. Backend normal/race runs each passed 92 top-level tests plus 55 subtests in 12 packages. Frontend lint/types/build and 131 unit tests passed. Existing frontend audit/tooling issues and all live-verification limits are recorded in [the task handoff](tasks/0035_backend-observability.md).
+
+## Explicit refresh completed grouping (2026-10-24; review pending)
+
+Production scope: `frontend/src/features/view-list/ListPage.tsx`. Only the explicit pull callback clears session-toggled IDs after the existing guarded offline-aware synchronization succeeds and only for the same current list. Polling and edit reloads retain delayed grouping. Rendering uses refreshed state; no backend mutation or storage schema change.
+
+- `pull-to-refresh.e2e.test.ts` — “regroups checked items only on a successful pull and persists the refreshed shared state”: real UI check, ordinary polling stability, cache loss plus failed GET pull retains grouping, successful retry creates Completed (1), URL/identity retained, HTTP completion state and browser reload persistence through Go/JSONL.
+- Same file — “regroups a durable offline check on pull without losing the queued edit”: offline check remains active until pull, successful cached projection regroups, pending queue stays intact, HTTP state remains unchecked until reconnection and replay persists completion.
+- Existing “refreshes real shared state with a touch gesture without navigating or losing identity” covers external participant changes. Existing collaboration and JSONL restart scenarios remain applicable; grouping changes only local presentation and adds no event, sharing or identity path.
+- `ListPage.pull-to-refresh.test.tsx` adds success/fetch-failure/replay-failure cases, polling retention, retry, subsequent checks retaining delayed grouping refreshed unchecked state and a previous-list refresh settling after navigation.
+
+Remaining gaps: native touch devices, Safari/Firefox and assistive technology remain unverified. Offline refresh intentionally uses the existing projected cache and does not imply network delivery. Full results and commands: [task 0036](tasks/0036_refresh-completed-items.md).
+
+
+Final verification: test-first regressions failed before the fix; **136/136 frontend unit tests** pass. Full `bun run test:e2e:run` passed **78/78 twice**, 14 files, zero skips/failures (**193.58s**, **188.52s**); both JUnit reports pass policy checks. Frontend lint/types/build pass. Backend ordinary and race tests each pass 147 tests/subtests across 12 packages; vet/staticcheck/gosec (zero issues) and real Collector pipeline pass. Policy self-tests: 5/5. Existing audit scanner parsing failure and 86 dependency advisories remain; see task 0036 for exact commands, initial failed attempts and tooling.

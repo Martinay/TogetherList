@@ -5,7 +5,7 @@ type: Functional
 priority: P1
 source: User-requested pull-to-refresh feature
 created: 2026-10-07
-updated: 2026-10-07
+updated: 2026-10-24
 links:
   adr: [0008_state_sync_strategy, 0026_durable-offline-sync]
   requirements: [REQ-0020]
@@ -30,6 +30,8 @@ When a user releases a single-finger downward pull of at least 72 CSS pixels tha
 - Gestures originating on buttons, links, labels, editable fields, or focusable controls retain their normal behavior.
 - Pull and release hints, loading feedback, and refresh failure feedback use translations; refresh exposes busy state.
 - Manual refresh and polling share a guarded replay-before-fetch operation. Overlapping refreshes coalesce.
+- Successful explicit refresh resets delayed session grouping using the refreshed state: checked items move to Completed and unchecked items remain active, including offline projected pending edits.
+- Polling and edit-triggered reloads preserve delayed grouping; rejected replay/fetch does not reset it. A successful cached fallback follows the same regrouping rule as an offline projection. Later checks again remain active until a successful explicit refresh. A refresh for a previous list must not regroup the current list.
 - Offline snapshots and pending edits retain the loader's existing projection/replay behavior; refreshing never reloads the browser.
 - Errors retain visible list content, release the busy guard, and permit another pull.
 - Idle gesture feedback does not add a status region that interferes with offline feedback.

@@ -1,7 +1,7 @@
 import { beforeEach, afterEach, it, expect } from 'vitest'
 import type { Browser } from 'webdriverio'
 import { closeBrowser, createBrowser, cdp } from './browser-helper'
-import { seed, join, request } from './fixtures'
+import { seed, join, request, add, settled, state } from './fixtures'
 let browser: Browser
 beforeEach(async () => { browser = await createBrowser(); await browser.setWindowSize(390, 844) })
 afterEach(async () => { if (browser) await closeBrowser(browser) })
@@ -45,4 +45,52 @@ it('ignores short pulls and input gestures and shows failure then recovers on an
     await gesture(110)
     await browser.waitUntil(async () => !(await browser.$('[role="status"]=Failed to load list').isExisting()))
     expect(await browser.$('[data-testid="list-title"]').getText()).toBe('Shared groceries')
+})
+
+
+it('regroups checked items only on a successful pull and persists the refreshed shared state', async () => {
+    const id = await seed()
+    await join(browser, id)
+    await add(browser, 'Milk')
+    await browser.$('button[aria-label="Mark complete"]').click()
+    await settled(browser)
+    expect(await browser.$('h2').isExisting()).toBe(false)
+    // Ordinary polling must preserve delayed grouping.
+    await browser.pause(3200)
+    expect(await browser.$('h2').isExisting()).toBe(false)
+    // A cached fallback resolves successfully; remove it to exercise rejection.
+    await browser.execute((listId: string) => localStorage.removeItem('togetherlist:offline:v1:' + listId), id)
+    await cdp(browser, 'Network.setBlockedURLs', { urls: ['*/api/v1/list/*'] })
+    await gesture(110)
+    await browser.$('[role="status"]=Failed to load list').waitForDisplayed()
+    expect(await browser.$('h2').isExisting()).toBe(false)
+    await cdp(browser, 'Network.setBlockedURLs', { urls: [] })
+    const url = await browser.getUrl()
+    await gesture(110)
+    await browser.$('h2').waitForDisplayed()
+    expect(await browser.$('h2').getText()).toContain('(1)')
+    expect(await browser.getUrl()).toBe(url)
+    expect(await browser.$('[role="button"]').getText()).toContain('Alex')
+    expect(Object.values((await state(id)).items)[0]).toMatchObject({ title: 'Milk', completed: true })
+    await browser.refresh()
+    await browser.$('h2').waitForDisplayed()
+    expect(await browser.$('span=Milk').isDisplayed()).toBe(true)
+})
+
+it('regroups a durable offline check on pull without losing the queued edit', async () => {
+    const id = await seed()
+    await join(browser, id)
+    await add(browser, 'Offline milk')
+    await settled(browser)
+    await cdp(browser, 'Network.emulateNetworkConditions', { offline: true, latency: 0, downloadThroughput: 0, uploadThroughput: 0 })
+    await browser.$('button[aria-label="Mark complete"]').click()
+    await browser.waitUntil(async () => (await browser.$('body').getText()).includes('Pending edits: 1'))
+    expect(await browser.$('h2').isExisting()).toBe(false)
+    await gesture(110)
+    await browser.$('h2').waitForDisplayed()
+    expect(await browser.$('body').getText()).toContain('Pending edits: 1')
+    expect(Object.values((await state(id)).items)[0]!.completed).toBe(false)
+    await cdp(browser, 'Network.emulateNetworkConditions', { offline: false, latency: 0, downloadThroughput: -1, uploadThroughput: -1 })
+    await settled(browser)
+    expect(Object.values((await state(id)).items)[0]!.completed).toBe(true)
 })
