@@ -63,6 +63,11 @@ function ListPage() {
         return promise
     }, [id, refreshList])
 
+    const handleManualRefresh = useCallback(async (): Promise<void> => {
+        await syncList()
+        if (currentId.current === id) setSessionToggledIds(new Set())
+    }, [id, syncList])
+
     const refreshAfterEdit = () => { void refreshList().catch(() => {}) }
 
     useEffect(() => {
@@ -159,7 +164,7 @@ function ListPage() {
     })
 
     return (
-        <PullToRefresh key={id} onRefresh={syncList}>
+        <PullToRefresh key={id} onRefresh={handleManualRefresh}>
         <div className="flex-1 flex flex-col max-w-[600px] mx-auto w-full p-8 relative">
             <div className="absolute top-4 right-4 z-50">
                 <LanguageSwitcher />

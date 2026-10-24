@@ -1,6 +1,6 @@
 import { it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { render, screen, waitFor, fireEvent, act } from '@testing-library/react'
-import { MemoryRouter, Route, Routes } from 'react-router-dom'
+import { MemoryRouter, Route, Routes, Link } from 'react-router-dom'
 import ListPage from '../features/view-list/ListPage'
 import OfflineStatus from '../features/offline/OfflineStatus'
 import '../i18n'
@@ -32,14 +32,15 @@ vi.mock('../features/view-list/AddItemForm', () => ({
 }))
 
 vi.mock('../features/view-list/ListItem', () => ({
-    ListItem: ({ item }: { item: { title: string, completed: boolean } }) => (
-        <div data-testid={item.completed ? 'completed-item' : 'active-item'}>{item.title}</div>
+    ListItem: ({ item, onItemToggled }: { item: { id: string, title: string, completed: boolean }, onItemToggled: (id: string) => void }) => (
+        <div data-testid={item.completed ? 'completed-item' : 'active-item'}>{item.title}<button onClick={() => onItemToggled(item.id)}>Toggle {item.title}</button></div>
     ),
 }))
 
 function renderListPage() {
     return render(
         <MemoryRouter initialEntries={['/list/list-1']}>
+            <Link to="/list/list-2">Other list</Link>
             <Routes>
                 <Route path="/list/:id" element={<ListPage />} />
             </Routes>
@@ -127,4 +128,84 @@ it.each(['fetch', 'replay'])('reports storage failure only for replay when polli
     } finally {
         window.removeEventListener('togetherlist:storage-error', storageError)
     }
+})
+
+
+function pullHeader() {
+    const target = screen.getByText('Header')
+    fireEvent.touchStart(target, { touches: [{ identifier: 1, clientX: 20, clientY: 20 }] })
+    fireEvent.touchMove(target, { touches: [{ identifier: 1, clientX: 20, clientY: 110 }] })
+    fireEvent.touchEnd(target, { touches: [], changedTouches: [{ identifier: 1, clientX: 20, clientY: 110 }] })
+}
+
+it.each(['success', 'fetch failure', 'replay failure'])('regroups only after successful explicit refresh: %s', async outcome => {
+    vi.useFakeTimers()
+    const snapshot = (completed: boolean) => ({ name: 'List', participants: ['Alice'], items: {
+        a: { id: 'a', title: 'Milk', completed },
+        b: { id: 'b', title: 'Bread', completed: false },
+    } })
+    mockFetchListState.mockResolvedValue(snapshot(false))
+    renderListPage()
+    await act(async () => {})
+    fireEvent.click(screen.getByRole('button', { name: 'Toggle Milk' }))
+    mockFetchListState.mockResolvedValue(snapshot(true))
+    await act(async () => { await vi.advanceTimersByTimeAsync(3000) })
+    expect(screen.queryByRole('heading')).not.toBeInTheDocument()
+    if (outcome === 'fetch failure') mockFetchListState.mockRejectedValueOnce(new Error('network'))
+    if (outcome === 'replay failure') mockReplay.mockRejectedValueOnce(new Error('storage'))
+    await act(async () => pullHeader())
+    if (outcome !== 'success') {
+        expect(screen.queryByRole('heading')).not.toBeInTheDocument()
+        await act(async () => pullHeader())
+    }
+    expect(screen.getByRole('heading')).toHaveTextContent('Completed')
+    expect(screen.getByTestId('active-item')).toHaveTextContent('Bread')
+    // A later check starts a new period of delayed regrouping.
+    fireEvent.click(screen.getByRole('button', { name: 'Toggle Bread' }))
+    mockFetchListState.mockResolvedValue({ ...snapshot(true), items: {
+        ...snapshot(true).items, b: { id: 'b', title: 'Bread', completed: true },
+    } })
+    await act(async () => { await vi.advanceTimersByTimeAsync(3000) })
+    expect(screen.getByRole('heading')).toHaveTextContent('(1)')
+})
+
+it('uses the refreshed unchecked state rather than the state at pull start', async () => {
+    mockFetchListState.mockResolvedValue({ name: 'List', participants: ['Alice'], items: {
+        a: { id: 'a', title: 'Milk', completed: true },
+    } })
+    renderListPage()
+    await screen.findByText('Milk')
+    await act(async () => {})
+    fireEvent.click(screen.getByRole('button', { name: 'Toggle Milk' }))
+    mockFetchListState.mockResolvedValue({ name: 'List', participants: ['Alice'], items: {
+        a: { id: 'a', title: 'Milk', completed: false },
+    } })
+    await act(async () => pullHeader())
+    expect(screen.queryByRole('heading')).not.toBeInTheDocument()
+    expect(screen.getByTestId('active-item')).toHaveTextContent('Milk')
+})
+
+
+it('does not regroup the current list when a previous list refresh settles', async () => {
+    vi.useFakeTimers()
+    mockFetchListState.mockResolvedValue({ name: 'List', participants: ['Alice'], items: {
+        a: { id: 'a', title: 'Milk', completed: false },
+    } })
+    renderListPage()
+    await act(async () => {})
+    let finish!: () => void
+    mockReplay.mockImplementationOnce(() => new Promise<void>(resolve => { finish = resolve }))
+    await act(async () => pullHeader())
+    fireEvent.click(screen.getByRole('link', { name: 'Other list' }))
+    await act(async () => {})
+    fireEvent.click(screen.getByRole('button', { name: 'Toggle Milk' }))
+    mockFetchListState.mockResolvedValue({ name: 'List', participants: ['Alice'], items: {
+        a: { id: 'a', title: 'Milk', completed: true },
+    } })
+    await act(async () => { await vi.advanceTimersByTimeAsync(3000) })
+    await act(async () => finish())
+    // Fetch the checked state after the old refresh has settled.
+    await act(async () => { await vi.advanceTimersByTimeAsync(3000) })
+    expect(screen.getByTestId('completed-item')).toHaveTextContent('Milk')
+    expect(screen.queryByRole('heading')).not.toBeInTheDocument()
 })
