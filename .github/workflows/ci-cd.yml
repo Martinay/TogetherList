@@ -192,8 +192,13 @@ jobs:
 
       - name: Validate Bicep files
         run: |
-          az bicep build --file infra/main.bicep --stdout > /dev/null
+          az bicep build --file infra/main.bicep --stdout > "$RUNNER_TEMP/main.json"
           echo "✓ Bicep syntax validation passed"
+
+      - name: Check workspace Application Insights ingestion
+        run: |
+          python3 scripts/test_insights_ingestion.py
+          python3 scripts/check-insights-ingestion.py "$RUNNER_TEMP/main.json"
 
       - name: Lint Bicep files
         run: |
