@@ -5,7 +5,7 @@ go 1.27.1
 require (
 	github.com/felixge/httpsnoop v1.1.0
 	github.com/google/uuid v1.6.0
-	github.com/mark3labs/mcp-go v1.3.0
+	github.com/mark3labs/mcp-go v1.4.0
 	github.com/rs/cors v1.11.1
 	go.opentelemetry.io/otel v1.47.0
 	go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploghttp v0.23.0
