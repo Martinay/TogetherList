@@ -10,7 +10,7 @@
         "framer-motion": "^14.6.0",
         "i18next": "^26.5.12",
         "i18next-browser-languagedetector": "^8.2.4",
-        "i18next-http-backend": "^4.0.0",
+        "i18next-http-backend": "^4.0.10",
         "react": "19.2.8",
         "react-dom": "19.2.8",
         "react-i18next": "^17.0.16",
@@ -619,7 +619,7 @@
 
     "i18next-browser-languagedetector": ["i18next-browser-languagedetector@8.2.4", "", { "dependencies": { "@babel/runtime": "^7.29.2" } }, "sha512-n6zWTCD8plrPN6gotXNXf0qdM2cORZqZ6ypJA4aIXZkEa45Ds2BVlrZfFItD+XQWP3yAgWxV+euldyN+2utk0Q=="],
 
-    "i18next-http-backend": ["i18next-http-backend@4.0.0", "", {}, "sha512-EgSjO3Q1G6f2Q5oy7u9mmxuesE0oSfzAD97NFBjC8EmkK4guBSYLljM0Fng3DarMWIIkU70jfo4+mUzmyVISTA=="],
+    "i18next-http-backend": ["i18next-http-backend@4.0.10", "", {}, "sha512-CfdQuwIVijbrS/fmiTAQYcYyje4nMbH9aIjKYhhm5bgVmWKWLOM1F7qrA1o63Jl1JxQcRjdtWhKlvDzyqV9aPg=="],
 
     "iconv-lite": ["iconv-lite@0.6.3", "", { "dependencies": { "safer-buffer": ">= 2.1.2 < 3.0.0" } }, "sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw=="],
 
